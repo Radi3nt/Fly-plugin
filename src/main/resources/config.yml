@@ -1,0 +1,26 @@
+prefix: "Fly >"
+
+# fly command
+fly-youreself: "You toggled your fly"
+fly-someone-player: "Toggled the fly"
+fly-someone-target: "Toggled your fly"
+fly-target-message: true
+fly-player-name-reval: true
+
+
+
+
+# flight speed command
+speed-player-message: "You set you flight speed to"
+speed-someone-player: "You set the flight speed of"
+speed-target-namereval: "set your flight speed to"
+speed-target: "Set your flight speed to"
+speed-target-message: true
+speed-player-name-reval: true
+
+
+invalid-player: "This player is invalid !"
+no-args: "This command require an argument"
+wrong-args: "Wrong argument. See the command usage"
+no-permission: "You don't have the permission to use this command !"
+reload-message: "Configuration reloaded"

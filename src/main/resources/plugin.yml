@@ -1,0 +1,16 @@
+name: Fly
+version: 1.0.0
+main: fr.radi3nt.fly.MainFly
+api-version: 1.13
+prefix: [Fly]
+authors: [Radi3nt]
+description: You can now fly in survival mod !
+commands:
+  fly:
+    description: Just fly
+  flyspeed:
+    usage: /flyspeed [speed (1 - 9) ]
+  flyers:
+    description: gets the player that is flying
+  flyreload:
+    description: reload the config
