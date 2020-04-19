@@ -23,7 +23,7 @@ public final class MainFly extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnPlayerDisconnect(), this);
 
         getCommand("fly").setExecutor(new Fly());
-        getCommand("flyspeed").setTabCompleter(new fr.radi3nt.fly.Tab.FlySpeed());
+        getCommand("flyspeed").setTabCompleter(new fr.radi3nt.fly.tab.FlySpeed());
         getCommand("flyspeed").setExecutor(new FlySpeed());
         getCommand("flyreload").setExecutor(new FlyReload());
 

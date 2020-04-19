@@ -1,6 +1,5 @@
-package fr.radi3nt.fly.Tab;
+package fr.radi3nt.fly.tab;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
