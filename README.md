@@ -103,10 +103,10 @@ reload-message: "Configuration reloaded"
 #### Plugin
 
 - [ ] Pass the 1.1.0 version of the plugin
-- [ ] No bugs
+- [ ] No big problem in it
 - [ ] Add command `flyers`
 - [ ] Have some contributors
-- [ ] Use on a known server
+- [ ] Used on a known server
 
 #### Compatibility for all version of Minecraft
 
