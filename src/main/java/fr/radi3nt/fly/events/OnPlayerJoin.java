@@ -24,7 +24,6 @@ public class OnPlayerJoin implements Listener {
             }
         }
         player.setInvulnerable(false);
-
     }
 
 }

@@ -57,23 +57,27 @@ public class FlySpeed implements CommandExecutor {
                             Player target = Bukkit.getPlayerExact(args[1]);
                             target.setFlySpeed(FlySpeedf / 10);
                             int FlySpeedI = (int) FlySpeedf;
-                            if (player.hasPermission("fly.speed." + FlySpeedI)) {
-                                player.sendMessage(Prefix + " " + PlayerSomeoneMessage + " " + target.getName() + " to " + ChatColor.DARK_AQUA + FlySpeedI);
-                                if (SpeedTargetMessage) {
-                                    if (SpeedPlayerNameReval) {
-                                        target.sendMessage(Prefix + " " + player.getName() + " " + TargetMessageReval + " " + ChatColor.DARK_AQUA + FlySpeedI);
-                                    } else {
-                                        target.sendMessage(Prefix + " " + TargetMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
+                            if (player.hasPermission("fly.others")) {
+                                if (player.hasPermission("fly.speed." + FlySpeedI)) {
+                                    player.sendMessage(Prefix + " " + PlayerSomeoneMessage + " " + target.getName() + " to " + ChatColor.DARK_AQUA + FlySpeedI);
+                                    if (SpeedTargetMessage) {
+                                        if (SpeedPlayerNameReval) {
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + TargetMessageReval + " " + ChatColor.DARK_AQUA + FlySpeedI);
+                                        } else {
+                                            target.sendMessage(Prefix + " " + TargetMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
+                                        }
                                     }
+                                } else {
+                                    player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                                 }
                             } else {
-                                player.sendMessage( Prefix + " " + ChatColor.RED + NoPermission);
+                                player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                             }
 
                         } else {
-                            player.setFlySpeed(FlySpeedf / 10);
                             int FlySpeedI = (int) FlySpeedf;
                             if (player.hasPermission("fly.speed." + FlySpeedI)) {
+                                player.setFlySpeed(FlySpeedf / 10);
                                 player.sendMessage(Prefix + " " + PlayerMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
                             } else {
                                 player.sendMessage( Prefix + " " + ChatColor.RED + NoPermission);

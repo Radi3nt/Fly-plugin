@@ -28,7 +28,7 @@ public class FlyReload implements CommandExecutor {
             return true;
         } else {
             player.sendMessage( Prefix + " " + ChatColor.RED + NoPermission);
-            return false;
         }
+        return true;
     }
 }

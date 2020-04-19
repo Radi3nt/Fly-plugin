@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import sun.jvm.hotspot.ui.ObjectHistogramPanel;
 
 import java.util.ArrayList;
 
@@ -24,6 +23,10 @@ public class OnGamemodeChange implements Listener {
                 player.setFlying(false);
                 flyers.remove(player);
             }
+        } else {
+            player.setAllowFlight(false);
+            player.setFlying(false);
+            flyers.remove(player);
         }
     }
 
