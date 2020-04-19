@@ -25,8 +25,10 @@ public class FlySpeed implements CommandExecutor {
             String PlayerSomeoneMessage = plugin.getConfig().getString("speed-someone-player");
             String TargetMessageReval = plugin.getConfig().getString("speed-target-namereval");
             String TargetMessage = plugin.getConfig().getString("speed-target");
+            String InvalidPlayer = plugin.getConfig().getString("invalid-player");
             Boolean SpeedTargetMessage = plugin.getConfig().getBoolean("speed-target-message");
             Boolean SpeedPlayerNameReval = plugin.getConfig().getBoolean("speed-player-name-reval");
+
 
             String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
 
@@ -55,23 +57,27 @@ public class FlySpeed implements CommandExecutor {
 
                         if (args.length > 1) {
                             Player target = Bukkit.getPlayerExact(args[1]);
-                            target.setFlySpeed(FlySpeedf / 10);
-                            int FlySpeedI = (int) FlySpeedf;
-                            if (player.hasPermission("fly.others")) {
-                                if (player.hasPermission("fly.speed." + FlySpeedI)) {
-                                    player.sendMessage(Prefix + " " + PlayerSomeoneMessage + " " + target.getName() + " to " + ChatColor.DARK_AQUA + FlySpeedI);
-                                    if (SpeedTargetMessage) {
-                                        if (SpeedPlayerNameReval) {
-                                            target.sendMessage(Prefix + " " + player.getName() + " " + TargetMessageReval + " " + ChatColor.DARK_AQUA + FlySpeedI);
-                                        } else {
-                                            target.sendMessage(Prefix + " " + TargetMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
+                            if (player instanceof Player) {
+                                target.setFlySpeed(FlySpeedf / 10);
+                                int FlySpeedI = (int) FlySpeedf;
+                                if (player.hasPermission("fly.others")) {
+                                    if (player.hasPermission("fly.speed." + FlySpeedI)) {
+                                        player.sendMessage(Prefix + " " + PlayerSomeoneMessage + " " + target.getName() + " to " + ChatColor.DARK_AQUA + FlySpeedI);
+                                        if (SpeedTargetMessage) {
+                                            if (SpeedPlayerNameReval) {
+                                                target.sendMessage(Prefix + " " + player.getName() + " " + TargetMessageReval + " " + ChatColor.DARK_AQUA + FlySpeedI);
+                                            } else {
+                                                target.sendMessage(Prefix + " " + TargetMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
+                                            }
                                         }
+                                    } else {
+                                        player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                                     }
                                 } else {
                                     player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                                 }
                             } else {
-                                player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                                player.sendMessage(Prefix + " " + InvalidPlayer);
                             }
 
                         } else {
