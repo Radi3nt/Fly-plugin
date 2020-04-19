@@ -103,7 +103,7 @@ reload-message: "Configuration reloaded"
 #### Plugin
 
 - [ ] Pass the 1.1.0 version of the plugin
-- [ ] Adding command tempfly
+- [ ] Adding command `tempfly`
 - [ ] No big problem in it
 - [ ] Add command `flyers`
 - [ ] Have some contributors
@@ -120,7 +120,7 @@ reload-message: "Configuration reloaded"
 # Help
 
 If you need help, **__do not hesitate__** ask me !  
-Report all the issues you have, I will correct my code.
+Report all issues you have, I will correct my code.
 
-**Discord**: Red_white_200#3502  
+**Discord**: (Red_white_200#3502)[]
 **Mail**: Radi3nt.plugin@gmail.com
