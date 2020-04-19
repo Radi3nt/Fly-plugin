@@ -2,7 +2,7 @@ name: FlyPlugin
 version: 1.0.0
 main: fr.radi3nt.fly.MainFly
 api-version: 1.13
-prefix: [Fly]
+prefix: Fly
 authors: [Radi3nt]
 description: You can now fly in survival mod !
 commands:
@@ -13,5 +13,8 @@ commands:
     description: Allow to chage fly speed for youreself or another player
     usage: /flyspeed <1-9> [player]
   flyreload:
+    description: Simply reload the fly-plugin config
+    usage: /flyreload
+  tempfly:
     description: Simply reload the fly-plugin config
     usage: /flyreload

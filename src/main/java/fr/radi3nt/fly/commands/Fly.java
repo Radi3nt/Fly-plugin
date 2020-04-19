@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Fly implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
-    public static ArrayList<Player> flyers = new ArrayList<>();
+    public static ArrayList<String> flyers = new ArrayList<>();
 
     String FlyYoureself = plugin.getConfig().getString("fly-youreself");
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
@@ -100,9 +100,9 @@ public class Fly implements CommandExecutor {
     public void FlyMethod(Player player, boolean state) {
         player.setAllowFlight(state);
         if (state == true) {
-            flyers.add(player); // this will be useless for the next update !
+            flyers.add(player.getName()); // this will be useless for the next update !
         } else {
-            flyers.remove(player);
+            flyers.remove(player.getName());
             player.setInvulnerable(false);
         }
     }

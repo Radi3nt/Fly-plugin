@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class PlayerRespawn implements Listener {
 
-    ArrayList<Player> flyers = Fly.flyers;
+    ArrayList<String> flyers = Fly.flyers;
 
     @EventHandler
     public void PlayerRespawn(PlayerRespawnEvent e) {

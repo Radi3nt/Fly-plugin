@@ -14,7 +14,7 @@ public class PlayerInteract implements Listener {
     @EventHandler
     public void OnPlayerInteract(PlayerInteractEvent e) {
 
-        ArrayList<Player> flyers = Fly.flyers;
+        ArrayList<String> flyers = Fly.flyers;
 
         Player player = e.getPlayer();
         if (player.isFlying()) {
