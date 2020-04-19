@@ -100,7 +100,7 @@ reload-message: "Configuration reloaded"
 
 # Objectives
 
-##### Plugin
+#### Plugin
 
 - [ ] Pass the 1.1.0 version of the plugin
 - [ ] No bugs
@@ -108,7 +108,7 @@ reload-message: "Configuration reloaded"
 - [ ] Have some contributors
 - [ ] Use on a known server
 
-##### Compatibility for all version of Minecraft
+#### Compatibility for all version of Minecraft
 
   - [x] 1.13 - 1.15
   - [ ] 1.11 - 1.12
