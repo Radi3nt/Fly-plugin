@@ -1,4 +1,4 @@
-name: Fly
+name: FlyPlugin
 version: 1.0.0
 main: fr.radi3nt.fly.MainFly
 api-version: 1.13
