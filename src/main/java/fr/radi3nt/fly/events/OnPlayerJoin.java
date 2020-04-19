@@ -23,6 +23,7 @@ public class OnPlayerJoin implements Listener {
                 flyers.remove(player);
             }
         }
+        flyers.remove(player);
         player.setInvulnerable(false);
     }
 

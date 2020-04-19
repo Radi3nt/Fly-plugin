@@ -32,31 +32,31 @@ public class checker extends BukkitRunnable {
                 long timeleft = ((timer.get(list.get(i).getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
 
                 if (timeleft == 30 && timem > 30) {
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 30 " + ChatColor.GREEN + "seconds of flight left !");
+                    player.sendMessage(Prefix + ChatColor.AQUA + " 30 " + ChatColor.GREEN + "seconds of flight left!");
                     timem = 30;
                 }
                 if (timeleft == 15 && timem > 15) {
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 15 " + ChatColor.GREEN + "seconds of flight left !");
+                    player.sendMessage(Prefix + ChatColor.AQUA + " 15 " + ChatColor.GREEN + "seconds of flight left!");
                     timem = 15;
                 }
                 if (timeleft == 5 && timem > 5) {
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 5 " + ChatColor.GOLD + "seconds of flight left !");
+                    player.sendMessage(Prefix + ChatColor.AQUA + " 5 " + ChatColor.GOLD + "seconds of flight left!");
                     timem = 5;
                 }
                 if (timeleft == 3 && timem > 3) {
-                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 3 " + ChatColor.RESET + ChatColor.RED + "seconds of flight left !");
+                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 3 " + ChatColor.RESET + ChatColor.RED + "seconds of flight left!");
                     timem = 3;
                 }
                 if (timeleft == 2 && timem > 2) {
-                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 2 " + ChatColor.RESET + ChatColor.RED + "seconds of flight left !");
+                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 2 " + ChatColor.RESET + ChatColor.RED + "seconds of flight left!");
                     timem = 2;
                 }
                 if (timeleft == 1 && timem > 1) {
-                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 1 " + ChatColor.RESET + ChatColor.RED + "seconds of flight left !");
+                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 1 " + ChatColor.RESET + ChatColor.RED + "seconds of flight left!");
                     timem = 1;
                 }
                 if (timeleft < 0) {
-                    player.sendMessage(Prefix + ChatColor.RED + " No time left !");
+                    player.sendMessage(Prefix + ChatColor.RED + ChatColor.BOLD + " No time left!");
                     player.setAllowFlight(false);
                     player.setFlying(false);
                     player.setInvulnerable(false);
