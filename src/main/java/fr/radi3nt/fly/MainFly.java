@@ -1,14 +1,15 @@
 package fr.radi3nt.fly;
 
-import fr.radi3nt.fly.commands.Fly;
-import fr.radi3nt.fly.commands.FlyReload;
-import fr.radi3nt.fly.commands.FlySpeed;
-import fr.radi3nt.fly.commands.Tempfly;
+import fr.radi3nt.fly.commands.*;
 import fr.radi3nt.fly.events.*;
 import fr.radi3nt.fly.timer.checker;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+
 public final class MainFly extends JavaPlugin {
+
+    public ArrayList<String> flyers = Fly.flyers;
 
     @Override
     public void onEnable() {
@@ -28,6 +29,7 @@ public final class MainFly extends JavaPlugin {
         getCommand("flyspeed").setTabCompleter(new fr.radi3nt.fly.tab.FlySpeed());
         getCommand("flyspeed").setExecutor(new FlySpeed());
         getCommand("tempfly").setExecutor(new Tempfly());
+        getCommand("flyers").setExecutor(new Flyers());
         getCommand("flyreload").setExecutor(new FlyReload());
 
         checker task = new checker();
@@ -35,5 +37,11 @@ public final class MainFly extends JavaPlugin {
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+    }
+
+    @Override
+    public void onDisable() {
+        System.out.println("Disabling ...");
+        flyers.clear();
     }
 }

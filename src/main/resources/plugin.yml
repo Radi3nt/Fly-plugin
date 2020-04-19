@@ -16,5 +16,8 @@ commands:
     description: Simply reload the fly-plugin config
     usage: /flyreload
   tempfly:
-    description: Simply reload the fly-plugin config
-    usage: /flyreload
+    description: Temp-fly someone
+    usage: /tempfly [seconds] [player]
+  flyers:
+    description: List of the flyers
+    usage: /flyers
