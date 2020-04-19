@@ -98,15 +98,22 @@ reload-message: "Configuration reloaded"
 
 > Hmmmmmmmm not today. Maybe tomorrow ?
 
-#Objectives
+# Objectives
+
+##### Plugin
 
 - [ ] Pass the 1.1.0 version of the plugin
 - [ ] No bugs
-- Compatibility for all version of Minecraft
-    - [x] 1.13 - 1.15
-    - [ ] 1.11 - 1.12
-    - [ ] 1.9 - 1.10
-    - [ ] 1.7 - 1.8
+- [ ] Add command `flyers`
+- [ ] Have some contributors
+- [ ] Use on a known server
+
+##### Compatibility for all version of Minecraft
+
+  - [x] 1.13 - 1.15
+  - [ ] 1.11 - 1.12
+  - [ ] 1.9 - 1.10
+  - [ ] 1.7 - 1.8
 
 
 # Help
