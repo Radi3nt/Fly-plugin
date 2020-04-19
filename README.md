@@ -7,6 +7,7 @@
   - [Permissions](#Permissions)
 - [Config](#Config)
 - [Credits](#Credits)
+- [Objetives](#Objectives)
 - [Help](#Help)
 
 
@@ -61,8 +62,8 @@ To install the plugin, please follow the following steps:
 <details>
   <summary>Config</summary>
   
-  ```json
-  prefix: "Fly >"
+  ``` json
+prefix: "Fly >"
 
 # fly command
 fly-youreself: "You toggled your fly" - message when tou toggle your own fly
@@ -97,9 +98,20 @@ reload-message: "Configuration reloaded"
 
 > Hmmmmmmmm not today. Maybe tomorrow ?
 
+#Objectives
+
+- [ ] Pass the 1.1.0 version of the plugin
+- [ ] No bugs
+- Compatibility for all version of Minecraft
+    - [x] 1.13 - 1.15
+    - [ ] 1.11 - 1.12
+    - [ ] 1.9 - 1.10
+    - [ ] 1.7 - 1.8
+
+
 # Help
 
-If you need help, **__do not hesitate !__** ask me !  
+If you need help, **__do not hesitate__** ask me !  
 Report all the issues you have, I will correct my code.
 
 **Discord**: Red_white_200#3502  
