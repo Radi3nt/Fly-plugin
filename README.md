@@ -38,8 +38,8 @@ To install the plugin, please follow the following steps:
 
 ## Commands
 
-  - `fly [player]` - Allow to fly for youreself or another player
-  - `flyspeed <1-9> [player]` - Allow to chage fly speed for youreself or another player
+  - `fly [player]` - Allow to fly for yourself or another player
+  - `flyspeed <1-9> [player]` - Allow to chage fly speed for yourself or another player
   - `flyreload` - Simply reload the fly-plugin config
   
 ## Permissions
@@ -51,7 +51,7 @@ To install the plugin, please follow the following steps:
   - `fly.damage` - Allow to do damage when flying
   
   - `fly.gamemode` - Allow to keep your flight ability when changing gamemode
-  - `fly.join` - Comming soon
+  - `fly.join` - Coming soon
   - `fly.respawn` - Allow to keep your flight ability when respawn
   - `fly.changeworld` - Allow to keep your flight ability when changing world
   
@@ -68,8 +68,8 @@ prefix: "Fly >"
 # fly command
 fly-youreself: "You toggled your fly" - message when tou toggle your own fly
 fly-someone-player: "Toggled the fly" - message for the person who toggle the fly of another personn
-fly-someone-target: "Toggled your fly" - message for the personn that his flight ability was toggled
-fly-target-message: true - define if the target recive a message when someone toggle his flight ability
+fly-someone-target: "Toggled your fly" - message for the person that his flight ability was toggled
+fly-target-message: true - define if the target receive a message when someone toggle his flight ability
 fly-player-name-reval: true - define if the name of the personn who toggled the flight ability of someone is revealed
 
 
@@ -78,10 +78,10 @@ fly-player-name-reval: true - define if the name of the personn who toggled the 
 # flight speed command
 speed-player-message: "You set you flight speed to" - message when tou change your own fly speed
 speed-someone-player: "You set the flight speed of" - message for the person who change the fly speed of another personn
-speed-target-namereval: "set your flight speed to" - message for the personn that his flight speed was changed (with name reval)
-speed-target: "Set your flight speed to" - message for the personn that his flight speed was changed (without name reval)
-speed-target-message: true - define if the target recive a message when someone change his flight speed
-speed-player-name-reval: true - define if the name of the personn who changed the flight speed of someone is revealed
+speed-target-namereval: "set your flight speed to" - message for the person that his flight speed was changed (with name reveal)
+speed-target: "Set your flight speed to" - message for the person that his flight speed was changed (without name reveal)
+speed-target-message: true - define if the target receive a message when someone change his flight speed
+speed-player-name-reval: true - define if the name of the person who changed the flight speed of someone is revealed
 
 
 
@@ -103,6 +103,7 @@ reload-message: "Configuration reloaded"
 #### Plugin
 
 - [ ] Pass the 1.1.0 version of the plugin
+- [ ] Adding command tempfly
 - [ ] No big problem in it
 - [ ] Add command `flyers`
 - [ ] Have some contributors
