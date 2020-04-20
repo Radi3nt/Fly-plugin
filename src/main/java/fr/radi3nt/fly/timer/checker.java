@@ -30,17 +30,22 @@ public class checker extends BukkitRunnable {
                 Player player = list.get(i);
                 int secondes = time.get(list.get(i).getName());
                 long timeleft = ((timer.get(list.get(i).getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
-
+                if (timeleft == 900 && timem > 900) {
+                    player.sendMessage(Prefix + ChatColor.AQUA + " 15 " + ChatColor.GREEN + "minutes of flight left!");
+                    timem = 900;
+                }
                 if (timeleft == 300 && timem > 300) {
                     player.sendMessage(Prefix + ChatColor.AQUA + " 5 " + ChatColor.GREEN + "minutes of flight left!");
                     timem = 300;
                 }
                 if (timeleft == 60 && timem > 60) {
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 1 " + ChatColor.GREEN + "minutes of flight left!");
+                    player.sendMessage(Prefix + ChatColor.AQUA + " 1 " + ChatColor.GOLD + "minutes of flight left!");
+                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft/60) + " minute", 20,30,20);
                     timem = 60;
                 }
                 if (timeleft == 30 && timem > 30) {
                     player.sendMessage(Prefix + ChatColor.AQUA + " 30 " + ChatColor.GOLD + "seconds of flight left!");
+                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft), 20,30,20);
                     timem = 30;
                 }
                 if (timeleft == 15 && timem > 15) {
