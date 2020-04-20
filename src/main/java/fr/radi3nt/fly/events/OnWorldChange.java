@@ -20,7 +20,7 @@ public class OnWorldChange implements Listener {
                 player.setFlying(false);
                 player.setAllowFlight(false);
                 player.setInvulnerable(false);
-                flyers.remove(player);
+                flyers.remove(player.getName());
             }
         }
     }

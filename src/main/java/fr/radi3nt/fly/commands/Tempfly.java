@@ -26,11 +26,17 @@ public class Tempfly implements CommandExecutor {
     String WrongArgs = plugin.getConfig().getString("wrong-args");
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
 
+    String NameReveal = plugin.getConfig().getString("temp-target-namereveal");
+    String TargetMe = plugin.getConfig().getString("temp-target");
+
+    Boolean TargetMessage = plugin.getConfig().getBoolean("temp-target-message");
+    Boolean PlayerNameReveal = plugin.getConfig().getBoolean("temp-player-name-reveal");
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         if (player.hasPermission("fly.tempfly")) {
-            if (args.length < 2) {
+            if (args.length < 1) {
                 player.sendMessage(Prefix + " " + WrongArgs);
             } else {
                 StringBuilder sb = new StringBuilder();
@@ -49,20 +55,72 @@ public class Tempfly implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + WrongArgs);
                     return false;
                 }
-
-                    Player target = Bukkit.getPlayerExact(args[1]);
-                    if (target instanceof Player) {
-                        time.put(target.getName(), Integer.parseInt((sb.toString())));
+                    if (!(args.length == 1)) {
+                        Player target = Bukkit.getPlayerExact(args[1]);
+                        if (target instanceof Player) {
+                            time.put(target.getName(), Integer.parseInt((sb.toString())));
                             if (time.get(target.getName()) > 0 && time.get(target.getName()) < 86400) {
+                                flyers.remove(target);
+                                flyers.remove(target);
                                 FlyMethod(target, true);
-                                player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
                                 timer.put(target.getName(), System.currentTimeMillis());
+                                if (time.get(target.getName()) >= 3600) {
+                                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                    if (TargetMessage) {
+                                        if (PlayerNameReveal) {
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                        } else {
+                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                        }
+                                    }
+                                } else if (time.get(target.getName()) >= 60) {
+                                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                    if (TargetMessage) {
+                                        if (PlayerNameReveal) {
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                        } else {
+                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                        }
+                                    }
+                                } else {
+                                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
+                                    if (TargetMessage) {
+                                        if (PlayerNameReveal) {
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + time.get(target.getName()) + " sceonds");
+                                        } else {
+                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
+                                        }
+                                    }
+                                }
                             } else {
                                 player.sendMessage(Prefix + ChatColor.RED + WrongArgs);
                             }
 
+                        } else {
+                            player.sendMessage(Prefix + ChatColor.RED + InvalidPlayer);
+                        }
                     } else {
-                        player.sendMessage(Prefix + ChatColor.RED + InvalidPlayer);
+                        if (player instanceof Player) {
+                            time.put(player.getName(), Integer.parseInt((sb.toString())));
+                            if (time.get(player.getName()) > 0 && time.get(player.getName()) < 86400) {
+                                flyers.remove(player);
+                                flyers.remove(player);
+                                FlyMethod(player, true);
+                                timer.put(player.getName(), System.currentTimeMillis());
+                                if (time.get(player.getName()) >= 3600) {
+                                    player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 3600) + " hours");
+                                } else if (time.get(player.getName()) >= 60) {
+                                    player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 60) + " minutes");
+                                } else {
+                                    player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(player.getName()) + " seconds");
+                                }
+                            } else {
+                                player.sendMessage(Prefix + ChatColor.RED + WrongArgs);
+                            }
+
+                        } else {
+                            player.sendMessage(Prefix + ChatColor.RED + InvalidPlayer);
+                        }
                     }
             }
         }

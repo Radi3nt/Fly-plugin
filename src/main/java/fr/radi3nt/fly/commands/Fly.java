@@ -16,12 +16,12 @@ public class Fly implements CommandExecutor {
     Plugin plugin = MainFly.getPlugin(MainFly.class);
     public static ArrayList<String> flyers = new ArrayList<>();
 
-    String FlyYoureself = plugin.getConfig().getString("fly-youreself");
+    String FlyYoureself = plugin.getConfig().getString("fly-yourself");
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
     String NoPermission = plugin.getConfig().getString("no-permission");
     String FlySomeonePlayer = plugin.getConfig().getString("fly-someone-player");
     String FlySomeoneTarget = plugin.getConfig().getString("fly-someone-target");
-    Boolean PlayerNameReval = plugin.getConfig().getBoolean("fly-player-name-reval");
+    Boolean PlayerNameReval = plugin.getConfig().getBoolean("fly-player-name-reveal");
     Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
 
     String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;

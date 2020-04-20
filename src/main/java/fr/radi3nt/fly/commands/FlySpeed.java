@@ -23,11 +23,11 @@ public class FlySpeed implements CommandExecutor {
             String WrongArgs = plugin.getConfig().getString("wrong-args");
             String PlayerMessage = plugin.getConfig().getString("speed-player-message");
             String PlayerSomeoneMessage = plugin.getConfig().getString("speed-someone-player");
-            String TargetMessageReval = plugin.getConfig().getString("speed-target-namereval");
+            String TargetMessageReval = plugin.getConfig().getString("speed-target-namereveal");
             String TargetMessage = plugin.getConfig().getString("speed-target");
             String InvalidPlayer = plugin.getConfig().getString("invalid-player");
             Boolean SpeedTargetMessage = plugin.getConfig().getBoolean("speed-target-message");
-            Boolean SpeedPlayerNameReval = plugin.getConfig().getBoolean("speed-player-name-reval");
+            Boolean SpeedPlayerNameReval = plugin.getConfig().getBoolean("speed-player-name-reveal");
 
 
             String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
