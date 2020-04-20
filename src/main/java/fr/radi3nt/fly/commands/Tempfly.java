@@ -25,6 +25,7 @@ public class Tempfly implements CommandExecutor {
     String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
     String WrongArgs = plugin.getConfig().getString("wrong-args");
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
+    String NoPermission = plugin.getConfig().getString("no-permission");
 
     String NameReveal = plugin.getConfig().getString("temp-target-namereveal");
     String TargetMe = plugin.getConfig().getString("temp-target");
@@ -98,12 +99,14 @@ public class Tempfly implements CommandExecutor {
                                         }
                                     }
                                 } else {
-                                    player.sendMessage(Prefix + ChatColor.RED + WrongArgs);
+                                    player.sendMessage(Prefix + ChatColor.RED + " " +  WrongArgs);
                                 }
 
                             } else {
-                                player.sendMessage(Prefix + ChatColor.RED + InvalidPlayer);
+                                player.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                             }
+                        } else {
+                            player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
                         }
                     } else {
                         if (player instanceof Player) {
@@ -121,11 +124,11 @@ public class Tempfly implements CommandExecutor {
                                     player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(player.getName()) + " seconds");
                                 }
                             } else {
-                                player.sendMessage(Prefix + ChatColor.RED + WrongArgs);
+                                player.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
                             }
 
                         } else {
-                            player.sendMessage(Prefix + ChatColor.RED + InvalidPlayer);
+                            player.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                         }
                     }
             }

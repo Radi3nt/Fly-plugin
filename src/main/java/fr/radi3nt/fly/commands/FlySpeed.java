@@ -48,7 +48,7 @@ public class FlySpeed implements CommandExecutor {
                     }
 
                     if(sb.toString().isEmpty()) {
-                        player.sendMessage(ChatColor.RED + WrongArgs);
+                        player.sendMessage(ChatColor.RED + " " + WrongArgs);
                         return false;
                     }
                     float FlySpeedf = Float.parseFloat(sb.toString());
