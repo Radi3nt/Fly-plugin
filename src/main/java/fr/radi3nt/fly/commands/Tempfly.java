@@ -60,7 +60,7 @@ public class Tempfly implements CommandExecutor {
                     return false;
                 }
                     if (!(args.length == 1)) {
-                        if (player.hasPermission("fly.tempfly.others")) {
+                        if (player.hasPermission("fly.tempflyothers")) {
                             Player target = Bukkit.getPlayerExact(args[1]);
                             if (target instanceof Player) {
                                 time.put(target.getName(), Integer.parseInt((sb.toString())));
