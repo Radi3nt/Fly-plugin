@@ -103,9 +103,9 @@ reload-message: "Configuration reloaded"
 #### Plugin
 
 - [ ] Pass the 1.1.0 version of the plugin
-- [ ] Adding command `tempfly`
+- [X] Adding command `tempfly`
 - [ ] No big problem in it
-- [ ] Add command `flyers`
+- [X] Add command `flyers`
 - [ ] Have some contributors
 - [ ] Used on a known server
 
