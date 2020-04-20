@@ -36,6 +36,8 @@ To install the plugin, please follow the following steps:
   
 # General
 
+### Update 1.1.0 is a big update ! You need to delete the plugin folder and relaunch your server,and it will recreate on automatically.
+
 ## Commands
 
   - `fly [player]` - Allow to fly for yourself or another player
