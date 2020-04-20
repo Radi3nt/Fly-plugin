@@ -19,7 +19,10 @@ public class Flyers implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        int shift = 5;
+        int shift;
+        if (flyers.size() == 0) {
+            sender.sendMessage(Prefix + " No one has the permission to fly !");
+        }
             if (flyers.size() == 1) {
                 sender.sendMessage(Prefix + " " + flyers.get(0));
             }
