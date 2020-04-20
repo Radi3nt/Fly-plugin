@@ -14,20 +14,27 @@ public class FlyReload implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player =(Player) sender;
+
 
         String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
         String NoPermission = plugin.getConfig().getString("no-permission");
         String ReloadMessage = plugin.getConfig().getString("reload-message");
 
+        if (sender instanceof Player) {
 
-        if (player.hasPermission("fly.reload")) {
-            plugin.reloadConfig();
-            player.sendMessage(Prefix + " " + ReloadMessage);
-            System.out.println(Prefix + " " + ReloadMessage);
-            return true;
+            Player player = (Player) sender;
+            if (player.hasPermission("fly.reload")) {
+
+                plugin.reloadConfig();
+                player.sendMessage(Prefix + " " + ReloadMessage);
+                System.out.println(Prefix + " " + ReloadMessage);
+                return true;
+            } else {
+                player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+            }
         } else {
-            player.sendMessage( Prefix + " " + ChatColor.RED + NoPermission);
+            plugin.reloadConfig();
+            System.out.println(Prefix + " " + ReloadMessage);
         }
         return true;
     }

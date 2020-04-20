@@ -35,6 +35,7 @@ public class Tempfly implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
+            System.out.println("Not availaible yet");
             return false;
         }
         Player player = (Player) sender;

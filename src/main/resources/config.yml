@@ -20,10 +20,13 @@ speed-player-name-reval: true
 
 
 #tempfly
-temp-player-message: "You set you flight speed to"
-temp-someone-player: "You set the flight speed of"
 temp-target-namereveal: "allowed you to fly for"
 temp-target: "You can fly for"
+temp-left: "of flight left!"
+
+temp-hours: "hours"
+temp-minutes: "minutes"
+temp-seconds: "seconds"
 temp-target-message: true
 temp-player-name-reveal: true
 
