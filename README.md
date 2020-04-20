@@ -40,12 +40,17 @@ To install the plugin, please follow the following steps:
 
   - `fly [player]` - Allow to fly for yourself or another player
   - `flyspeed <1-9> [player]` - Allow to chage fly speed for yourself or another player
+  - `tempfly <time in seconds>[ player]` - Allow to fly for yourself or another player **temporally**
+  - `flyers` - List all the player that can fly
   - `flyreload` - Simply reload the fly-plugin config
   
 ## Permissions
 
   - `fly.fly` - Allow to toggle your flight ability
-  - `fly.others` - Allow to toggle the flight ability or the flight speed of the other player (no permission needed for the targeted player)
+  - `fly.others` - Allow to toggle the flight ability, or the flight speed of the other player (no permission needed for the targeted player)
+  - `fly.tempfly` - Allow you to tempfly yourself
+  - `fly.tempflyothers` - Allow you to tempfly other persons
+  - `fly.flyers` - Allow you to get the list of the flyers
   - `fly.speed` or `fly.speed.[1-9]` - Allow to change your fly speed or that of the other players (no permission needed for the targeted player)
   - `fly.invincible` - Allow to be invincible when flying
   - `fly.damage` - Allow to do damage when flying
@@ -83,6 +88,16 @@ speed-target: "Set your flight speed to" - message for the person that his fligh
 speed-target-message: true - define if the target receive a message when someone change his flight speed
 speed-player-name-reval: true - define if the name of the person who changed the flight speed of someone is revealed
 
+#tempfly
+temp-target-namereveal: "allowed you to fly for"
+temp-target: "You can fly for"
+temp-left: "of flight left!"
+
+temp-hours: "hours"
+temp-minutes: "minutes"
+temp-seconds: "seconds"
+temp-target-message: true
+temp-player-name-reveal: true
 
 
 invalid-player: "This player is invalid !"
