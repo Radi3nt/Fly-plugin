@@ -90,7 +90,7 @@ public class checker extends BukkitRunnable {
                 }
                 if (timeleft <= 0) {
                     player.sendTitle(ChatColor.DARK_RED +"NO TIME LEFT!", "", 20,30,20);
-                    player.sendMessage(Prefix + ChatColor.BOLD +ChatColor.RED + " No time left!");
+                    player.sendMessage(Prefix + ChatColor.RED +ChatColor.BOLD + " No time left!");
                     flyers.remove(player.getName());
                     player.setAllowFlight(false);
                     player.setFlying(false);

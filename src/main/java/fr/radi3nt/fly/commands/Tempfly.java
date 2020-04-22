@@ -112,8 +112,7 @@ public class Tempfly implements CommandExecutor {
                         if (player instanceof Player) {
                             time.put(player.getName(), Integer.parseInt((sb.toString())));
                             if (time.get(player.getName()) > 0 && time.get(player.getName()) < 86400) {
-                                flyers.remove(player);
-                                flyers.remove(player);
+                                flyers.remove(player.getName());
                                 FlyMethod(player, true);
                                 timer.put(player.getName(), System.currentTimeMillis());
                                 if (time.get(player.getName()) >= 3600) {
