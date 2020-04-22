@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
 public class GetEntityDamaged implements Listener {
@@ -23,7 +22,7 @@ public class GetEntityDamaged implements Listener {
         if (damager instanceof Player) {
             if (((Player) damager).isFlying()) {
                 if (!damager.hasPermission("fly.damage")) {
-                    damager.sendMessage(Prefix + " " + ChatColor.RED +NoPermission);
+                    damager.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                     e.setCancelled(true);
                 }
             }
