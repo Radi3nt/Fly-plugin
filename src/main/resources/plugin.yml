@@ -1,5 +1,5 @@
 name: FlyPlugin
-version: 1.1.0
+version: 1.1.1
 main: fr.radi3nt.fly.MainFly
 api-version: 1.13
 prefix: Fly
@@ -10,14 +10,17 @@ commands:
     description: Allow to fly for youreself or another player
     usage: /fly [player]
   flyspeed:
-    description: Allow to chage fly speed for youreself or another player
+    description: Change the fly speed of someone
     usage: /flyspeed <1-9> [player]
+    aliases: fs
   flyreload:
     description: Simply reload the fly-plugin config
     usage: /flyreload
+    aliases: fr
   tempfly:
     description: Temp-fly someone
     usage: /tempfly [seconds] [player]
+    aliases: tf
   flyers:
-    description: List of the flyers
+    description: Give you the list of the flyers
     usage: /flyers

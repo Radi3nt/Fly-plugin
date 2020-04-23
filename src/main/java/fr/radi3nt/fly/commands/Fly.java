@@ -44,7 +44,7 @@ public class Fly implements CommandExecutor {
                         TargetFly(target, player);
 
                     } else {
-                        player.sendMessage(Prefix + ChatColor.RED + InvalidPlayer);
+                        player.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                         player.sendMessage(ChatColor.RED + "/fly [joueur]");
                     }
                 } else {
@@ -56,7 +56,38 @@ public class Fly implements CommandExecutor {
             }
 
         } else {
-            sender.sendMessage("This command must be run by a player !");
+            if (!(args.length == 0)) {
+                Player target = Bukkit.getPlayerExact(args[0]);
+                if (target instanceof Player) {
+                    if (!target.getAllowFlight()) {
+                        FlyMethod(target, true);
+                        sender.sendMessage(Prefix + " " + FlySomeonePlayer + " on for " + target.getName());
+                        if (TargetSendMessage) {
+                            if (!PlayerNameReval) {
+                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " on");
+                            } else {
+                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " on by the console");
+                            }
+                        }
+                    } else {
+                        FlyMethod(target, false);
+                        sender.sendMessage(Prefix + " " + FlySomeonePlayer + " off for " + target.getName());
+                        if (TargetSendMessage) {
+                            if (!PlayerNameReval) {
+                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " off");
+                            } else {
+                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " off by the console" );
+                            }
+                        }
+                    }
+                } else {
+                    sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
+                    sender.sendMessage(ChatColor.RED + "/fly <joueur>");
+                }
+            } else {
+                sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
+                sender.sendMessage(ChatColor.RED + "/fly <joueur>");
+            }
         }
         return true;
     }

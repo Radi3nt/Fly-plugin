@@ -24,6 +24,7 @@ public class Tempfly implements CommandExecutor {
 
     String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
     String WrongArgs = plugin.getConfig().getString("wrong-args");
+    String NoArgs = plugin.getConfig().getString("no-args");
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
     String NoPermission = plugin.getConfig().getString("no-permission");
 
@@ -36,9 +37,72 @@ public class Tempfly implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            System.out.println("Not availaible yet");
-            return false;
-        }
+            if (args.length < 1) {
+                sender.sendMessage(Prefix + " " + NoArgs);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                boolean found = false;
+                for (char c : args[0].toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        sb.append(c);
+                        found = true;
+                    } else if (found) {
+                        // If we already found a digit before and this char is not a digit, stop looping
+                        break;
+                    }
+                }
+
+                if (sb.toString().isEmpty()) {
+                    sender.sendMessage(ChatColor.RED + WrongArgs);
+                    return false;
+                }
+                if (!(args.length == 1)) {
+                    Player target = Bukkit.getPlayerExact(args[1]);
+                    if (target instanceof Player) {
+                        time.put(target.getName(), Integer.parseInt((sb.toString())));
+                        if (time.get(target.getName()) > 0 && time.get(target.getName()) < 86400) {
+                            flyers.remove(target);
+                            flyers.remove(target);
+                            FlyMethod(target, true);
+                            timer.put(target.getName(), System.currentTimeMillis());
+                            if (time.get(target.getName()) >= 3600) {
+                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                if (TargetMessage) {
+                                    if (PlayerNameReveal) {
+                                        target.sendMessage(Prefix + " The console " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                    } else {
+                                        target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                    }
+                                }
+                            } else if (time.get(target.getName()) >= 60) {
+                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                if (TargetMessage) {
+                                    if (PlayerNameReveal) {
+                                        target.sendMessage(Prefix + " The console " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                    } else {
+                                        target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                    }
+                                }
+                            } else {
+                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
+                                if (TargetMessage) {
+                                    if (PlayerNameReveal) {
+                                        target.sendMessage(Prefix + " The console " + NameReveal + " " + ChatColor.AQUA + time.get(target.getName()) + " sceonds");
+                                    } else {
+                                        target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
+                                    }
+                                }
+                            }
+                        } else {
+                            sender.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
+                        }
+
+                    } else {
+                        sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
+                    }
+                }
+            }
+        } else {
         Player player = (Player) sender;
         if (player.hasPermission("fly.tempfly")) {
             if (args.length < 1) {
@@ -46,81 +110,57 @@ public class Tempfly implements CommandExecutor {
             } else {
                 StringBuilder sb = new StringBuilder();
                 boolean found = false;
-                for(char c : args[0].toCharArray()){
-                    if(Character.isDigit(c)){
+                for (char c : args[0].toCharArray()) {
+                    if (Character.isDigit(c)) {
                         sb.append(c);
                         found = true;
-                    } else if(found){
+                    } else if (found) {
                         // If we already found a digit before and this char is not a digit, stop looping
                         break;
                     }
                 }
 
-                if(sb.toString().isEmpty()) {
+                if (sb.toString().isEmpty()) {
                     player.sendMessage(ChatColor.RED + WrongArgs);
                     return false;
                 }
-                    if (!(args.length == 1)) {
-                        if (player.hasPermission("fly.tempflyothers")) {
-                            Player target = Bukkit.getPlayerExact(args[1]);
-                            if (target instanceof Player) {
-                                time.put(target.getName(), Integer.parseInt((sb.toString())));
-                                if (time.get(target.getName()) > 0 && time.get(target.getName()) < 86400) {
-                                    flyers.remove(target);
-                                    flyers.remove(target);
-                                    FlyMethod(target, true);
-                                    timer.put(target.getName(), System.currentTimeMillis());
-                                    if (time.get(target.getName()) >= 3600) {
-                                        player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
-                                        if (TargetMessage) {
-                                            if (PlayerNameReveal) {
-                                                target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
-                                            } else {
-                                                target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
-                                            }
+                if (!(args.length == 1)) {
+                    if (player.hasPermission("fly.tempflyothers")) {
+                        Player target = Bukkit.getPlayerExact(args[1]);
+                        if (target instanceof Player) {
+                            time.put(target.getName(), Integer.parseInt((sb.toString())));
+                            if (time.get(target.getName()) > 0 && time.get(target.getName()) < 86400) {
+                                flyers.remove(target);
+                                flyers.remove(target);
+                                FlyMethod(target, true);
+                                timer.put(target.getName(), System.currentTimeMillis());
+                                if (time.get(target.getName()) >= 3600) {
+                                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                    if (TargetMessage) {
+                                        if (PlayerNameReveal) {
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
+                                        } else {
+                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " hours");
                                         }
-                                    } else if (time.get(target.getName()) >= 60) {
-                                        player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
-                                        if (TargetMessage) {
-                                            if (PlayerNameReveal) {
-                                                target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
-                                            } else {
-                                                target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
-                                            }
-                                        }
-                                    } else {
-                                        player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
-                                        if (TargetMessage) {
-                                            if (PlayerNameReveal) {
-                                                target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + time.get(target.getName()) + " sceonds");
-                                            } else {
-                                                target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
-                                            }
+                                    }
+                                } else if (time.get(target.getName()) >= 60) {
+                                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                    if (TargetMessage) {
+                                        if (PlayerNameReveal) {
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
+                                        } else {
+                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " minutes");
                                         }
                                     }
                                 } else {
-                                    player.sendMessage(Prefix + ChatColor.RED + " " +  WrongArgs);
-                                }
-
-                            } else {
-                                player.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
-                            }
-                        } else {
-                            player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
-                        }
-                    } else {
-                        if (player instanceof Player) {
-                            time.put(player.getName(), Integer.parseInt((sb.toString())));
-                            if (time.get(player.getName()) > 0 && time.get(player.getName()) < 86400) {
-                                flyers.remove(player.getName());
-                                FlyMethod(player, true);
-                                timer.put(player.getName(), System.currentTimeMillis());
-                                if (time.get(player.getName()) >= 3600) {
-                                    player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 3600) + " hours");
-                                } else if (time.get(player.getName()) >= 60) {
-                                    player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 60) + " minutes");
-                                } else {
-                                    player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(player.getName()) + " seconds");
+                                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
+                                    if (TargetMessage) {
+                                        if (PlayerNameReveal) {
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + time.get(target.getName()) + " sceonds");
+                                        } else {
+                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(target.getName()) + " seconds");
+                                        }
+                                    }
                                 }
                             } else {
                                 player.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
@@ -129,7 +169,32 @@ public class Tempfly implements CommandExecutor {
                         } else {
                             player.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                         }
+                    } else {
+                        player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
                     }
+                } else {
+                    if (player instanceof Player) {
+                        time.put(player.getName(), Integer.parseInt((sb.toString())));
+                        if (time.get(player.getName()) > 0 && time.get(player.getName()) < 86400) {
+                            flyers.remove(player.getName());
+                            FlyMethod(player, true);
+                            timer.put(player.getName(), System.currentTimeMillis());
+                            if (time.get(player.getName()) >= 3600) {
+                                player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 3600) + " hours");
+                            } else if (time.get(player.getName()) >= 60) {
+                                player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 60) + " minutes");
+                            } else {
+                                player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(player.getName()) + " seconds");
+                            }
+                        } else {
+                            player.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
+                        }
+
+                    } else {
+                        player.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
+                    }
+                }
+            }
             }
         }
         return true;

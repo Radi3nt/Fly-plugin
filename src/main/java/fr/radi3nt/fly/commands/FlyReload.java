@@ -27,14 +27,14 @@ public class FlyReload implements CommandExecutor {
 
                 plugin.reloadConfig();
                 player.sendMessage(Prefix + " " + ReloadMessage);
-                System.out.println(Prefix + " " + ReloadMessage);
+                sender.sendMessage(Prefix + " " + ReloadMessage);
                 return true;
             } else {
                 player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
             }
         } else {
             plugin.reloadConfig();
-            System.out.println(Prefix + " " + ReloadMessage);
+            sender.sendMessage(Prefix + " " + ReloadMessage);
         }
         return true;
     }
