@@ -28,6 +28,8 @@ public class OnGamemodeChange implements Listener {
                 flyers.remove(player.getName());
                 timer.remove(player.getName());
                 time.remove(player.getName());
+            } else if (player.getGameMode() == GameMode.CREATIVE) {
+                player.setFlying(true);
             }
         } else {
             player.setAllowFlight(false);
