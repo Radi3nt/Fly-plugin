@@ -19,11 +19,7 @@ public class PlayerFlying implements Listener {
             if (!flyers.contains(player.getName())) {
                 flyers.add(player.getName());
             }
-            if (player.hasPermission("fly.invincible")) {
-                player.setInvulnerable(true);
-            } else {
-                player.setInvulnerable(false);
-            }
+            player.setInvulnerable(player.hasPermission("fly.invincible"));
         } else {
             player.setInvulnerable(false);
             if (!player.hasPermission("fly.fly") && !flyers.contains(player.getName())) {
