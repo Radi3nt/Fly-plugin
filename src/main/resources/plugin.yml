@@ -25,3 +25,6 @@ commands:
   flyers:
     description: Give you the list of the flyers
     usage: /flyers
+  timefly:
+    description: Give you your flight time left
+    usage: /timefly [player]

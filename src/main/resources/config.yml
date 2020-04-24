@@ -30,6 +30,9 @@ temp-seconds: "seconds"
 temp-target-message: true
 temp-player-name-reveal: true
 
+#timefly
+timefly-nofly-you: "You are not temp-flying !"
+timefly-nofly-target: "This player is not tem-flying !"
 
 
 
