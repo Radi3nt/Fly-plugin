@@ -9,6 +9,7 @@ commands:
   fly:
     description: Allow to fly for youreself or another player
     usage: /fly [player]
+    aliases: f
   flyspeed:
     description: Change the fly speed of someone
     usage: /flyspeed <1-9> [player]

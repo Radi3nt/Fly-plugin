@@ -5,6 +5,7 @@ import fr.radi3nt.fly.events.*;
 import fr.radi3nt.fly.timer.checker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,11 +16,15 @@ public final class MainFly extends JavaPlugin {
 
     public ArrayList<String> flyers = Fly.flyers;
     String Prefix = ChatColor.GOLD + this.getConfig().getString("prefix") + ChatColor.RESET;
+    ConsoleCommandSender console = Bukkit.getConsoleSender();
 
     @Override
     public void onEnable() {
 
-        System.out.println("[Fly] Starting up !");
+
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Starting up !");
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Fly Plugin by " + ChatColor.AQUA + ChatColor.BOLD + "Radi3nt");
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "If you have any issues, please report it");
 
         getServer().getPluginManager().registerEvents(new GetEntityDamaged(), this);
         getServer().getPluginManager().registerEvents(new OnWorldChange(), this);
@@ -47,7 +52,7 @@ public final class MainFly extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        System.out.println("Disabling ...");
+        console.sendMessage( ChatColor.GOLD + "[Fly] " + ChatColor.DARK_RED + "Disabling ...");
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (int i = 0; i < list.size(); i++){
             if (list.get(i).hasPermission("fly.admin")) {

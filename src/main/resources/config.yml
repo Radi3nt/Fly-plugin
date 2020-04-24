@@ -38,3 +38,6 @@ no-args: "This command require an argument"
 wrong-args: "Wrong argument. See the command usage"
 no-permission: "You don't have the permission to use this command !"
 reload-message: "Configuration reloaded"
+
+#DON'T CHANGE IT !
+version: 1.1.1
