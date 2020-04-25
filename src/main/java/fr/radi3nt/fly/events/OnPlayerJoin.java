@@ -3,7 +3,6 @@ package fr.radi3nt.fly.events;
 import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.Tempfly;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +11,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class OnPlayerJoin implements Listener {
@@ -41,17 +39,12 @@ public class OnPlayerJoin implements Listener {
         }
         flyers.remove(player.getName());
         player.setInvulnerable(false);
-
-        List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
-        for (int i = 0; i < list.size(); i++){
-            if (list.get(i).hasPermission("fly.admin")) {
-                list.get(i).sendMessage(Prefix + ChatColor.BLUE + " ------------------------");
-                list.get(i).sendMessage(Prefix + ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD +"Radi3nt" + ChatColor.AQUA +"    |");
-                list.get(i).sendMessage(Prefix + ChatColor.AQUA + " |         Version: " + version + ChatColor.AQUA + "         |");
-                list.get(i).sendMessage(Prefix + ChatColor.BLUE + " ------------------------");
+            if (player.hasPermission("fly.admin")) {
+                player.sendMessage(Prefix + ChatColor.BLUE + " ------------------------");
+                player.sendMessage(Prefix + ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD +"Radi3nt" + ChatColor.AQUA +"    |");
+                player.sendMessage(Prefix + ChatColor.AQUA + " |         Version: " + ChatColor.BOLD +version + ChatColor.AQUA + "         |");
+                player.sendMessage(Prefix + ChatColor.BLUE + " ------------------------");
             }
         }
 
     }
-
-}

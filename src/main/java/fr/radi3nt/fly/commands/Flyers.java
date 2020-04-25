@@ -23,6 +23,7 @@ public class Flyers implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         int shift;
         if (sender instanceof Player) {
+            Player player = (Player) sender;
             if (sender.hasPermission("fly.flyers")) {
                 if (flyers.size() == 0) {
                     sender.sendMessage(Prefix + " No one has the permission to fly !");
