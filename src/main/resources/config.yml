@@ -45,4 +45,4 @@ reload-message: "Configuration reloaded"
 message: true
 
 #DON'T CHANGE IT !
-version: 1.1.2
+version: 1.1.3
