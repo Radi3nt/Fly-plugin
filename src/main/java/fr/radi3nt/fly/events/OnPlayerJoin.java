@@ -22,7 +22,9 @@ public class OnPlayerJoin implements Listener {
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
     String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
-    String version = ChatColor.GREEN + plugin.getConfig().getString("version") + ChatColor.RESET;
+    String version = plugin.getConfig().getString("version");
+    Boolean Message = plugin.getConfig().getBoolean("message");
+
 
     @EventHandler
     public void OnPlayerJoin(PlayerJoinEvent e){
@@ -40,10 +42,12 @@ public class OnPlayerJoin implements Listener {
         flyers.remove(player.getName());
         player.setInvulnerable(false);
             if (player.hasPermission("fly.admin")) {
-                player.sendMessage(Prefix + ChatColor.BLUE + " ------------------------");
-                player.sendMessage(Prefix + ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD +"Radi3nt" + ChatColor.AQUA +"    |");
-                player.sendMessage(Prefix + ChatColor.AQUA + " |         Version: " + ChatColor.BOLD +version + ChatColor.AQUA + "         |");
-                player.sendMessage(Prefix + ChatColor.BLUE + " ------------------------");
+                if (Message) {
+                    player.sendMessage(Prefix + ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
+                    player.sendMessage(Prefix + ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD + "Radi3nt" + ChatColor.AQUA + "    |");
+                    player.sendMessage(Prefix + ChatColor.AQUA + " |         Version: " + ChatColor.GREEN + ChatColor.BOLD + version + ChatColor.AQUA + "        |");
+                    player.sendMessage(Prefix + ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
+                }
             }
         }
 

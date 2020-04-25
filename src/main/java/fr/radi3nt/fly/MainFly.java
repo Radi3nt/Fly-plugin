@@ -5,6 +5,7 @@ import fr.radi3nt.fly.events.*;
 import fr.radi3nt.fly.timer.checker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,6 +48,7 @@ public final class MainFly extends JavaPlugin {
         checker task = new checker();
         task.runTaskTimer(this, 0, 1);
 
+
         getConfig().options().copyDefaults();
         saveDefaultConfig();
     }
@@ -60,6 +62,8 @@ public final class MainFly extends JavaPlugin {
                 list.get(i).sendMessage(Prefix + ChatColor.RED + " Reloading is not very compatible with the plugin ...");
                 list.get(i).sendMessage(Prefix + ChatColor.RED + " We highly recommend to restart your server,");
                 list.get(i).sendMessage(Prefix + ChatColor.RED + " If you don't want to have some hackers flying around");
+
+                list.get(i).playSound(list.get(i).getLocation(), "minecraft:block.note_block.bit", SoundCategory.AMBIENT, 100, 1);
             }
         }
         flyers.clear();

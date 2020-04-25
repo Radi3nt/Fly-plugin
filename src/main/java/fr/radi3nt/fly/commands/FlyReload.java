@@ -27,15 +27,15 @@ public class FlyReload implements CommandExecutor {
 
         if (sender instanceof Player) {
 
-            Player player = (Player) sender;
-            if (player.hasPermission("fly.reload")) {
+            Player player_c = (Player) sender;
+            if (player_c.hasPermission("fly.reload")) {
 
                 plugin.reloadConfig();
                 List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
                 for (int i = 0; i < list.size(); i++){
                     if (list.get(i).hasPermission("fly.admin")) {
-                        list.get(i).sendMessage(Prefix + " " + ReloadMessage);
-                        Player op = list.get(i);
+                        list.get(i).sendMessage(Prefix + " " + ChatColor.RED + ReloadMessage);
+                        /*/Player op = list.get(i);
                         Bukkit.getScheduler().runTaskLater(plugin, () -> {
                             op.playSound(player.getLocation(), "minecraft:block.note_block.pling", SoundCategory.AMBIENT, 100, (float) 1);
                         }, 5L);
@@ -44,17 +44,52 @@ public class FlyReload implements CommandExecutor {
                         }, 8L);
                         Bukkit.getScheduler().runTaskLater(plugin, () -> {
                             op.playSound(player.getLocation(), "minecraft:block.note_block.pling", SoundCategory.AMBIENT, 100, (float) 2);
-                        }, 11L);
+                        }, 11L);/*/
+                        Player player = list.get(i);
+                        player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 0.8);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 0.8);
+                        }, 4L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 0.67);
+                        }, 8L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 0.67);
+                        }, 12L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 0.8);
+                        }, 16L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 0.9);
+                        }, 20L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 1);
+                        }, 24L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 1.2);
+                        }, 28L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 1.2);
+                        }, 32L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 1.2);
+                        }, 36L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 1);
+                        }, 40L);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            player.playSound(player.getLocation(), "minecraft:block.note_block.harp", SoundCategory.AMBIENT, 100, (float) 1.6);
+                        }, 44L);
                     }
 
                 }
                 return true;
             } else {
-                player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                player_c.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
             }
         } else {
             plugin.reloadConfig();
-            sender.sendMessage(Prefix + " " + ReloadMessage);
+            sender.sendMessage(Prefix + " " + ChatColor.RED + ReloadMessage);
         }
         return true;
     }
