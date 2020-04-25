@@ -13,7 +13,7 @@
 
 # About
 
-This is a fly plugin for minecraft 1.13 < 1.15.2. It allows to fly in survival gamemode.
+This is a fly plugin for minecraft 1.12 < 1.15.2. It allows to fly in survival gamemode.
 All messages are fully configurable, you can manage to toggle you flight ability or just allow the flight ability for the others.
 You can also set your flight speed or set it for the other players.
 
@@ -22,10 +22,10 @@ You can also set your flight speed or set it for the other players.
 
 ## Installation classique
 
-Compatibility: 1.13 - 1.15.2  
+Compatibility: 1.12 - 1.15.2  
 To install the plugin, please follow the following steps:
 
-- Download the 1.13, 1.14, 1.15 version of Spigot and launch the server once.
+- Download the 1.12, 1.13, 1.14, 1.15 version of Spigot and launch the server once.
 > Tip : You must accept the conditions of use of Mojang by modifying the file `eula.txt`
 - In the server plugins folder, insert [Fly-plugin.jar](https://github.com/Radi3nt/Fly-plugin/releases).
 - Restart your server then change what you want in the config.
@@ -38,11 +38,14 @@ To install the plugin, please follow the following steps:
 
 ### Update 1.1.0 is a big update ! You need to delete the plugin folder and relaunch your server,and it will recreate on automatically.
 
+### Update 1.1.1 is more stable, correct a lot of bugs, add console command (with colors) and 1.12 compatibility
+
 ## Commands
 
   - `fly [player]` - Allow to fly for yourself or another player
   - `flyspeed <1-9> [player]` - Allow to chage fly speed for yourself or another player
   - `tempfly <time in seconds>[ player]` - Allow to fly for yourself or another player **temporally**
+  - `timefly [player]` - Get the time fly left
   - `flyers` - List all the player that can fly
   - `flyreload` - Simply reload the fly-plugin config
   
@@ -52,6 +55,8 @@ To install the plugin, please follow the following steps:
   - `fly.others` - Allow to toggle the flight ability, or the flight speed of the other player (no permission needed for the targeted player)
   - `fly.tempfly` - Allow you to tempfly yourself
   - `fly.tempflyothers` - Allow you to tempfly other persons
+  - `fly.timefly` - Get your time fly
+  - `fly.timeflyothers` - Get the time fly of other players
   - `fly.flyers` - Allow you to get the list of the flyers
   - `fly.speed` or `fly.speed.[1-9]` - Allow to change your fly speed or that of the other players (no permission needed for the targeted player)
   - `fly.invincible` - Allow to be invincible when flying
@@ -69,7 +74,7 @@ To install the plugin, please follow the following steps:
 <details>
   <summary>Config</summary>
   
-  ``` json
+  ``` yaml
 prefix: "Fly >"
 
 # fly command
@@ -101,12 +106,20 @@ temp-seconds: "seconds"
 temp-target-message: true
 temp-player-name-reveal: true
 
+#timefly
+timefly-nofly-you: "You are not temp-flying !"
+timefly-nofly-target: "This player is not tem-flying !"
+
+
 
 invalid-player: "This player is invalid !"
 no-args: "This command require an argument"
 wrong-args: "Wrong argument. See the command usage"
 no-permission: "You don't have the permission to use this command !"
 reload-message: "Configuration reloaded"
+
+#DON'T CHANGE IT !
+version: 1.1.2
   ```
   
 </details>
@@ -119,7 +132,7 @@ reload-message: "Configuration reloaded"
 
 #### Plugin
 
-- [ ] Pass the 1.1.0 version of the plugin
+- [X] Pass the 1.1.0 version of the plugin
 - [X] Adding command `tempfly`
 - [ ] No big problem in it
 - [X] Add command `flyers`
