@@ -20,7 +20,7 @@ public class checker extends BukkitRunnable {
     public Map<String, Integer> time = Tempfly.time;
     ArrayList<String> flyers = Fly.flyers;
     Plugin plugin = MainFly.getPlugin(MainFly.class);
-    String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
+    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
 
     String TempLeft = plugin.getConfig().getString("temp-left");

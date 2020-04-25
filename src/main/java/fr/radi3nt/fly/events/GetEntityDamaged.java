@@ -14,7 +14,7 @@ public class GetEntityDamaged implements Listener {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
+    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
     String NoPermission = plugin.getConfig().getString("no-permission");
 
     @EventHandler

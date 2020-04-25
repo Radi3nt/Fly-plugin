@@ -21,7 +21,7 @@ public class FlyReload implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
 
-        String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
         String NoPermission = plugin.getConfig().getString("no-permission");
         String ReloadMessage = plugin.getConfig().getString("reload-message");
 

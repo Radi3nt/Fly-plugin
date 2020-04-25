@@ -24,7 +24,7 @@ public class Fly implements CommandExecutor {
     Boolean PlayerNameReval = plugin.getConfig().getBoolean("fly-player-name-reveal");
     Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
 
-    String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
+    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

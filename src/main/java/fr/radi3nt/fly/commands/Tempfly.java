@@ -23,7 +23,7 @@ public class Tempfly implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
+    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
     String WrongArgs = plugin.getConfig().getString("wrong-args");
     String NoArgs = plugin.getConfig().getString("no-args");
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");

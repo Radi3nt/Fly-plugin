@@ -25,7 +25,7 @@ public class FlySpeed implements CommandExecutor {
     Boolean SpeedPlayerNameReval = plugin.getConfig().getBoolean("speed-player-name-reveal");
 
 
-    String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
+    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
 
 

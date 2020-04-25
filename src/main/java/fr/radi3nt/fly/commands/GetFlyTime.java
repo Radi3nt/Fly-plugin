@@ -30,7 +30,7 @@ public class GetFlyTime implements CommandExecutor {
     String TempSecond = plugin.getConfig().getString("temp-seconds");
     String TempHours = plugin.getConfig().getString("temp-hours");
 
-    String Prefix = ChatColor.GOLD + plugin.getConfig().getString("prefix") + ChatColor.RESET;
+    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
