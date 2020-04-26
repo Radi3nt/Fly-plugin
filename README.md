@@ -40,6 +40,10 @@ To install the plugin, please follow the following steps:
 
 ### Update 1.1.1 is more stable, correct a lot of bugs, add console command (with colors) and 1.12 compatibility
 
+### Update 1.1.4 is the last and the more stable, with a lot of customisability, and sounds. Also added colors code fore prefix
+#### COMING SOON: All config message with colors code.
+
+
 ## Commands
 
   - `fly [player]` - Allow to fly for yourself or another player
@@ -106,6 +110,12 @@ temp-seconds: "seconds"
 temp-target-message: true
 temp-player-name-reveal: true
 
+temp-sound-high: BLOCK_NOTE_BLOCK_HAT
+temp-sound-medium: BLOCK_NOTE_BLOCK_HAT
+temp-sound-low: BLOCK_NOTE_BLOCK_HARP
+temp-sound-last: BLOCK_NOTE_BLOCK_HARP
+temp-sound-no: BLOCK_BELL_USE
+
 #timefly
 timefly-nofly-you: "You are not temp-flying !"
 timefly-nofly-target: "This player is not tem-flying !"
@@ -116,10 +126,20 @@ invalid-player: "This player is invalid !"
 no-args: "This command require an argument"
 wrong-args: "Wrong argument. See the command usage"
 no-permission: "You don't have the permission to use this command !"
+no-damage: "You can't hit entities while flying !"
 reload-message: "Configuration reloaded"
 
+
+cooldown-message: "Command on cooldown for"
+
+#I recommend to let this like that
+cooldown-time: 5
+
+reload-melody: true
+credits-message: true
+
 #DON'T CHANGE IT !
-version: 1.1.2
+version: 1.1.4
   ```
   
 </details>
@@ -134,8 +154,9 @@ version: 1.1.2
 
 - [X] Pass the 1.1.0 version of the plugin
 - [X] Adding command `tempfly`
-- [ ] No big problem in it
 - [X] Add command `flyers`
+- [ ] Add colors code for all config messages
+- [ ] No big problem in it
 - [ ] Have some contributors
 - [ ] Used on a known server
 
