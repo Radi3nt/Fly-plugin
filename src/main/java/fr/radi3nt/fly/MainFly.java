@@ -16,7 +16,7 @@ import java.util.List;
 public final class MainFly extends JavaPlugin {
 
     public ArrayList<String> flyers = Fly.flyers;
-    String Prefix = ChatColor.GOLD + this.getConfig().getString("prefix") + ChatColor.RESET;
+    String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
     ConsoleCommandSender console = Bukkit.getConsoleSender();
 
     @Override
@@ -59,13 +59,14 @@ public final class MainFly extends JavaPlugin {
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (int i = 0; i < list.size(); i++){
             if (list.get(i).hasPermission("fly.admin")) {
-                list.get(i).sendMessage(Prefix + ChatColor.RED + " Reloading is not very compatible with the plugin ...");
-                list.get(i).sendMessage(Prefix + ChatColor.RED + " We highly recommend to restart your server,");
-                list.get(i).sendMessage(Prefix + ChatColor.RED + " If you don't want to have some hackers flying around");
+                list.get(i).sendMessage(Prefix + ChatColor.RED + " Reloading is not very compatible with the plugin ... \n We highly recommend to restart your server, \n if you don't want to have some hackers flying around");
 
                 list.get(i).playSound(list.get(i).getLocation(), "minecraft:block.note_block.bit", SoundCategory.AMBIENT, 100, 1);
             }
         }
         flyers.clear();
+    }
+    public static void reload() {
+        MainFly.getPlugin(MainFly.class).reloadConfig();
     }
 }

@@ -180,15 +180,19 @@ public class Tempfly implements CommandExecutor {
                 } else {
                     time.put(player.getName(), Integer.parseInt((sb.toString())));
                     if (time.get(player.getName()) > 0 && time.get(player.getName()) < 86400) {
-                        flyers.remove(player.getName());
-                        FlyMethod(player, true);
-                        timer.put(player.getName(), System.currentTimeMillis());
-                        if (time.get(player.getName()) >= 3600) {
-                            player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 3600) + " hours");
-                        } else if (time.get(player.getName()) >= 60) {
-                            player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 60) + " minutes");
+                        if (player.hasPermission("fly.tempfly." + time.get(player.getName()))) {
+                            flyers.remove(player.getName());
+                            FlyMethod(player, true);
+                            timer.put(player.getName(), System.currentTimeMillis());
+                            if (time.get(player.getName()) >= 3600) {
+                                player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 3600) + " hours");
+                            } else if (time.get(player.getName()) >= 60) {
+                                player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(player.getName()) / 60) + " minutes");
+                            } else {
+                                player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(player.getName()) + " seconds");
+                            }
                         } else {
-                            player.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(player.getName()) + " seconds");
+                            player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
                         }
                     } else {
                         player.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
