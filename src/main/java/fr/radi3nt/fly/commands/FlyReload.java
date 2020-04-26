@@ -13,8 +13,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.radi3nt.fly.MainFly.reload;
-
 public class FlyReload implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
@@ -37,7 +35,7 @@ public class FlyReload implements CommandExecutor {
 
             Player player_c = (Player) sender;
             if (player_c.hasPermission("fly.reload")) {
-                reload();
+                plugin.reloadConfig();
                 int secondes = CooldownTime;
                 long timeleft = ((timer / 1000) + secondes) - (System.currentTimeMillis() / 1000);
                 if (timeleft <= 0) {

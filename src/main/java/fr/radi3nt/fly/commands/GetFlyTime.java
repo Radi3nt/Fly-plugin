@@ -84,7 +84,7 @@ public class GetFlyTime implements CommandExecutor {
                     player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                 }
             } else {
-                sender.sendMessage(Prefix + " " + ChatColor.RED + NoArgs);
+                sender.sendMessage(Prefix + " " + ChatColor.RED + InvalidPlayer);
             }
         }
         return true;
