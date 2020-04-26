@@ -1,4 +1,4 @@
-prefix: "&6Fly >"
+prefix: "&6&lFly >"
 
 # fly command
 fly-yourself: "You toggled your fly"
@@ -30,6 +30,12 @@ temp-seconds: "seconds"
 temp-target-message: true
 temp-player-name-reveal: true
 
+temp-sound-high: BLOCK_NOTE_BLOCK_HAT
+temp-sound-medium: BLOCK_NOTE_BLOCK_HAT
+temp-sound-low: BLOCK_NOTE_BLOCK_HARP
+temp-sound-last: BLOCK_NOTE_BLOCK_HARP
+temp-sound-no: BLOCK_BELL_USE
+
 #timefly
 timefly-nofly-you: "You are not temp-flying !"
 timefly-nofly-target: "This player is not tem-flying !"
@@ -40,8 +46,15 @@ invalid-player: "This player is invalid !"
 no-args: "This command require an argument"
 wrong-args: "Wrong argument. See the command usage"
 no-permission: "You don't have the permission to use this command !"
+no-damage: "You can't hit entities while flying !"
 reload-message: "Configuration reloaded"
 
+
+cooldown-message: "Command on cooldown for"
+#I recommend to let this like that
+cooldown-time: 5
+
+reload-melody: true
 credits-message: true
 
 #DON'T CHANGE IT !
