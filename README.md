@@ -40,7 +40,7 @@ To install the plugin, please follow the following steps:
 
 ### Update 1.1.1 is more stable, correct a lot of bugs, add console command (with colors) and 1.12 compatibility
 
-### Update 1.1.4 is the last and the more stable, with a lot of customisability, and sounds. Also added colors code fore prefix
+### Update 1.1.4 is the last and the most stable, with a lot of customisability, and sounds. Also added colors code fore prefix
 #### COMING SOON: All config message with colors code.
 
 
