@@ -79,7 +79,7 @@ To install the plugin, please follow the following steps:
   <summary>Config</summary>
   
   ``` yaml
-prefix: "Fly >"
+prefix: "&6&lFly >"
 
 # fly command
 fly-youreself: "You toggled your fly" - message when tou toggle your own fly
