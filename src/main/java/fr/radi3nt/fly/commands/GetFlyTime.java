@@ -41,7 +41,9 @@ public class GetFlyTime implements CommandExecutor {
                     if (timer.containsKey(target.getName())) {
                         int secondes = time.get(target.getName());
                         long timeleft = ((timer.get(target.getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
-                        sender.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond + " "  + TempLeft);
+                        int heures = (int) (timeleft / 3600);
+                        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
+                        sender.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                     } else {
                         sender.sendMessage(Prefix + " " + ChatColor.RED + NoFlyHe);
                     }
@@ -60,7 +62,9 @@ public class GetFlyTime implements CommandExecutor {
                     if (timer.containsKey(sender.getName())) {
                         int secondes = time.get(player.getName());
                         long timeleft = ((timer.get(player.getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
-                        player.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond + " " + TempLeft);
+                        int heures = (int) (timeleft / 3600);
+                        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
+                        player.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                     } else {
                         player.sendMessage(Prefix + " " + ChatColor.RED + NoFlyYou);
                     }

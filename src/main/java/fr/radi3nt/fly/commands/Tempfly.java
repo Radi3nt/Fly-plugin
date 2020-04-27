@@ -70,12 +70,14 @@ public class Tempfly implements CommandExecutor {
                             FlyMethod(target, true);
                             timer.put(target.getName(), System.currentTimeMillis());
                                 int timeleft = time.get(target.getName());
-                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                                int heures = (timeleft / 3600);
+                                int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
+                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                                 if (TargetMessage) {
                                     if (PlayerNameReveal) {
-                                        target.sendMessage(Prefix + " The console " + NameReveal + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                                        target.sendMessage(Prefix + " The console " + NameReveal + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                                     } else {
-                                        target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                                        target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                                     }
                                 }
                         } else {
@@ -121,12 +123,14 @@ public class Tempfly implements CommandExecutor {
                                 FlyMethod(target, true);
                                 timer.put(target.getName(), System.currentTimeMillis());
                                 int timeleft = time.get(target.getName());
-                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                                int heures = (timeleft / 3600);
+                                int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
+                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                                 if (TargetMessage) {
                                         if (PlayerNameReveal) {
-                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                                         } else {
-                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                                         }
                                     }
                             } else {
@@ -147,7 +151,9 @@ public class Tempfly implements CommandExecutor {
                             FlyMethod(player, true);
                             timer.put(player.getName(), System.currentTimeMillis());
                             int timeleft = time.get(player.getName());
-                            sender.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                            int heures = (timeleft / 3600);
+                            int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
+                            sender.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                         } else {
                             player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
                         }

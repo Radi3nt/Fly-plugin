@@ -45,6 +45,8 @@ public class OnFlyGuiClick implements Listener {
     String TempSecond = plugin.getConfig().getString("temp-seconds");
     String TempHours = plugin.getConfig().getString("temp-hours");
 
+    String NoPermission = plugin.getConfig().getString("no-permission");
+
 
     String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
@@ -66,22 +68,67 @@ public class OnFlyGuiClick implements Listener {
             Player target = players.get(player);
             switch (e.getCurrentItem().getType()) {
                 case RED_WOOL:
-                    player.closeInventory();
-                    TargetFly(target, player, false);
-                    players.remove(player);
-                    break;
+                    if (target == player) {
+                        if (player.hasPermission("fly.fly")) {
+                            player.closeInventory();
+                            TargetFly(target, player, false);
+                            players.remove(player);
+                            break;
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                        }
+                    } else {
+                        if (player.hasPermission("fly.others")) {
+                            player.closeInventory();
+                            TargetFly(target, player, false);
+                            players.remove(player);
+                            break;
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                        }
+                    }
 
                 case LIME_WOOL:
-                    player.closeInventory();
-                    TargetFly(target, player, true);
-                    players.remove(player);
-                    break;
+                    if (target == player) {
+                        if (player.hasPermission("fly.fly")) {
+                            player.closeInventory();
+                            TargetFly(target, player, true);
+                            players.remove(player);
+                            break;
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                        }
+                    } else {
+                        if (player.hasPermission("fly.others")) {
+                            player.closeInventory();
+                            TargetFly(target, player, true);
+                            players.remove(player);
+                            break;
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                        }
+                    }
 
                 case GOLD_BLOCK:
-                    player.closeInventory();
-                    players.remove(player);
-                    TempflyMethod(player, target);
-                    break;
+                    if (target == player) {
+                        if (player.hasPermission("fly.tempfly")) {
+                            player.closeInventory();
+                            players.remove(player);
+                            TempflyMethod(player, target);
+                            break;
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                        }
+                    } else {
+                        if (player.hasPermission("fly.tempflyothers")) {
+                            player.closeInventory();
+                            players.remove(player);
+                            TempflyMethod(player, target);
+                            break;
+                        }  else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                        }
+                    }
             }
 
             e.setCancelled(true);
@@ -145,6 +192,7 @@ public class OnFlyGuiClick implements Listener {
                                 MinuteI = 0;
                                 Minutes.remove(player);
                                 Minutes.put(player, MinuteI);
+
                             } else {
                                 MinuteI = Minutes.get(player);
                                 MinuteI--;
@@ -194,12 +242,14 @@ public class OnFlyGuiClick implements Listener {
                 FlyMethod(target, true);
                 Tempfly.time.put(target.getName(), TimeLeft);
                 Tempfly.timer.put(target.getName(), System.currentTimeMillis());
-                player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (((TimeLeft / 3600) *3600) + (TimeLeft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
-                    if (TargetMessage) {
+                int heures = (TimeLeft / 3600);
+                int minutes = ((TimeLeft - (TimeLeft / 3600) *3600) / 60);
+                player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                if (TargetMessage) {
                         if (PlayerNameReveal) {
-                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " "+ TempHours);
+                            player.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                         } else {
-                            target.sendMessage(Prefix + " " + TargetMe + " " + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (((TimeLeft / 3600) *3600) + (TimeLeft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
+                            player.sendMessage(Prefix + " " + TargetMe + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                         }
                     }
 
@@ -207,9 +257,8 @@ public class OnFlyGuiClick implements Listener {
                 player.closeInventory();
 
             }
-            }
-
             e.setCancelled(true);
+            }
         }
 
     public void TargetFly(Player target, Player player, Boolean state) {

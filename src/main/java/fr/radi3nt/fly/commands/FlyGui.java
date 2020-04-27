@@ -37,7 +37,7 @@ public class FlyGui implements CommandExecutor {
                 Player target = Bukkit.getPlayerExact(args[0]);
                 if (target instanceof Player) {
                     Player player = (Player) sender;
-                    if (player.hasPermission("fly.gui.*")) {
+                    if (player.hasPermission("fly.gui")) {
                         Inventory flygui = Bukkit.createInventory(player, 36, ChatColor.GOLD + "           === Fly GUI ===");
 
                         ItemStack on = new ItemStack(Material.LIME_WOOL);
