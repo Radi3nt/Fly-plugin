@@ -189,7 +189,6 @@ public class OnFlyGuiClick implements Listener {
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Continue")) {
 
                 int TimeLeft = ((Hours.get(player)*3600) + (Minutes.get(player)*60) + (Secondes.get(player)));
-                System.out.println(TimeLeft);
                 flyers.remove(target.getName());
                 flyers.remove(target.getName());
                 FlyMethod(target, true);
