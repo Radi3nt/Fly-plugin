@@ -24,6 +24,7 @@ public class FlyGui implements CommandExecutor {
     static public HashMap<Player, Player> players = new HashMap<>();
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
     String NoPermission = plugin.getConfig().getString("no-permission");
+    String NoArgs = plugin.getConfig().getString("no-args");
 
 
     String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
@@ -100,7 +101,7 @@ public class FlyGui implements CommandExecutor {
                     sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                 }
             } else {
-                sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
+                sender.sendMessage(Prefix + ChatColor.RED + " " + NoArgs);
             }
             } else {
             sender.sendMessage(Prefix + ChatColor.RED + " This command MUST be run by a player");

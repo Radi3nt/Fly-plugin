@@ -41,15 +41,7 @@ public class GetFlyTime implements CommandExecutor {
                     if (timer.containsKey(target.getName())) {
                         int secondes = time.get(target.getName());
                         long timeleft = ((timer.get(target.getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
-                        if (timeleft >= 3600) {
-                            sender.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + " " + TempLeft);
-                        }
-                        if (timeleft < 3600 && timeleft >= 60) {
-                            sender.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft / 60) + " " + ChatColor.GREEN + TempMinute + " " + TempLeft);
-                        }
-                        if (timeleft < 60 && timeleft > 0) {
-                            sender.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft) + " " + ChatColor.GREEN + TempSecond + " " + TempLeft);
-                        }
+                        sender.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond + " "  + TempLeft);
                     } else {
                         sender.sendMessage(Prefix + " " + ChatColor.RED + NoFlyHe);
                     }
@@ -68,15 +60,7 @@ public class GetFlyTime implements CommandExecutor {
                     if (timer.containsKey(sender.getName())) {
                         int secondes = time.get(player.getName());
                         long timeleft = ((timer.get(player.getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
-                        if (timeleft >= 3600) {
-                            player.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + " " + TempLeft);
-                        }
-                        if (timeleft < 3600 && timeleft >= 60) {
-                            player.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft / 60) + " " + ChatColor.GREEN + TempMinute + " " + TempLeft);
-                        }
-                        if (timeleft < 60 && timeleft > 0) {
-                            player.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft) + " " + ChatColor.GREEN + TempSecond + " " + TempLeft);
-                        }
+                        player.sendMessage(Prefix + ChatColor.AQUA + " " + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (((timeleft / 3600) *3600) + (timeleft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond + " " + TempLeft);
                     } else {
                         player.sendMessage(Prefix + " " + ChatColor.RED + NoFlyYou);
                     }

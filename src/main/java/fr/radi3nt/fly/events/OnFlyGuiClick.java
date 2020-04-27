@@ -194,34 +194,15 @@ public class OnFlyGuiClick implements Listener {
                 FlyMethod(target, true);
                 Tempfly.time.put(target.getName(), TimeLeft);
                 Tempfly.timer.put(target.getName(), System.currentTimeMillis());
-                if (time.get(target.getName()) >= 3600) {
-                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA  + (time.get(target.getName()) / 3600) + " "+ TempHours);
+                player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (((TimeLeft / 3600) *3600) + (TimeLeft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
                     if (TargetMessage) {
                         if (PlayerNameReveal) {
                             target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " "+ TempHours);
                         } else {
-                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 3600) + " "+ TempHours);
+                            target.sendMessage(Prefix + " " + TargetMe + " " + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (((TimeLeft / 3600) *3600) + (TimeLeft/ 60) * 60)) + " " + ChatColor.GREEN + TempSecond);
                         }
                     }
-                } else if (time.get(target.getName()) >= 60) {
-                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " "+ TempMinute);
-                    if (TargetMessage) {
-                        if (PlayerNameReveal) {
-                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + (time.get(target.getName()) / 60) + " "+ TempMinute);
-                        } else {
-                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (time.get(target.getName()) / 60) + " "+ TempMinute);
-                        }
-                    }
-                } else {
-                    player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + time.get(target.getName()) + " "+ TempSecond);
-                    if (TargetMessage) {
-                        if (PlayerNameReveal) {
-                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + time.get(target.getName()) + " "+ TempSecond);
-                        } else {
-                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + time.get(target.getName()) + " "+ TempSecond);
-                        }
-                    }
-                }
+
                 players.remove(player);
                 player.closeInventory();
 
