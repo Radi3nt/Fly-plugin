@@ -34,15 +34,24 @@ public final class MainFly extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnGamemodeChange(), this);
         getServer().getPluginManager().registerEvents(new PlayerRespawn(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerDisconnect(), this);
+        getServer().getPluginManager().registerEvents(new OnFlyGuiClick(), this);
 
         getCommand("fly").setExecutor(new Fly());
         getCommand("fly").setTabCompleter(new fr.radi3nt.fly.tab.Fly());
+
         getCommand("flyspeed").setExecutor(new FlySpeed());
         getCommand("flyspeed").setTabCompleter(new fr.radi3nt.fly.tab.FlySpeed());
+
         getCommand("tempfly").setExecutor(new Tempfly());
+        getCommand("tempfly").setTabCompleter(new fr.radi3nt.fly.tab.Tempfly());
+
         getCommand("timefly").setExecutor(new GetFlyTime());
         getCommand("timefly").setTabCompleter(new fr.radi3nt.fly.tab.GetFlyTime());
+
+        getCommand("flygui").setExecutor(new FlyGui());
+
         getCommand("flyers").setExecutor(new Flyers());
+
         getCommand("flyreload").setExecutor(new FlyReload());
 
         checker task = new checker();

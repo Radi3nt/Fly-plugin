@@ -28,3 +28,5 @@ commands:
   timefly:
     description: Give you your flight time left
     usage: /timefly [player]
+  flygui:
+    usage: /flygui <player>

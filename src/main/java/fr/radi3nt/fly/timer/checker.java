@@ -42,6 +42,7 @@ public class checker extends BukkitRunnable {
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (int i = 0; i < list.size(); i++) {
             if (timer.containsKey(list.get(i).getName())) {
+                System.out.println("FIND");
                 Player player = list.get(i);
                 int secondes = time.get(list.get(i).getName());
                 long timeleft = ((timer.get(list.get(i).getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);

@@ -111,7 +111,7 @@ public class Fly implements CommandExecutor {
                 if (!PlayerNameReval) {
                     target.sendMessage(Prefix + " " + FlySomeoneTarget + " on");
                 } else {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " on by " + " " + player.getName());
+                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " on by " + player.getName());
                 }
             }
         } else {
@@ -128,10 +128,10 @@ public class Fly implements CommandExecutor {
     }
 
 
-    public void FlyMethod(Player player, boolean state) {
+    public static void FlyMethod(Player player, boolean state) {
         player.setAllowFlight(state);
         if (state) {
-            flyers.add(player.getName()); // this will be useless for the next update !
+            flyers.add(player.getName());
         } else {
             flyers.remove(player.getName());
             player.setInvulnerable(false);
