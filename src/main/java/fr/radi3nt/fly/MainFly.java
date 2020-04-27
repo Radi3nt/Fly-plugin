@@ -72,6 +72,7 @@ public final class MainFly extends JavaPlugin {
 
                 list.get(i).playSound(list.get(i).getLocation(), "minecraft:block.note_block.bit", SoundCategory.AMBIENT, 100, 1);
             }
+            Fly.FlyMethod(list.get(i), false);
         }
         flyers.clear();
     }

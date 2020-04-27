@@ -29,4 +29,6 @@ commands:
     description: Give you your flight time left
     usage: /timefly [player]
   flygui:
+    description: Open you the fly GUI !
     usage: /flygui <player>
+    aliases: fgui
