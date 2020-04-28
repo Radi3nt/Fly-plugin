@@ -101,7 +101,7 @@ public class FlyGui implements CommandExecutor {
                     sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                 }
             } else {
-                sender.sendMessage(Prefix + ChatColor.RED + " " + NoArgs);
+                sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
             }
             } else {
             sender.sendMessage(Prefix + ChatColor.RED + " This command MUST be run by a player");

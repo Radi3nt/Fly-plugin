@@ -60,10 +60,10 @@ public class FlySpeed implements CommandExecutor {
                         if (args.length > 1) {
                             Player target = Bukkit.getPlayerExact(args[1]);
                             if (target instanceof Player) {
-                                target.setFlySpeed(FlySpeedf / 10);
                                 int FlySpeedI = (int) FlySpeedf;
                                 if (player.hasPermission("fly.others")) {
                                     if (player.hasPermission("fly.speed." + FlySpeedI)) {
+                                        target.setFlySpeed(FlySpeedf / 10);
                                         player.sendMessage(Prefix + " " + PlayerSomeoneMessage + " " + target.getName() + " to " + ChatColor.DARK_AQUA + FlySpeedI);
                                         if (SpeedTargetMessage) {
                                             if (SpeedPlayerNameReval) {

@@ -76,6 +76,8 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                            players.remove(player);
+                            player.closeInventory();
                         }
                     } else {
                         if (player.hasPermission("fly.others")) {
@@ -85,6 +87,8 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                            players.remove(player);
+                            player.closeInventory();
                         }
                     }
 
@@ -97,6 +101,8 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                            players.remove(player);
+                            player.closeInventory();
                         }
                     } else {
                         if (player.hasPermission("fly.others")) {
@@ -106,27 +112,31 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                            players.remove(player);
+                            player.closeInventory();
                         }
                     }
 
                 case GOLD_BLOCK:
-                    if (target == player) {
+                    if (target.getName().equalsIgnoreCase(player.getName())) {
                         if (player.hasPermission("fly.tempfly")) {
                             player.closeInventory();
-                            players.remove(player);
                             TempflyMethod(player, target);
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                            players.remove(player);
+                            player.closeInventory();
                         }
                     } else {
                         if (player.hasPermission("fly.tempflyothers")) {
                             player.closeInventory();
-                            players.remove(player);
                             TempflyMethod(player, target);
                             break;
                         }  else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                            players.remove(player);
+                            player.closeInventory();
                         }
                     }
             }
@@ -134,6 +144,7 @@ public class OnFlyGuiClick implements Listener {
             e.setCancelled(true);
         } else if (e.getView().getTitle().equalsIgnoreCase(ChatColor.GOLD + "        === Tempfly GUI ===")) {
             Player target = players.get(player);
+            players.remove(player);
             if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.GOLD + TempHours)) {
                 int HoursI;
                 if (e.getClick().isLeftClick()) {
