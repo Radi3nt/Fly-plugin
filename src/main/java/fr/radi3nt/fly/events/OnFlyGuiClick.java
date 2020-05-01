@@ -1,6 +1,7 @@
 package fr.radi3nt.fly.events;
 
 import fr.radi3nt.fly.MainFly;
+import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.FlyGui;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.Bukkit;
@@ -25,7 +26,7 @@ import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 public class OnFlyGuiClick implements Listener {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
-    public static ArrayList<String> flyers = new ArrayList<>();
+    public static ArrayList<String> flyers = Fly.flyers;
     public static Map<String, Long> timer = new HashMap<>();
     public Map<String, Integer> time = Tempfly.time;
 
@@ -56,7 +57,7 @@ public class OnFlyGuiClick implements Listener {
 
 
 
-    HashMap<Player, Player> players = FlyGui.players;
+    public HashMap<Player, Player> players = FlyGui.players;
 
     @EventHandler
     public void OnFlyGuiClick(InventoryClickEvent e) {
@@ -127,6 +128,7 @@ public class OnFlyGuiClick implements Listener {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                             players.remove(player);
                             player.closeInventory();
+                            break;
                         }
                     } else {
                         if (player.hasPermission("fly.tempflyothers")) {
@@ -137,14 +139,14 @@ public class OnFlyGuiClick implements Listener {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                             players.remove(player);
                             player.closeInventory();
+                            break;
                         }
                     }
             }
 
             e.setCancelled(true);
         } else if (e.getView().getTitle().equalsIgnoreCase(ChatColor.GOLD + "        === Tempfly GUI ===")) {
-            Player target = players.get(player);
-            players.remove(player);
+            Player targettf = players.get(player);
             if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.GOLD + TempHours)) {
                 int HoursI;
                 if (e.getClick().isLeftClick()) {
@@ -178,10 +180,10 @@ public class OnFlyGuiClick implements Listener {
                         }
                     }
                 }
-                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + TempMinute)) {
-                    int MinuteI;
-                    if (e.getClick().isLeftClick()) {
-                        if (Minutes.get(player) >= 59) {
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + TempMinute)) {
+                int MinuteI;
+                if (e.getClick().isLeftClick()) {
+                    if (Minutes.get(player) >= 59) {
                             MinuteI = 59;
                             Minutes.remove(player);
                             Minutes.put(player, MinuteI);
@@ -212,7 +214,7 @@ public class OnFlyGuiClick implements Listener {
                             }
                         }
                     }
-                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + TempSecond)) {
+                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + TempSecond)) {
                         int SecondesI;
                         if (e.getClick().isLeftClick()) {
                             if (Secondes.get(player) >= 59) {
@@ -246,28 +248,25 @@ public class OnFlyGuiClick implements Listener {
                             }
                     }
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Continue")) {
-
-                int TimeLeft = ((Hours.get(player)*3600) + (Minutes.get(player)*60) + (Secondes.get(player)));
-                flyers.remove(target.getName());
-                flyers.remove(target.getName());
-                FlyMethod(target, true);
-                Tempfly.time.put(target.getName(), TimeLeft);
-                Tempfly.timer.put(target.getName(), System.currentTimeMillis());
-                int heures = (TimeLeft / 3600);
-                int minutes = ((TimeLeft - (TimeLeft / 3600) *3600) / 60);
-                player.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
-                if (TargetMessage) {
+                    System.out.println("cooses");
+                    int TimeLeft = ((Hours.get(player)*3600) + (Minutes.get(player)*60) + (Secondes.get(player)));
+                    targettf.setAllowFlight(true);
+                    flyers.add(targettf.getName());
+                    Tempfly.time.put(targettf.getName(), TimeLeft);
+                    Tempfly.timer.put(targettf.getName(), System.currentTimeMillis());
+                    int heures = (TimeLeft / 3600);
+                    int minutes = ((TimeLeft - (TimeLeft / 3600) *3600) / 60);
+                    player.sendMessage(Prefix + " " + targettf.getName() + " can fly for " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                    if (TargetMessage) {
                         if (PlayerNameReveal) {
-                            player.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                            targettf.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                         } else {
-                            player.sendMessage(Prefix + " " + TargetMe + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                            targettf.sendMessage(Prefix + " " + TargetMe + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                         }
                     }
-
-                players.remove(player);
-                player.closeInventory();
-
-            }
+                    players.remove(player);
+                    player.closeInventory();
+                }
             e.setCancelled(true);
             }
         }
@@ -368,7 +367,6 @@ public class OnFlyGuiClick implements Listener {
             Minutes.put(player, 0);
             Hours.put(player, 0);
 
-            players.put(player, target);
             player.openInventory(tempflygui);
         }
     }

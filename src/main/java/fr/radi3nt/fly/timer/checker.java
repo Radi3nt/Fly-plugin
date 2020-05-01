@@ -114,7 +114,7 @@ public class checker extends BukkitRunnable {
                     player.sendTitle(ChatColor.DARK_RED +"NO TIME LEFT!", "", 20,30,20);
                     player.sendMessage(Prefix + ChatColor.RED +ChatColor.BOLD + " No time left!");
                     player.playSound(player.getLocation(), "minecraft:block.note_block.pling", SoundCategory.AMBIENT, 100, (float) 1.5);
-                    player.playSound(player.getLocation(), SoundLast, 100, 1);
+                    player.playSound(player.getLocation(), SoundNo, 100, 1);
                     flyers.remove(player.getName());
                     player.setAllowFlight(false);
                     player.setFlying(false);
