@@ -25,6 +25,7 @@ public class OnPlayerJoin implements Listener {
     HashMap<Player, Boolean> NotifyChat = FlyAlert.NotifyChat;
     HashMap<Player, Boolean> NotifyTitle = FlyAlert.NotifyTitle;
     HashMap<Player, Boolean> NotifyBossBar = FlyAlert.NotifyBossBar;
+    HashMap<Player, Boolean> NotifySounds = FlyAlert.NotifySounds;
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
@@ -36,9 +37,14 @@ public class OnPlayerJoin implements Listener {
     @EventHandler
     public void OnPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
+        NotifyChat.remove(player);
+        NotifyTitle.remove(player);
+        NotifyBossBar.remove(player);
+        NotifySounds.remove(player);
         NotifyChat.put(player, true);
         NotifyTitle.put(player, true);
         NotifyBossBar.put(player, true);
+        NotifySounds.put(player, true);
         if (player.getAllowFlight()) {
             if (!player.hasPermission("fly.join")) {
                 player.setFlying(false);

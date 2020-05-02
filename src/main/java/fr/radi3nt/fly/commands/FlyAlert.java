@@ -15,6 +15,7 @@ public class FlyAlert implements CommandExecutor {
     public static HashMap<Player, Boolean> NotifyChat = new HashMap<>();
     public static HashMap<Player, Boolean> NotifyTitle = new HashMap<>();
     public static HashMap<Player, Boolean> NotifyBossBar = new HashMap<>();
+    public static HashMap<Player, Boolean> NotifySounds = new HashMap<>();
 
 
     @Override
@@ -23,6 +24,9 @@ public class FlyAlert implements CommandExecutor {
         Plugin plugin = MainFly.getPlugin(MainFly.class);
 
         String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        String NoArgs = plugin.getConfig().getString("no-args");
+        String WrongArgs = plugin.getConfig().getString("wrong-args");
+
 
 
         if (sender instanceof Player) {
@@ -39,7 +43,7 @@ public class FlyAlert implements CommandExecutor {
                             NotifyChat.put(player, false);
                             sender.sendMessage(Prefix + " " + "Chat disabled"); //TODO CONFIG
                         } else {
-                            //TODO message error
+                            player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
                         break;
 
@@ -53,11 +57,25 @@ public class FlyAlert implements CommandExecutor {
                             NotifyTitle.put(player, false);
                             sender.sendMessage(Prefix + " " + "Title disabled"); //TODO CONFIG
                         } else {
-                            //TODO message error
+                            player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
                         break;
 
-                    case "bossbar":
+                    case "sounds":
+                        if (args[1].equals("on")) {
+                            NotifySounds.remove(player);
+                            NotifySounds.put(player, true);
+                            sender.sendMessage(Prefix + " " + "Sounds enabled"); //TODO CONFIG
+                        } else if (args[1].equals("off")) {
+                            NotifySounds.remove(player);
+                            NotifySounds.put(player, false);
+                            sender.sendMessage(Prefix + " " + "Sounds disabled"); //TODO CONFIG
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
+                        }
+                        break;
+
+                    /*/case "bossbar":
                         if (args[1].equals("on")) {
                             NotifyBossBar.remove(player);
                             NotifyBossBar.put(player, true);
@@ -67,11 +85,45 @@ public class FlyAlert implements CommandExecutor {
                             NotifyBossBar.put(player, false);
                             sender.sendMessage(Prefix + " " + "Bar disabled"); //TODO CONFIG
                         } else {
-                            //TODO message error
+                            player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
                         break;
+                        /*/
+
+                    case "all":
+                        if (args[1].equals("on")) {
+                            NotifyBossBar.remove(player);
+                            NotifyBossBar.put(player, true);
+                            NotifyTitle.remove(player);
+                            NotifyTitle.put(player, true);
+                            NotifyChat.remove(player);
+                            NotifyChat.put(player, true);
+                            NotifySounds.remove(player);
+                            NotifySounds.put(player, true);
+                            sender.sendMessage(Prefix + " " + "All enabled"); //TODO CONFIG
+                        } else if (args[1].equals("off")) {
+                            NotifyBossBar.remove(player);
+                            NotifyBossBar.put(player, false);
+                            NotifyTitle.remove(player);
+                            NotifyTitle.put(player, false);
+                            NotifyChat.remove(player);
+                            NotifyChat.put(player, false);
+                            NotifySounds.remove(player);
+                            NotifySounds.put(player, false);
+                            sender.sendMessage(Prefix + " " + "All disabled"); //TODO CONFIG
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
+                        }
+                        break;
+                    default:
+                        player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
+                        break;
                 }
+            } else {
+                player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
             }
+        } else {
+            sender.sendMessage(Prefix + ChatColor.RED +" This command MUST be run by a player");
         }
         return true;
     }

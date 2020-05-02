@@ -11,9 +11,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public final class MainFly extends JavaPlugin {
+
+    HashMap<Player, Boolean> NotifyChat = FlyAlert.NotifyChat;
+    HashMap<Player, Boolean> NotifyTitle = FlyAlert.NotifyTitle;
+    HashMap<Player, Boolean> NotifyBossBar = FlyAlert.NotifyBossBar;
+    HashMap<Player, Boolean> NotifySounds = FlyAlert.NotifySounds;
 
     public ArrayList<String> flyers = Fly.flyers;
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
@@ -49,6 +55,8 @@ public final class MainFly extends JavaPlugin {
         getCommand("timefly").setTabCompleter(new fr.radi3nt.fly.tab.GetFlyTime());
 
         getCommand("flyalert").setExecutor(new FlyAlert());
+        getCommand("flyalert").setTabCompleter(new fr.radi3nt.fly.tab.FlyAlert());
+
 
         getCommand("flygui").setExecutor(new FlyGui());
 
@@ -62,12 +70,29 @@ public final class MainFly extends JavaPlugin {
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+
+        List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
+        for (int i = 0; i < list.size(); i++){
+            Player player = list.get(i);
+            NotifyChat.remove(player);
+            NotifyTitle.remove(player);
+            NotifyBossBar.remove(player);
+            NotifySounds.remove(player);
+            NotifyChat.put(player, true);
+            NotifyTitle.put(player, true);
+            NotifyBossBar.put(player, true);
+            NotifySounds.put(player, true);
+        }
     }
 
     @Override
     public void onDisable() {
         console.sendMessage( ChatColor.GOLD + "[Fly] " + ChatColor.DARK_RED + "Disabling ...");
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
+        NotifyBossBar.clear();
+        NotifyTitle.clear();
+        NotifyChat.clear();
+        NotifySounds.clear();
         for (int i = 0; i < list.size(); i++){
             if (list.get(i).hasPermission("fly.admin")) {
                 list.get(i).sendMessage(Prefix + ChatColor.RED + " Reloading is not very compatible with the plugin ... \n We highly recommend to restart your server, \n if you don't want to have some hackers flying around");
@@ -75,10 +100,16 @@ public final class MainFly extends JavaPlugin {
                 list.get(i).playSound(list.get(i).getLocation(), "minecraft:block.note_block.bit", SoundCategory.AMBIENT, 100, 1);
             }
             Fly.FlyMethod(list.get(i), false);
+            Player player = list.get(i);
+            NotifyChat.remove(player);
+            NotifyTitle.remove(player);
+            NotifyBossBar.remove(player);
+            NotifySounds.remove(player);
+            NotifyChat.put(player, true);
+            NotifyTitle.put(player, true);
+            NotifyBossBar.put(player, true);
+            NotifySounds.put(player, true);
         }
         flyers.clear();
-    }
-    public static void reload() {
-        MainFly.getPlugin(MainFly.class).reloadConfig();
     }
 }

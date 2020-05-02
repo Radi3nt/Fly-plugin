@@ -41,6 +41,7 @@ public class checker extends BukkitRunnable {
     HashMap<Player, Boolean> NotifyChat = FlyAlert.NotifyChat;
     HashMap<Player, Boolean> NotifyTitle = FlyAlert.NotifyTitle;
     HashMap<Player, Boolean> NotifyBossBar = FlyAlert.NotifyBossBar;
+    HashMap<Player, Boolean> NotifySounds = FlyAlert.NotifySounds;
 
     int timem = 86400;
 
@@ -116,11 +117,6 @@ public class checker extends BukkitRunnable {
                     time.remove(player.getName());
                     timem = 100;
                 }
-
-
-
-
-
             }
         }
     }
@@ -141,7 +137,9 @@ public class checker extends BukkitRunnable {
     public void High(Player player, long timeleft) {
 
 
-        PlayHighSound(player);
+        if (NotifySounds.get(player)) {
+            PlayHighSound(player);
+        }
         int heures = (int) (timeleft / 3600);
         int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
         if (NotifyChat.get(player)) {
@@ -153,7 +151,9 @@ public class checker extends BukkitRunnable {
     public void Medium(Player player, long timeleft) {
 
 
-        PlayMediumSound(player);
+        if (NotifySounds.get(player)) {
+            PlayMediumSound(player);
+        }
         int heures = (int) (timeleft / 3600);
         int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
         if (NotifyChat.get(player)) {
@@ -169,7 +169,9 @@ public class checker extends BukkitRunnable {
     public void Low(Player player, long timeleft) {
 
 
-        PlayLowSound(player);
+        if (NotifySounds.get(player)) {
+            PlayLowSound(player);
+        }
         int heures = (int) (timeleft / 3600);
         int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
         if (NotifyChat.get(player)) {

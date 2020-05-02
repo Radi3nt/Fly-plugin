@@ -156,6 +156,8 @@ version: 1.1.4
 - [X] Adding command `tempfly`
 - [X] Add command `flyers`
 - [ ] Add colors code for all config messages
+- [ ] Finish config messages
+- [ ] Add a bossbar
 - [ ] No big problem in it
 - [ ] Have some contributors
 - [ ] Used on a known server
