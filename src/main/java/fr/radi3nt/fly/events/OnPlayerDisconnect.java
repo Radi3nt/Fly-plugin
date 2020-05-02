@@ -22,7 +22,10 @@ public class OnPlayerDisconnect implements Listener {
         Player player = e.getPlayer();
         player.setInvulnerable(false);
         flyers.remove(player.getName());
+        flyers.remove(player.getName());
         timer.remove(player.getName());
+        timer.remove(player.getName());
+        time.remove(player.getName());
         time.remove(player.getName());
 
     }

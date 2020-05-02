@@ -87,6 +87,8 @@ public class Tempfly implements CommandExecutor {
                     } else {
                         sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                     }
+                } else {
+                    sender.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
                 }
             }
         } else {
@@ -163,7 +165,9 @@ public class Tempfly implements CommandExecutor {
 
                 }
             }
-            }
+            } else {
+            player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
+        }
         }
         return true;
     }
@@ -171,7 +175,7 @@ public class Tempfly implements CommandExecutor {
 
     public void FlyMethod(Player player, boolean state) {
         player.setAllowFlight(state);
-        if (state == true) {
+        if (state) {
             flyers.add(player.getName());
         } else {
             flyers.remove(player.getName());

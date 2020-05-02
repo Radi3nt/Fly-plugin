@@ -248,8 +248,8 @@ public class OnFlyGuiClick implements Listener {
                             }
                     }
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Continue")) {
-                    System.out.println("cooses");
                     int TimeLeft = ((Hours.get(player)*3600) + (Minutes.get(player)*60) + (Secondes.get(player)));
+                    flyers.remove(targettf.getName());
                     targettf.setAllowFlight(true);
                     flyers.add(targettf.getName());
                     Tempfly.time.put(targettf.getName(), TimeLeft);
@@ -259,9 +259,9 @@ public class OnFlyGuiClick implements Listener {
                     player.sendMessage(Prefix + " " + targettf.getName() + " can fly for " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                     if (TargetMessage) {
                         if (PlayerNameReveal) {
-                            targettf.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                            targettf.sendMessage(Prefix + " " + player.getName() + " " + NameReveal  + " " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                         } else {
-                            targettf.sendMessage(Prefix + " " + TargetMe + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                            targettf.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (TimeLeft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((TimeLeft - (TimeLeft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (TimeLeft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
                         }
                     }
                     players.remove(player);
