@@ -97,9 +97,15 @@ public class checker extends BukkitRunnable {
                     timem = 2;
                 }
                 if (timeleft == 1 && timem > 1) {
-                    PlayLowSound(player);
-                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 1 " + ChatColor.RESET + ChatColor.RED + TempSecond + " " + TempLeft);
-                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.DARK_RED + String.valueOf(timeleft), 20,30,20);
+                    if (NotifySounds.get(player)) {
+                        PlayLowSound(player);
+                    }
+                    if (NotifyChat.get(player)) {
+                        player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 1 " + ChatColor.RESET + ChatColor.RED + TempSecond + " " + TempLeft);
+                    }
+                    if (NotifyTitle.get(player)) {
+                        player.sendTitle(ChatColor.RED + "Time left:", ChatColor.DARK_RED + String.valueOf(timeleft), 20, 30, 20);
+                    }
                     timem = 1;
                 }
                 if (timeleft <= 0) {
@@ -157,7 +163,7 @@ public class checker extends BukkitRunnable {
         int heures = (int) (timeleft / 3600);
         int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
         if (NotifyChat.get(player)) {
-            player.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GOLD + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) * 3600) / 60) + " " + ChatColor.GOLD + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures * 3600 + minutes * 60)) + " " + ChatColor.GOLD + TempSecond + " " + TempLeft);
+            player.sendMessage(Prefix + " " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) * 3600) / 60) + " " + ChatColor.GOLD + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures * 3600 + minutes * 60)) + " " + ChatColor.GOLD + TempSecond + " " + TempLeft);
         }
         if (NotifyTitle.get(player)) {
             player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft), 20,30,20); //TODO CONFIG
@@ -175,7 +181,7 @@ public class checker extends BukkitRunnable {
         int heures = (int) (timeleft / 3600);
         int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
         if (NotifyChat.get(player)) {
-            player.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.RED + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) * 3600) / 60) + " " + ChatColor.RED + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures * 3600 + minutes * 60)) + " " + ChatColor.RED + TempSecond + " " + TempLeft);
+            player.sendMessage(Prefix + " " + ChatColor.DARK_RED + ChatColor.BOLD + (timeleft - (heures * 3600 + minutes * 60)) + " " + ChatColor.RED + TempSecond + " " + TempLeft);
         }
         if (NotifyTitle.get(player)) {
             player.sendTitle(ChatColor.DARK_RED +"Time left:", ChatColor.RED + String.valueOf(timeleft), 20,30,20);

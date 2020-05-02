@@ -13,15 +13,15 @@ commands:
   flyspeed:
     description: Change the fly speed of someone
     usage: /flyspeed <1-9> [player]
-    aliases: fs
+    aliases: [fs, fspeed, flys]
   flyreload:
     description: Simply reload the fly-plugin config
     usage: /flyreload
-    aliases: fr
+    aliases: [fr, freload, flyr]
   tempfly:
     description: Temp-fly someone
     usage: /tempfly [seconds] [player]
-    aliases: tf
+    aliases: [tempf, tf, tfly]
   flyers:
     description: Give you the list of the flyers
     usage: /flyers
@@ -33,3 +33,6 @@ commands:
     usage: /flygui <player>
     aliases: fgui
   flyalert:
+    description: Toggle your tempfly notifications
+    usage: /flyalert <chat|title|sounds|all> <on|off>
+    aliases: [falert, fnotify, flya, flyn]
