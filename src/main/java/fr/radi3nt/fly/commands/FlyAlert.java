@@ -20,13 +20,13 @@ public class FlyAlert implements CommandExecutor {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (args.length < 2) {
+            if (args.length > 1) {
                 switch (args[0]) {
                     case "chat":
                         if (args[1].equals("on")) {
                             NotifyChat.remove(player);
                             NotifyChat.put(player, true);
-                        } else if (args[1].equals("off")){
+                        } else if (args[1].equals("off")) {
                             NotifyChat.remove(player);
                             NotifyChat.put(player, false);
                         } else {
@@ -38,7 +38,7 @@ public class FlyAlert implements CommandExecutor {
                         if (args[1].equals("on")) {
                             NotifyTitle.remove(player);
                             NotifyTitle.put(player, true);
-                        } else if (args[1].equals("off")){
+                        } else if (args[1].equals("off")) {
                             NotifyTitle.remove(player);
                             NotifyTitle.put(player, false);
                         } else {
@@ -48,11 +48,11 @@ public class FlyAlert implements CommandExecutor {
 
                     case "bossbar":
                         if (args[1].equals("on")) {
-                            NotifyTitle.remove(player);
-                            NotifyTitle.put(player, true);
-                        } else if (args[1].equals("off")){
-                            NotifyTitle.remove(player);
-                            NotifyTitle.put(player, false);
+                            NotifyBossBar.remove(player);
+                            NotifyBossBar.put(player, true);
+                        } else if (args[1].equals("off")) {
+                            NotifyBossBar.remove(player);
+                            NotifyBossBar.put(player, false);
                         } else {
                             //TODO message erreur
                         }
@@ -61,6 +61,5 @@ public class FlyAlert implements CommandExecutor {
             }
         }
         return true;
-
     }
 }
