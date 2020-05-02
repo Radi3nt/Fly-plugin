@@ -32,3 +32,4 @@ commands:
     description: Open you the fly GUI !
     usage: /flygui <player>
     aliases: fgui
+  flyalert:

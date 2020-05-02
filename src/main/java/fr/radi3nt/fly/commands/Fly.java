@@ -16,6 +16,7 @@ public class Fly implements CommandExecutor {
     Plugin plugin = MainFly.getPlugin(MainFly.class);
     public static ArrayList<String> flyers = new ArrayList<>();
 
+    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
     String FlyYoureself = plugin.getConfig().getString("fly-yourself");
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
     String NoPermission = plugin.getConfig().getString("no-permission");
@@ -24,10 +25,10 @@ public class Fly implements CommandExecutor {
     Boolean PlayerNameReval = plugin.getConfig().getBoolean("fly-player-name-reveal");
     Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
 
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
 
         if (sender instanceof Player) {
 

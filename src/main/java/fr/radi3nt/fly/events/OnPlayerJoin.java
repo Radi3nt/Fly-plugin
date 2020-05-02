@@ -2,6 +2,7 @@ package fr.radi3nt.fly.events;
 
 import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
+import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class OnPlayerJoin implements Listener {
@@ -18,6 +20,11 @@ public class OnPlayerJoin implements Listener {
     ArrayList<String> flyers = Fly.flyers;
     public Map<String, Long> timer = Tempfly.timer;
     public Map<String, Integer> time = Tempfly.time;
+
+
+    HashMap<Player, Boolean> NotifyChat = FlyAlert.NotifyChat;
+    HashMap<Player, Boolean> NotifyTitle = FlyAlert.NotifyTitle;
+    HashMap<Player, Boolean> NotifyBossBar = FlyAlert.NotifyBossBar;
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
@@ -29,6 +36,9 @@ public class OnPlayerJoin implements Listener {
     @EventHandler
     public void OnPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
+        NotifyChat.put(player, true);
+        NotifyTitle.put(player, true);
+        NotifyBossBar.put(player, true);
         if (player.getAllowFlight()) {
             if (!player.hasPermission("fly.join")) {
                 player.setFlying(false);

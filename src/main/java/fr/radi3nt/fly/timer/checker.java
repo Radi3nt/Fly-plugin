@@ -2,6 +2,7 @@ package fr.radi3nt.fly.timer;
 
 import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
+import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +37,11 @@ public class checker extends BukkitRunnable {
     Sound SoundLast = Sound.valueOf(plugin.getConfig().getString("temp-sound-last"));
     Sound SoundNo = Sound.valueOf(plugin.getConfig().getString("temp-sound-no"));
 
+
+    HashMap<Player, Boolean> NotifyChat = FlyAlert.NotifyChat;
+    HashMap<Player, Boolean> NotifyTitle = FlyAlert.NotifyTitle;
+    HashMap<Player, Boolean> NotifyBossBar = FlyAlert.NotifyBossBar;
+
     int timem = 86400;
 
     @Override
@@ -49,59 +56,43 @@ public class checker extends BukkitRunnable {
                     timem = (int) timeleft;
                 }
                 if (timeleft == 3600 && timem > 3600) {
-                    PlayHighSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 1 " + ChatColor.GREEN + TempHours + " " + TempLeft);
+                    High(player, timeleft);
                     timem = 3600;
                 }
                 if (timeleft == 1800 && timem > 1800) {
-                    PlayHighSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 30 " + ChatColor.GREEN + TempMinute + " " + TempLeft);
+                    High(player, timeleft);
                     timem = 1800;
                 }
                 if (timeleft == 900 && timem > 900) {
-                    PlayHighSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 15 " + ChatColor.GREEN + TempMinute + " " + TempLeft);
+                    High(player, timeleft);
                     timem = 900;
                 }
                 if (timeleft == 300 && timem > 300) {
-                    PlayHighSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 5 " + ChatColor.GREEN + TempMinute + " " + TempLeft);
+                    High(player, timeleft);
                     timem = 300;
                 }
                 if (timeleft == 60 && timem > 60) {
-                    PlayMediumSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 1 " + ChatColor.GOLD + TempMinute + " " + TempLeft);
-                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft/60) + " minute", 20,30,20);
+                    Medium(player, timeleft);
                     timem = 60;
                 }
                 if (timeleft == 30 && timem > 30) {
-                    PlayMediumSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 30 " + ChatColor.GOLD + TempSecond + " " + TempLeft);
-                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft), 20,30,20);
+                    Medium(player, timeleft);
                     timem = 30;
                 }
                 if (timeleft == 15 && timem > 15) {
-                    PlayMediumSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 15 " + ChatColor.GOLD + TempSecond + " " + TempLeft);
-                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft), 20,30,20);
+                    Medium(player, timeleft);
                     timem = 15;
                 }
                 if (timeleft == 5 && timem > 5) {
-                    PlayMediumSound(player);
-                    player.sendMessage(Prefix + ChatColor.AQUA + " 5 " + ChatColor.GOLD + TempSecond + " " + TempLeft);
-                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft), 20,30,20);
+                    Medium(player, timeleft);
                     timem = 5;
                 }
                 if (timeleft == 3 && timem > 3) {
-                    PlayLowSound(player);
-                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 3 " + ChatColor.RESET + ChatColor.RED + TempSecond + " " + TempLeft);
-                    player.sendTitle(ChatColor.RED +"Time left:", ChatColor.RED + String.valueOf(timeleft), 20,30,20);
+                    Low(player, timeleft);
                     timem = 3;
                 }
                 if (timeleft == 2 && timem > 2) {
-                    PlayLowSound(player);
-                    player.sendMessage(Prefix + ChatColor.DARK_RED + ChatColor.BOLD + " 2 " + ChatColor.RESET + ChatColor.RED + TempSecond + " " + TempLeft);
-                    player.sendTitle(ChatColor.RED +"Time left:",  ChatColor.RED + String.valueOf(timeleft), 20,30,20);
+                    Low(player, timeleft);
                     timem = 2;
                 }
                 if (timeleft == 1 && timem > 1) {
@@ -125,6 +116,11 @@ public class checker extends BukkitRunnable {
                     time.remove(player.getName());
                     timem = 100;
                 }
+
+
+
+
+
             }
         }
     }
@@ -139,6 +135,50 @@ public class checker extends BukkitRunnable {
 
     public void PlayLowSound(Player player) {
         player.playSound(player.getLocation(), SoundLow, SoundCategory.AMBIENT, 100, (float) 1);
+    }
+
+
+    public void High(Player player, long timeleft) {
+
+
+        PlayHighSound(player);
+        int heures = (int) (timeleft / 3600);
+        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
+        if (NotifyChat.get(player)) {
+            player.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) * 3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures * 3600 + minutes * 60)) + " " + ChatColor.GREEN + TempSecond + " " + TempLeft);
+        }
+
+    }
+
+    public void Medium(Player player, long timeleft) {
+
+
+        PlayMediumSound(player);
+        int heures = (int) (timeleft / 3600);
+        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
+        if (NotifyChat.get(player)) {
+            player.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GOLD + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) * 3600) / 60) + " " + ChatColor.GOLD + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures * 3600 + minutes * 60)) + " " + ChatColor.GOLD + TempSecond + " " + TempLeft);
+        }
+        if (NotifyTitle.get(player)) {
+            player.sendTitle(ChatColor.RED +"Time left:", ChatColor.GOLD + String.valueOf(timeleft), 20,30,20); //TODO CONFIG
+        }
+
+    }
+
+
+    public void Low(Player player, long timeleft) {
+
+
+        PlayLowSound(player);
+        int heures = (int) (timeleft / 3600);
+        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
+        if (NotifyChat.get(player)) {
+            player.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.RED + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) * 3600) / 60) + " " + ChatColor.RED + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures * 3600 + minutes * 60)) + " " + ChatColor.RED + TempSecond + " " + TempLeft);
+        }
+        if (NotifyTitle.get(player)) {
+            player.sendTitle(ChatColor.DARK_RED +"Time left:", ChatColor.RED + String.valueOf(timeleft), 20,30,20);
+        }
+
     }
 
 

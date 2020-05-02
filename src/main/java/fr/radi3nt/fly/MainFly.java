@@ -48,6 +48,8 @@ public final class MainFly extends JavaPlugin {
         getCommand("timefly").setExecutor(new GetFlyTime());
         getCommand("timefly").setTabCompleter(new fr.radi3nt.fly.tab.GetFlyTime());
 
+        getCommand("flyalert").setExecutor(new FlyAlert());
+
         getCommand("flygui").setExecutor(new FlyGui());
 
         getCommand("flyers").setExecutor(new Flyers());
