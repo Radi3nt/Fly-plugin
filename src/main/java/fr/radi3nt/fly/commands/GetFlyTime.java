@@ -18,22 +18,27 @@ public class GetFlyTime implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    String TempLeft = plugin.getConfig().getString("temp-left");
-    String InvalidPlayer = plugin.getConfig().getString("invalid-player");
-    String NoArgs = plugin.getConfig().getString("no-args");
-
-    String NoFlyYou = plugin.getConfig().getString("timefly-nofly-you");
-    String NoFlyHe = plugin.getConfig().getString("timefly-nofly-target");
-
-    String NoPermission = plugin.getConfig().getString("no-permission");
-    String TempMinute = plugin.getConfig().getString("temp-minutes");
-    String TempSecond = plugin.getConfig().getString("temp-seconds");
-    String TempHours = plugin.getConfig().getString("temp-hours");
-
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        String InvalidPlayer = plugin.getConfig().getString("invalid-player");
+
+        String NoFlyYou = plugin.getConfig().getString("timefly-nofly-you");
+        String NoFlyHe = plugin.getConfig().getString("timefly-nofly-target");
+
+        String NoPermission = plugin.getConfig().getString("no-permission");
+        String TempMinute = plugin.getConfig().getString("temp-minutes");
+        String TempSecond = plugin.getConfig().getString("temp-seconds");
+        String TempHours = plugin.getConfig().getString("temp-hours");
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
+
+        String Timeleft = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-structure") + ChatColor.RESET);
+
+
+
         if (args.length == 1) {
             if (sender.hasPermission("fly.timeflyothers")) {
                 Player target = Bukkit.getPlayerExact(args[0]);
@@ -43,7 +48,9 @@ public class GetFlyTime implements CommandExecutor {
                         long timeleft = ((timer.get(target.getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
                         int heures = (int) (timeleft / 3600);
                         int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
-                        sender.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                        int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                        String TimeleftR = Timeleft.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
+                        sender.sendMessage(Prefix + " " + TimeleftR);
                     } else {
                         sender.sendMessage(Prefix + " " + ChatColor.RED + NoFlyHe);
                     }
@@ -64,7 +71,9 @@ public class GetFlyTime implements CommandExecutor {
                         long timeleft = ((timer.get(player.getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
                         int heures = (int) (timeleft / 3600);
                         int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
-                        player.sendMessage(Prefix + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                        int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                        String TimeleftR = Timeleft.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
+                        player.sendMessage(Prefix + " " + TimeleftR);
                     } else {
                         player.sendMessage(Prefix + " " + ChatColor.RED + NoFlyYou);
                     }

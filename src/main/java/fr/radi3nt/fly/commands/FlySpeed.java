@@ -13,24 +13,25 @@ public class FlySpeed implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    String NoPermission = plugin.getConfig().getString("no-permission");
-    String NoArgs = plugin.getConfig().getString("no-args");
-    String WrongArgs = plugin.getConfig().getString("wrong-args");
-    String PlayerMessage = plugin.getConfig().getString("speed-player-message");
-    String PlayerSomeoneMessage = plugin.getConfig().getString("speed-someone-player");
-    String TargetMessageReval = plugin.getConfig().getString("speed-target-namereveal");
-    String TargetMessage = plugin.getConfig().getString("speed-target");
-    String InvalidPlayer = plugin.getConfig().getString("invalid-player");
-    Boolean SpeedTargetMessage = plugin.getConfig().getBoolean("speed-target-message");
-    Boolean SpeedPlayerNameReval = plugin.getConfig().getBoolean("speed-player-name-reveal");
-
-
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
-
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        String NoPermission = plugin.getConfig().getString("no-permission");
+        String NoArgs = plugin.getConfig().getString("no-args");
+        String WrongArgs = plugin.getConfig().getString("wrong-args");
+        String PlayerMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("speed-player-message")) + ChatColor.RESET;
+        String PlayerSomeoneMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("speed-someone-player")) + ChatColor.RESET;
+        String TargetMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("speed-target")) + ChatColor.RESET;
+        String InvalidPlayer = plugin.getConfig().getString("invalid-player");
+        Boolean SpeedTargetMessage = plugin.getConfig().getBoolean("speed-target-message");
+
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
+
+
 
         if (sender instanceof Player){
 
@@ -56,7 +57,6 @@ public class FlySpeed implements CommandExecutor {
                     float FlySpeedf = Float.parseFloat(sb.toString());
 
                     if (FlySpeedf > 0 && FlySpeedf < 10) {
-
                         if (args.length > 1) {
                             Player target = Bukkit.getPlayerExact(args[1]);
                             if (target instanceof Player) {
@@ -64,13 +64,11 @@ public class FlySpeed implements CommandExecutor {
                                 if (player.hasPermission("fly.others")) {
                                     if (player.hasPermission("fly.speed." + FlySpeedI)) {
                                         target.setFlySpeed(FlySpeedf / 10);
-                                        player.sendMessage(Prefix + " " + PlayerSomeoneMessage + " " + target.getName() + " to " + ChatColor.DARK_AQUA + FlySpeedI);
+                                        String PlayerSomeoneMessageR = PlayerSomeoneMessage.replace("%target%", target.getName()).replace("%speed%", String.valueOf(FlySpeedI));
+                                        player.sendMessage(Prefix + " " + PlayerSomeoneMessageR);
                                         if (SpeedTargetMessage) {
-                                            if (SpeedPlayerNameReval) {
-                                                target.sendMessage(Prefix + " " + player.getName() + " " + TargetMessageReval + " " + ChatColor.DARK_AQUA + FlySpeedI);
-                                            } else {
-                                                target.sendMessage(Prefix + " " + TargetMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
-                                            }
+                                            String TargetMessageR = TargetMessage.replace("%player%", player.getName()).replace("%speed%", String.valueOf(FlySpeedI));
+                                            target.sendMessage(Prefix + " " + TargetMessageR);
                                         }
                                     } else {
                                         player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
@@ -85,8 +83,9 @@ public class FlySpeed implements CommandExecutor {
                         } else {
                             int FlySpeedI = (int) FlySpeedf;
                             if (player.hasPermission("fly.speed." + FlySpeedI)) {
+                                String PlayerMessageR = PlayerMessage.replace("%speed%", String.valueOf(FlySpeedI));
                                 player.setFlySpeed(FlySpeedf / 10);
-                                player.sendMessage(Prefix + " " + PlayerMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
+                                player.sendMessage(Prefix + " " + PlayerMessageR);
                             } else {
                                 player.sendMessage( Prefix + " " + ChatColor.RED + NoPermission);
                             }
@@ -130,14 +129,12 @@ public class FlySpeed implements CommandExecutor {
                         if (target instanceof Player) {
                             target.setFlySpeed(FlySpeedf / 10);
                             int FlySpeedI = (int) FlySpeedf;
-                                    sender.sendMessage(Prefix + " " + PlayerSomeoneMessage + " " + target.getName() + " to " + ChatColor.DARK_AQUA + FlySpeedI);
-                                    if (SpeedTargetMessage) {
-                                        if (SpeedPlayerNameReval) {
-                                            target.sendMessage(Prefix + " The console " + TargetMessageReval + " " + ChatColor.DARK_AQUA + FlySpeedI);
-                                        } else {
-                                            target.sendMessage(Prefix + " " + TargetMessage + " " + ChatColor.DARK_AQUA + FlySpeedI);
-                                        }
-                                    }
+                            String PlayerSomeoneMessageR = PlayerSomeoneMessage.replace("%target%", target.getName()).replace("%speed%", String.valueOf(FlySpeedI));
+                            sender.sendMessage(Prefix + " " + PlayerSomeoneMessageR);
+                            if (SpeedTargetMessage) {
+                                String TargetMessageR = TargetMessage.replace("%player%", "console").replace("%speed%", String.valueOf(FlySpeedI));
+                                target.sendMessage(Prefix + " " + TargetMessageR);
+                            }
                                 } else {
                                     sender.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                                 }
@@ -145,7 +142,7 @@ public class FlySpeed implements CommandExecutor {
                                 sender.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                             }
                         } else {
-                            sender.sendMessage(Prefix + " " + InvalidPlayer);
+                            sender.sendMessage(Prefix + " " + ChatColor.RED + InvalidPlayer);
                         }
 
                     } else {

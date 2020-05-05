@@ -30,26 +30,6 @@ public class OnFlyGuiClick implements Listener {
     public static Map<String, Long> timer = new HashMap<>();
     public Map<String, Integer> time = Tempfly.time;
 
-    String FlySomeonePlayer = plugin.getConfig().getString("fly-someone-player");
-    String FlySomeoneTarget = plugin.getConfig().getString("fly-someone-target");
-    Boolean PlayerNameReval = plugin.getConfig().getBoolean("fly-player-name-reveal");
-    Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
-
-    String NameReveal = plugin.getConfig().getString("temp-target-namereveal");
-    String TargetMe = plugin.getConfig().getString("temp-target");
-
-    Boolean TargetMessage = plugin.getConfig().getBoolean("temp-target-message");
-    Boolean PlayerNameReveal = plugin.getConfig().getBoolean("temp-player-name-reveal");
-
-    String TempLeft = plugin.getConfig().getString("temp-left");
-    String TempMinute = plugin.getConfig().getString("temp-minutes");
-    String TempSecond = plugin.getConfig().getString("temp-seconds");
-    String TempHours = plugin.getConfig().getString("temp-hours");
-
-    String NoPermission = plugin.getConfig().getString("no-permission");
-
-
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
     public static HashMap<Player, Integer> Secondes = new HashMap<>();
     public static HashMap<Player, Integer> Minutes = new HashMap<>();
@@ -61,6 +41,24 @@ public class OnFlyGuiClick implements Listener {
 
     @EventHandler
     public void OnFlyGuiClick(InventoryClickEvent e) {
+
+
+        String NameReveal = plugin.getConfig().getString("temp-target-namereveal");
+        String TargetMe = plugin.getConfig().getString("temp-target");
+
+        Boolean TargetMessage = plugin.getConfig().getBoolean("temp-target-message");
+        Boolean PlayerNameReveal = plugin.getConfig().getBoolean("temp-player-name-reveal");
+
+        String TempLeft = plugin.getConfig().getString("temp-left");
+        String TempMinute = plugin.getConfig().getString("temp-minutes");
+        String TempSecond = plugin.getConfig().getString("temp-seconds");
+        String TempHours = plugin.getConfig().getString("temp-hours");
+
+        String NoPermission = plugin.getConfig().getString("no-permission");
+
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
 
         Player player = (Player) e.getWhoClicked();
         Inventory inventory = e.getInventory();
@@ -150,41 +148,61 @@ public class OnFlyGuiClick implements Listener {
             if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.GOLD + TempHours)) {
                 int HoursI;
                 if (e.getClick().isLeftClick()) {
-                    if (Hours.get(player) >= 23) {
+                    if (e.getClick().isShiftClick()) {
                         HoursI = 23;
-                        Hours.remove(player);
-                        Hours.put(player, HoursI);
-                    }
-                    HoursI = Hours.get(player);
-                    HoursI++;
-                    e.getCurrentItem().setAmount(HoursI);
-                    Hours.remove(player);
-                    Hours.put(player, HoursI);
-                } else if (e.getClick().isRightClick()) {
-                    if (!(Hours.get(player) <= 1)) {
-                        HoursI = Hours.get(player);
-                        HoursI--;
                         e.getCurrentItem().setAmount(HoursI);
                         Hours.remove(player);
                         Hours.put(player, HoursI);
                     } else {
-                        if (Hours.get(player) <= 0) {
-                            HoursI = 0;
+                        if (Hours.get(player) > 22) {
+                            HoursI = 22;
+                            Hours.remove(player);
+                            Hours.put(player, HoursI);
+                        }
+                        HoursI = Hours.get(player);
+                        HoursI++;
+                        e.getCurrentItem().setAmount(HoursI);
+                        Hours.remove(player);
+                        Hours.put(player, HoursI);
+                    }
+                } else if (e.getClick().isRightClick()) {
+                    if (e.getClick().isShiftClick()) {
+                        HoursI = 0;
+                        e.getCurrentItem().setAmount(1);
+                        Hours.remove(player);
+                        Hours.put(player, HoursI);
+                    } else {
+                        if (!(Hours.get(player) <= 1)) {
+                            HoursI = Hours.get(player);
+                            HoursI--;
+                            e.getCurrentItem().setAmount(HoursI);
                             Hours.remove(player);
                             Hours.put(player, HoursI);
                         } else {
-                            HoursI = Hours.get(player);
-                            HoursI--;
-                            Hours.remove(player);
-                            Hours.put(player, HoursI);
+                            if (Hours.get(player) <= 0) {
+                                HoursI = 0;
+                                Hours.remove(player);
+                                Hours.put(player, HoursI);
+                            } else {
+                                HoursI = Hours.get(player);
+                                HoursI--;
+                                Hours.remove(player);
+                                Hours.put(player, HoursI);
+                            }
                         }
                     }
                 }
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + TempMinute)) {
                 int MinuteI;
                 if (e.getClick().isLeftClick()) {
-                    if (Minutes.get(player) >= 59) {
-                            MinuteI = 59;
+                    if (e.getClick().isShiftClick()) {
+                        MinuteI = 59;
+                        e.getCurrentItem().setAmount(MinuteI);
+                        Minutes.remove(player);
+                        Minutes.put(player, MinuteI);
+                    } else {
+                        if (Minutes.get(player) > 58) {
+                            MinuteI = 58;
                             Minutes.remove(player);
                             Minutes.put(player, MinuteI);
                         }
@@ -193,60 +211,81 @@ public class OnFlyGuiClick implements Listener {
                         e.getCurrentItem().setAmount(MinuteI);
                         Minutes.remove(player);
                         Minutes.put(player, MinuteI);
+                    }
                     } else if (e.getClick().isRightClick()) {
-                        if (!(Minutes.get(player) <= 1)) {
-                            MinuteI = Minutes.get(player);
-                            MinuteI--;
-                            e.getCurrentItem().setAmount(MinuteI);
+                        if (e.getClick().isShiftClick()) {
+                            MinuteI = 0;
+                            e.getCurrentItem().setAmount(1);
                             Minutes.remove(player);
                             Minutes.put(player, MinuteI);
                         } else {
-                            if (Minutes.get(player) <= 0) {
-                                MinuteI = 0;
-                                Minutes.remove(player);
-                                Minutes.put(player, MinuteI);
-
-                            } else {
+                            if (!(Minutes.get(player) <= 1)) {
                                 MinuteI = Minutes.get(player);
                                 MinuteI--;
+                                e.getCurrentItem().setAmount(MinuteI);
                                 Minutes.remove(player);
                                 Minutes.put(player, MinuteI);
+                            } else {
+                                if (Minutes.get(player) <= 0) {
+                                    MinuteI = 0;
+                                    Minutes.remove(player);
+                                    Minutes.put(player, MinuteI);
+                                } else {
+                                    MinuteI = Minutes.get(player);
+                                    MinuteI--;
+                                    Minutes.remove(player);
+                                    Minutes.put(player, MinuteI);
+                                }
                             }
                         }
                     }
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + TempSecond)) {
                         int SecondesI;
                         if (e.getClick().isLeftClick()) {
-                            if (Secondes.get(player) >= 59) {
+                            if (e.getClick().isShiftClick()) {
                                 SecondesI = 59;
-                                Secondes.remove(player);
-                                Secondes.put(player, SecondesI);
-                            }
-                            SecondesI = Secondes.get(player);
-                            SecondesI++;
-                            e.getCurrentItem().setAmount(SecondesI);
-                            Secondes.remove(player);
-                            Secondes.put(player, SecondesI);
-                        } else if (e.getClick().isRightClick()) {
-                            if (!(Secondes.get(player) <= 1)) {
-                                SecondesI = Secondes.get(player);
-                                SecondesI--;
                                 e.getCurrentItem().setAmount(SecondesI);
                                 Secondes.remove(player);
                                 Secondes.put(player, SecondesI);
                             } else {
-                                if (Secondes.get(player) <= 0) {
-                                    SecondesI = 0;
-                                    Secondes.remove(player);
-                                    Secondes.put(player, SecondesI);
-                                } else {
-                                    SecondesI = Secondes.get(player);
-                                    SecondesI--;
+                                if (Secondes.get(player) > 58) {
+                                    SecondesI = 58;
                                     Secondes.remove(player);
                                     Secondes.put(player, SecondesI);
                                 }
+                                SecondesI = Secondes.get(player);
+                                SecondesI++;
+                                e.getCurrentItem().setAmount(SecondesI);
+                                Secondes.remove(player);
+                                Secondes.put(player, SecondesI);
                             }
-                    }
+                        } else if (e.getClick().isRightClick()) {
+                            if (e.getClick().isShiftClick()) {
+                                SecondesI = 0;
+                                e.getCurrentItem().setAmount(1);
+                                Secondes.remove(player);
+                                Secondes.put(player, SecondesI);
+                            } else {
+                                if (!(Secondes.get(player) <= 1)) {
+                                    SecondesI = Secondes.get(player);
+                                    SecondesI--;
+                                    e.getCurrentItem().setAmount(SecondesI);
+                                    Secondes.remove(player);
+                                    Secondes.put(player, SecondesI);
+                                } else {
+                                    if (Secondes.get(player) <= 0) {
+                                        SecondesI = 0;
+                                        Secondes.remove(player);
+                                        Secondes.put(player, SecondesI);
+                                    } else {
+                                        SecondesI = Secondes.get(player);
+                                        SecondesI--;
+                                        Secondes.remove(player);
+                                        Secondes.put(player, SecondesI);
+                                    }
+                                }
+                            }
+                        }
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Continue")) {
                     int TimeLeft = ((Hours.get(player)*3600) + (Minutes.get(player)*60) + (Secondes.get(player)));
                     flyers.remove(targettf.getName());
@@ -271,30 +310,39 @@ public class OnFlyGuiClick implements Listener {
             }
         }
 
-    public void TargetFly(Player target, Player player, Boolean state) {
-        FlyMethod(target, state);
+    public void TargetFly(Player target, Player player, boolean state) {
+        String On = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("on-state")) + ChatColor.RESET;
+        String Off = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("off-state")) + ChatColor.RESET;
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
+        String FlySomeoneTarget = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("fly-someone-target")) + ChatColor.RESET;
+        String FlySomeonePlayer = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("fly-someone-player")) + ChatColor.RESET;
         if (state) {
-            player.sendMessage(Prefix + " " + FlySomeonePlayer + " on for " + target.getName());
+            FlyMethod(target, true);
+            String FSPr = FlySomeonePlayer.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", player.getName());
+            player.sendMessage(Prefix + " " + FSPr);
             if (TargetSendMessage) {
-                if (!PlayerNameReval) {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " on");
-                } else {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " on by " + player.getName());
-                }
+                String FSTr = FlySomeoneTarget.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", player.getName());
+                target.sendMessage(Prefix + " " + FSTr);
             }
         } else {
-            player.sendMessage(Prefix + " " + FlySomeonePlayer + " off for " + target.getName());
+            FlyMethod(target, false);
+            String FSPr = FlySomeonePlayer.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", player.getName());
+            player.sendMessage(Prefix + " " + FSPr);
             if (TargetSendMessage) {
-                if (!PlayerNameReval) {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " off");
-                } else {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " off by " + player.getName());
-                }
+                String FSTr = FlySomeoneTarget.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", player.getName());
+                target.sendMessage(Prefix + " " + FSTr);
             }
         }
     }
 
     public void TempflyMethod(Player player, Player target) {
+
+        String TempLeft = plugin.getConfig().getString("temp-left");
+        String TempMinute = plugin.getConfig().getString("temp-minutes");
+        String TempSecond = plugin.getConfig().getString("temp-seconds");
+        String TempHours = plugin.getConfig().getString("temp-hours");
+
         if (player.hasPermission("fly.gui.*")) {
             Inventory tempflygui = Bukkit.createInventory(player, 36, ChatColor.GOLD + "        === Tempfly GUI ===");
 

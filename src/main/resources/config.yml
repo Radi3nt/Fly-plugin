@@ -1,28 +1,28 @@
 prefix: "&6&lFly >"
 
-# fly command
-fly-yourself: "You toggled your fly"
-fly-someone-player: "Toggled the fly"
-fly-someone-target: "Toggled your fly"
+#Fly
+#Color codes enabled
+fly-yourself: "You toggled your fly %state%"
+fly-someone-player: "Toggled the fly %state% for &b%target%"
+fly-someone-target: "Toggled your fly %state% by &b%player%"
 fly-target-message: true
-fly-player-name-reveal: true
 
 
 
 
-# flight speed command
-speed-player-message: "You set you flight speed to"
-speed-someone-player: "You set the flight speed of"
-speed-target-namereveal: "set your flight speed to"
-speed-target: "Set your flight speed to"
+#Flight speed command
+speed-player-message: "You set your flight speed to &b&l%speed%"
+speed-someone-player: "You set the flight speed of &2&l%target%&r to &b&l%speed%"
+speed-target: "Set your flight speed to &b&l%speed%&r by &2&l%player%"
 speed-target-message: true
-speed-player-name-reval: true
 
 
 #tempfly
 temp-target-namereveal: "allowed you to fly for"
 temp-target: "You can fly for"
 temp-left: "of flight left!"
+
+tempfly-message: "%target% can fly for %hours% hours, %minutes% minutes and %seconds% seconds"
 
 temp-hours: "hours"
 temp-minutes: "minutes"
@@ -36,21 +36,60 @@ temp-sound-low: BLOCK_NOTE_BLOCK_HARP
 temp-sound-last: BLOCK_NOTE_BLOCK_HARP
 temp-sound-no: BLOCK_BELL_USE
 
+
+
+
+
+
+
+
 #timefly
+
 timefly-nofly-you: "You are not temp-flying !"
 timefly-nofly-target: "This player is not tem-flying !"
+timefly-structure: "&b&l%hours%&r hours, &b&l%minutes%&r minutes, and &b&l%seconds%&r seconds of flight left"
 
 
 
+
+
+
+#Flyers
+#Color codes enabled
+flyers-noone: "No one has the permission to fly !"
+
+
+
+
+
+#Flyalert
+#Color codes enabled
+flyalert-chat: "&cChat %state%"
+flyalert-title: "&cTitle %state%"
+flyalert-sounds: "&cSounds %state%"
+flyalert-all: "&cAll %state%"
+
+
+
+
+#All of this is in RED
 invalid-player: "This player is invalid !"
 no-args: "This command require an argument"
 wrong-args: "Wrong argument. See the command usage"
 no-permission: "You don't have the permission to use this command !"
 no-damage: "You can't hit entities while flying !"
 reload-message: "Configuration reloaded"
+#Except this
+e-state: "&2&lenabled"
+d-state: "&c&ldisabled"
+on-state: "&2&lon"
+off-state: "&c&loff"
 
 
-cooldown-message: "Command on cooldown for"
+
+
+
+cooldown-message: "&cCommand on cooldown for &b&l%timeleft%&c seconds"
 #I recommend to let this like that
 cooldown-time: 5
 
@@ -58,4 +97,4 @@ reload-melody: true
 credits-message: true
 
 #DON'T CHANGE IT !
-version: 1.2.0
+version: 1.2.2

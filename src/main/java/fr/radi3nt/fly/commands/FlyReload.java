@@ -18,17 +18,17 @@ public class FlyReload implements CommandExecutor {
     Plugin plugin = MainFly.getPlugin(MainFly.class);
     public static Long timer = 0L;
 
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
-    String NoPermission = plugin.getConfig().getString("no-permission");
-    String ReloadMessage = plugin.getConfig().getString("reload-message");
-    String CooldownMessage = plugin.getConfig().getString("cooldown-message");
-    Boolean ReloadMelody = plugin.getConfig().getBoolean("reload-melody");
-    Integer CooldownTime = plugin.getConfig().getInt("cooldown-time");
-    String TempSecond = plugin.getConfig().getString("temp-seconds");
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        String NoPermission = plugin.getConfig().getString("no-permission");
+        String ReloadMessage = plugin.getConfig().getString("reload-message");
+        String CooldownMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("cooldown-message")) + ChatColor.RESET;
+        Boolean ReloadMelody = plugin.getConfig().getBoolean("reload-melody");
+        Integer CooldownTime = plugin.getConfig().getInt("cooldown-time");
 
 
         if (sender instanceof Player) {
@@ -36,8 +36,11 @@ public class FlyReload implements CommandExecutor {
             Player player_c = (Player) sender;
             if (player_c.hasPermission("fly.reload")) {
                 plugin.reloadConfig();
+                plugin.getConfig().options().copyDefaults();
+                plugin.saveConfig();
                 int secondes = CooldownTime;
                 long timeleft = ((timer / 1000) + secondes) - (System.currentTimeMillis() / 1000);
+                String cooldown = CooldownMessage.replace("%timeleft%", String.valueOf(timeleft));
                 if (timeleft <= 0) {
                     List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
                     for (int i = 0; i < list.size(); i++) {
@@ -94,7 +97,7 @@ public class FlyReload implements CommandExecutor {
                         }
                     }
                 } else {
-                    player_c.sendMessage(Prefix + " " + ChatColor.RED + CooldownMessage + " " + ChatColor.DARK_RED + ChatColor.BOLD + timeleft + " " + ChatColor.RED + TempSecond);
+                    player_c.sendMessage(Prefix + " " + cooldown);
                 }
                 return true;
             } else {
@@ -103,6 +106,8 @@ public class FlyReload implements CommandExecutor {
         } else {
             plugin.reloadConfig();
             sender.sendMessage(Prefix + " " + ChatColor.RED + ReloadMessage);
+            plugin.getConfig().options().copyDefaults();
+            plugin.saveDefaultConfig();
         }
         return true;
     }

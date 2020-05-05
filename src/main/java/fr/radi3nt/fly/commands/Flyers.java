@@ -14,19 +14,20 @@ public class Flyers implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
-
     public ArrayList<String> flyers = Fly.flyers;
-    String NoPermission = plugin.getConfig().getString("no-permission");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        String NoPermission = plugin.getConfig().getString("no-permission");
+        String NoOnePerm = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyers-noone")) + ChatColor.RESET;
+
         int shift;
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (sender.hasPermission("fly.flyers")) {
                 if (flyers.size() == 0) {
-                    sender.sendMessage(Prefix + " No one has the permission to fly !");
+                    sender.sendMessage(Prefix + " " + NoOnePerm);
                 }
                 if (flyers.size() == 1) {
                     sender.sendMessage(Prefix + " " + flyers.get(0));
@@ -96,7 +97,7 @@ public class Flyers implements CommandExecutor {
             }
             } else {
                 if (flyers.size() == 0) {
-                    sender.sendMessage(Prefix + " " + "No one has the permission to fly !");
+                    sender.sendMessage(Prefix + " " + NoOnePerm);
                 }
                 if (flyers.size() == 1) {
                     sender.sendMessage(Prefix + " " + flyers.get(0));

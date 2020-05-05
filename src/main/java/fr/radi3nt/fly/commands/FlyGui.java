@@ -22,15 +22,18 @@ public class FlyGui implements CommandExecutor {
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
     static public HashMap<Player, Player> players = new HashMap<>();
-    String InvalidPlayer = plugin.getConfig().getString("invalid-player");
-    String NoPermission = plugin.getConfig().getString("no-permission");
-    String NoArgs = plugin.getConfig().getString("no-args");
-
-
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        String InvalidPlayer = plugin.getConfig().getString("invalid-player");
+        String NoPermission = plugin.getConfig().getString("no-permission");
+        String NoArgs = plugin.getConfig().getString("no-args");
+
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
+
 
         if (sender instanceof Player) {
             if (args.length > 0) {

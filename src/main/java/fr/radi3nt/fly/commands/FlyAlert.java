@@ -26,6 +26,12 @@ public class FlyAlert implements CommandExecutor {
         String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
         String NoArgs = plugin.getConfig().getString("no-args");
         String WrongArgs = plugin.getConfig().getString("wrong-args");
+        String Estate = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("e-state")) + ChatColor.RESET;
+        String Dstate = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("d-state")) + ChatColor.RESET;
+        String Chat = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-chat")) + ChatColor.RESET;
+        String Title = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-title")) + ChatColor.RESET;
+        String Sounds = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-sounds")) + ChatColor.RESET;
+        String All = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-all")) + ChatColor.RESET;
 
 
 
@@ -37,11 +43,13 @@ public class FlyAlert implements CommandExecutor {
                         if (args[1].equals("on")) {
                             NotifyChat.remove(player);
                             NotifyChat.put(player, true);
-                            sender.sendMessage(Prefix + " " + "Chat enabled"); //TODO CONFIG
+                            String ChatR = Chat.replace("%state%", Estate);
+                            sender.sendMessage(Prefix + " " + ChatR);
                         } else if (args[1].equals("off")) {
                             NotifyChat.remove(player);
                             NotifyChat.put(player, false);
-                            sender.sendMessage(Prefix + " " + "Chat disabled"); //TODO CONFIG
+                            String ChatR = Chat.replace("%state%", Dstate);
+                            sender.sendMessage(Prefix + " " + ChatR);
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
@@ -51,11 +59,13 @@ public class FlyAlert implements CommandExecutor {
                         if (args[1].equals("on")) {
                             NotifyTitle.remove(player);
                             NotifyTitle.put(player, true);
-                            sender.sendMessage(Prefix + " " + "Title enabled"); //TODO CONFIG
+                            String TitleR = Title.replace("%state%", Estate);
+                            sender.sendMessage(Prefix + " " + TitleR);
                         } else if (args[1].equals("off")) {
                             NotifyTitle.remove(player);
                             NotifyTitle.put(player, false);
-                            sender.sendMessage(Prefix + " " + "Title disabled"); //TODO CONFIG
+                            String TitleR = Title.replace("%state%", Dstate);
+                            sender.sendMessage(Prefix + " " + TitleR);
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
@@ -65,11 +75,13 @@ public class FlyAlert implements CommandExecutor {
                         if (args[1].equals("on")) {
                             NotifySounds.remove(player);
                             NotifySounds.put(player, true);
-                            sender.sendMessage(Prefix + " " + "Sounds enabled"); //TODO CONFIG
+                            String SoundsR = Sounds.replace("%state%", Estate);
+                            sender.sendMessage(Prefix + " " + SoundsR);
                         } else if (args[1].equals("off")) {
                             NotifySounds.remove(player);
                             NotifySounds.put(player, false);
-                            sender.sendMessage(Prefix + " " + "Sounds disabled"); //TODO CONFIG
+                            String SoundsR = Sounds.replace("%state%", Dstate);
+                            sender.sendMessage(Prefix + " " + SoundsR);
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
@@ -79,11 +91,11 @@ public class FlyAlert implements CommandExecutor {
                         if (args[1].equals("on")) {
                             NotifyBossBar.remove(player);
                             NotifyBossBar.put(player, true);
-                            sender.sendMessage(Prefix + " " + "Bar enabled"); //TODO CONFIG
+                            sender.sendMessage(Prefix + " " + "Bar enabled");
                         } else if (args[1].equals("off")) {
                             NotifyBossBar.remove(player);
                             NotifyBossBar.put(player, false);
-                            sender.sendMessage(Prefix + " " + "Bar disabled"); //TODO CONFIG
+                            sender.sendMessage(Prefix + " " + "Bar disabled");
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
@@ -100,7 +112,8 @@ public class FlyAlert implements CommandExecutor {
                             NotifyChat.put(player, true);
                             NotifySounds.remove(player);
                             NotifySounds.put(player, true);
-                            sender.sendMessage(Prefix + " " + "All enabled"); //TODO CONFIG
+                            String AllR = All.replace("%state%", Estate);
+                            sender.sendMessage(Prefix + " " + AllR);
                         } else if (args[1].equals("off")) {
                             NotifyBossBar.remove(player);
                             NotifyBossBar.put(player, false);
@@ -110,7 +123,8 @@ public class FlyAlert implements CommandExecutor {
                             NotifyChat.put(player, false);
                             NotifySounds.remove(player);
                             NotifySounds.put(player, false);
-                            sender.sendMessage(Prefix + " " + "All disabled"); //TODO CONFIG
+                            String AllR = All.replace("%state%", Dstate);
+                            sender.sendMessage(Prefix + " " + AllR);
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }

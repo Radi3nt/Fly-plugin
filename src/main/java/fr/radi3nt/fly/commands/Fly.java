@@ -16,19 +16,14 @@ public class Fly implements CommandExecutor {
     Plugin plugin = MainFly.getPlugin(MainFly.class);
     public static ArrayList<String> flyers = new ArrayList<>();
 
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
-    String FlyYoureself = plugin.getConfig().getString("fly-yourself");
-    String InvalidPlayer = plugin.getConfig().getString("invalid-player");
-    String NoPermission = plugin.getConfig().getString("no-permission");
-    String FlySomeonePlayer = plugin.getConfig().getString("fly-someone-player");
-    String FlySomeoneTarget = plugin.getConfig().getString("fly-someone-target");
-    Boolean PlayerNameReval = plugin.getConfig().getBoolean("fly-player-name-reveal");
-    Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        String InvalidPlayer = plugin.getConfig().getString("invalid-player");
+        String NoPermission = plugin.getConfig().getString("no-permission");
 
         if (sender instanceof Player) {
 
@@ -60,25 +55,26 @@ public class Fly implements CommandExecutor {
             if (!(args.length == 0)) {
                 Player target = Bukkit.getPlayerExact(args[0]);
                 if (target instanceof Player) {
+                    String On = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("on-state")) + ChatColor.RESET;
+                    String Off = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("off-state")) + ChatColor.RESET;
+                    Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
+                    String FlySomeoneTarget = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("fly-someone-target")) + ChatColor.RESET;
+                    String FlySomeonePlayer = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("fly-someone-player")) + ChatColor.RESET;
                     if (!target.getAllowFlight()) {
                         FlyMethod(target, true);
-                        sender.sendMessage(Prefix + " " + FlySomeonePlayer + " on for " + target.getName());
+                        String FSPr = FlySomeonePlayer.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", "console");
+                        sender.sendMessage(Prefix + " " + FSPr);
                         if (TargetSendMessage) {
-                            if (!PlayerNameReval) {
-                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " on");
-                            } else {
-                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " on by the console");
-                            }
+                            String FSTr = FlySomeoneTarget.replace("%state%", On).replace("%target%", target.getName()).replace("%player%","console");
+                            target.sendMessage(Prefix + " " + FSTr);
                         }
                     } else {
                         FlyMethod(target, false);
-                        sender.sendMessage(Prefix + " " + FlySomeonePlayer + " off for " + target.getName());
+                        String FSPr = FlySomeonePlayer.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", "console");
+                        sender.sendMessage(Prefix + " " + FSPr);
                         if (TargetSendMessage) {
-                            if (!PlayerNameReval) {
-                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " off");
-                            } else {
-                                target.sendMessage(Prefix + " " + FlySomeoneTarget + " off by the console" );
-                            }
+                            String FSTr = FlySomeoneTarget.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", "console");
+                            target.sendMessage(Prefix + " " + FSTr);
                         }
                     }
                 } else {
@@ -94,36 +90,44 @@ public class Fly implements CommandExecutor {
     }
 
     public void PlayerFly(Player player) {
+        String On = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("on-state")) + ChatColor.RESET;
+        String Off = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("off-state")) + ChatColor.RESET;
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        String FlyYoureself = plugin.getConfig().getString("fly-yourself");
         if (!player.getAllowFlight()) {
             FlyMethod(player, true);
-            player.sendMessage(Prefix + " " + FlyYoureself + " on");
+            String FYr = FlyYoureself.replace("%state%", On);
+            player.sendMessage(Prefix + " " + FYr);
         } else {
             FlyMethod(player, false);
-            player.sendMessage(Prefix + " " + FlyYoureself + " off");
+            String FYr = FlyYoureself.replace("%state%", Off);
+            player.sendMessage(Prefix + " " + FYr);
         }
     }
 
 
     public void TargetFly(Player target, Player player) {
+        String On = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("on-state")) + ChatColor.RESET;
+        String Off = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("off-state")) + ChatColor.RESET;
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
+        String FlySomeoneTarget = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("fly-someone-target")) + ChatColor.RESET;
+        String FlySomeonePlayer = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("fly-someone-player")) + ChatColor.RESET;
         if (!target.getAllowFlight()) {
             FlyMethod(target, true);
-            player.sendMessage(Prefix + " " + FlySomeonePlayer + " on for " + target.getName());
+            String FSPr = FlySomeonePlayer.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", player.getName());
+            player.sendMessage(Prefix + " " + FSPr);
             if (TargetSendMessage) {
-                if (!PlayerNameReval) {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " on");
-                } else {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " on by " + player.getName());
-                }
+                    String FSTr = FlySomeoneTarget.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", player.getName());
+                    target.sendMessage(Prefix + " " + FSTr);
             }
         } else {
             FlyMethod(target, false);
-            player.sendMessage(Prefix + " " + FlySomeonePlayer + " off for " + target.getName());
+            String FSPr = FlySomeonePlayer.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", player.getName());
+            player.sendMessage(Prefix + " " + FSPr);
             if (TargetSendMessage) {
-                if (!PlayerNameReval) {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " off");
-                } else {
-                    target.sendMessage(Prefix + " " + FlySomeoneTarget + " off by " + player.getName());
-                }
+                String FSTr = FlySomeoneTarget.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", player.getName());
+                target.sendMessage(Prefix + " " + FSTr);
             }
         }
     }
