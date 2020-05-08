@@ -1,7 +1,26 @@
+#  ______  _         ______  _                _
+#  |  ___|| |        | ___ \| |              (_)
+#  | |_   | | _   _  | |_/ /| | _   _   __ _  _  _ __
+#  |  _|  | || | | | |  __/ | || | | | / _` || || '_ \
+#  | |    | || |_| | | |    | || |_| || (_| || || | | |
+#  \_|    |_| \__, | \_|    |_| \__,_| \__, ||_||_| |_|
+#              __/ |                    __/ |
+#             |___/                    |___/
+#
+#-----------------------
+# Developer: Radi3nt
+#-----------------------
+#
+# //ca// = color code accepted
+# //ce// = color code forbidden
+# non-specified = color code forbidden
+
+
+#//ca//
 prefix: "&6&lFly >"
 
 #Fly
-#Color codes enabled
+#//ca//
 fly-yourself: "You toggled your fly %state%"
 fly-someone-player: "Toggled the fly %state% for &b%target%"
 fly-someone-target: "Toggled your fly %state% by &b%player%"
@@ -11,6 +30,7 @@ fly-target-message: true
 
 
 #Flight speed command
+#//ca//
 speed-player-message: "You set your flight speed to &b&l%speed%"
 speed-someone-player: "You set the flight speed of &2&l%target%&r to &b&l%speed%"
 speed-target: "Set your flight speed to &b&l%speed%&r by &2&l%player%"
@@ -18,12 +38,17 @@ speed-target-message: true
 
 
 #tempfly
+#//ce//
+#//update this soon//
 temp-target-namereveal: "allowed you to fly for"
 temp-target: "You can fly for"
 temp-left: "of flight left!"
 
+#//ca//
 tempfly-message: "%target% can fly for %hours% hours, %minutes% minutes and %seconds% seconds"
 
+
+#//ce//
 temp-hours: "hours"
 temp-minutes: "minutes"
 temp-seconds: "seconds"
@@ -44,9 +69,11 @@ temp-sound-no: BLOCK_BELL_USE
 
 
 #timefly
-
+#//ce//
 timefly-nofly-you: "You are not temp-flying !"
 timefly-nofly-target: "This player is not tem-flying !"
+
+#//ca//
 timefly-structure: "&b&l%hours%&r hours, &b&l%minutes%&r minutes, and &b&l%seconds%&r seconds of flight left"
 
 
@@ -55,7 +82,7 @@ timefly-structure: "&b&l%hours%&r hours, &b&l%minutes%&r minutes, and &b&l%secon
 
 
 #Flyers
-#Color codes enabled
+#//ca//
 flyers-noone: "No one has the permission to fly !"
 
 
@@ -63,7 +90,7 @@ flyers-noone: "No one has the permission to fly !"
 
 
 #Flyalert
-#Color codes enabled
+#//ca//
 flyalert-chat: "&cChat %state%"
 flyalert-title: "&cTitle %state%"
 flyalert-sounds: "&cSounds %state%"
@@ -72,14 +99,16 @@ flyalert-all: "&cAll %state%"
 
 
 
-#All of this is in RED
+#All of this is in RED so //ce//
 invalid-player: "This player is invalid !"
 no-args: "This command require an argument"
 wrong-args: "Wrong argument. See the command usage"
 no-permission: "You don't have the permission to use this command !"
 no-damage: "You can't hit entities while flying !"
 reload-message: "Configuration reloaded"
-#Except this
+
+
+#//ca//
 e-state: "&2&lenabled"
 d-state: "&c&ldisabled"
 on-state: "&2&lon"
@@ -88,7 +117,7 @@ off-state: "&c&loff"
 
 
 
-
+#//ca//
 cooldown-message: "&cCommand on cooldown for &b&l%timeleft%&c seconds"
 #I recommend to let this like that
 cooldown-time: 5
@@ -97,4 +126,4 @@ reload-melody: true
 credits-message: true
 
 #DON'T CHANGE IT !
-version: 1.2.2
+version: 1.2.3

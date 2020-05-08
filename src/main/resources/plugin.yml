@@ -1,5 +1,5 @@
 name: FlyPlugin
-version: 1.2.2
+version: 1.2.3
 main: fr.radi3nt.fly.MainFly
 api-version: 1.13
 prefix: Fly

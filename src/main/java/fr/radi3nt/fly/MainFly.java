@@ -112,4 +112,25 @@ public final class MainFly extends JavaPlugin {
         }
         flyers.clear();
     }
+
+    public static int ReturnHours(int timeleft) {
+        int heures = (int) (timeleft / 3600);
+        return heures;
+    }
+
+    public static int ReturnMinutes(int timeleft) {
+        int heures = (int) (timeleft / 3600);
+        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
+        return minutes;
+    }
+
+    public static int ReturnSeconds(int timeleft) {
+        int heures = (int) (timeleft / 3600);
+        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
+        int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+        return seconds;
+    }
+
+
+
 }
