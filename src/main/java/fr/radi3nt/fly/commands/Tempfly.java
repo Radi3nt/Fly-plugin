@@ -29,14 +29,12 @@ public class Tempfly implements CommandExecutor {
     String InvalidPlayer = plugin.getConfig().getString("invalid-player");
     String NoPermission = plugin.getConfig().getString("no-permission");
 
-    String NameReveal = plugin.getConfig().getString("temp-target-namereveal");
-    String TargetMe = plugin.getConfig().getString("temp-target");
 
-    Boolean TargetMessage = plugin.getConfig().getBoolean("temp-target-message");
-    Boolean PlayerNameReveal = plugin.getConfig().getBoolean("temp-player-name-reveal");
-    String TempMinute = plugin.getConfig().getString("temp-minutes");
-    String TempSecond = plugin.getConfig().getString("temp-seconds");
-    String TempHours = plugin.getConfig().getString("temp-hours");
+    String MessagePT = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-message"));
+    String MessageTP = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-target"));
+    String MessageP = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-player"));
+
+    Boolean TargetMessage = plugin.getConfig().getBoolean("tempfly-target-message");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -72,13 +70,12 @@ public class Tempfly implements CommandExecutor {
                                 int timeleft = time.get(target.getName());
                                 int heures = (timeleft / 3600);
                                 int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
-                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                                int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                                String TimeleftPT = MessagePT.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%target%", target.getName());
+                                sender.sendMessage(Prefix + " " + TimeleftPT);
                                 if (TargetMessage) {
-                                    if (PlayerNameReveal) {
-                                        target.sendMessage(Prefix + " The console " + NameReveal + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
-                                    } else {
-                                        target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
-                                    }
+                                    String TimeleftTP = MessageTP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%player%", "console");
+                                        target.sendMessage(Prefix + " " + TimeleftTP);
                                 }
                         } else {
                             sender.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
@@ -127,13 +124,12 @@ public class Tempfly implements CommandExecutor {
                                 int timeleft = time.get(target.getName());
                                 int heures = (timeleft / 3600);
                                 int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
-                                sender.sendMessage(Prefix + " " + target.getName() + " can fly for " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                                int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                                String TimeleftPT = MessagePT.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%target%", target.getName());
+                                sender.sendMessage(Prefix + " " + TimeleftPT);
                                 if (TargetMessage) {
-                                        if (PlayerNameReveal) {
-                                            target.sendMessage(Prefix + " " + player.getName() + " " + NameReveal + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
-                                        } else {
-                                            target.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
-                                        }
+                                    String TimeleftTP = MessageTP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%player%", player.getName());
+                                    target.sendMessage(Prefix + " " + TimeleftTP);
                                     }
                             } else {
                                 player.sendMessage(Prefix + ChatColor.RED + " " + WrongArgs);
@@ -155,7 +151,9 @@ public class Tempfly implements CommandExecutor {
                             int timeleft = time.get(player.getName());
                             int heures = (timeleft / 3600);
                             int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
-                            sender.sendMessage(Prefix + " " + TargetMe + " " + ChatColor.AQUA + (timeleft / 3600) + " " + ChatColor.GREEN + TempHours + ", " + ChatColor.AQUA + ((timeleft - (timeleft / 3600) *3600) / 60) + " " + ChatColor.GREEN + TempMinute + " and " + ChatColor.AQUA + (timeleft - (heures*3600 + minutes*60)) + " " + ChatColor.GREEN + TempSecond);
+                            int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                            String TimeleftP = MessageP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
+                            sender.sendMessage(Prefix + " " + TimeleftP);
                         } else {
                             player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
                         }

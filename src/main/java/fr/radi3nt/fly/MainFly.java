@@ -5,6 +5,7 @@ import fr.radi3nt.fly.events.*;
 import fr.radi3nt.fly.timer.checker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -82,6 +83,10 @@ public final class MainFly extends JavaPlugin {
             NotifyTitle.put(player, true);
             NotifyBossBar.put(player, true);
             NotifySounds.put(player, true);
+            if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+            }
         }
     }
 
@@ -99,16 +104,20 @@ public final class MainFly extends JavaPlugin {
 
                 list.get(i).playSound(list.get(i).getLocation(), "minecraft:block.note_block.bit", SoundCategory.AMBIENT, 100, 1);
             }
-            Fly.FlyMethod(list.get(i), false);
-            Player player = list.get(i);
-            NotifyChat.remove(player);
-            NotifyTitle.remove(player);
-            NotifyBossBar.remove(player);
-            NotifySounds.remove(player);
-            NotifyChat.put(player, true);
-            NotifyTitle.put(player, true);
-            NotifyBossBar.put(player, true);
-            NotifySounds.put(player, true);
+            if (list.get(i).getGameMode().equals(GameMode.CREATIVE)) {
+                list.get(i).setAllowFlight(true);
+            } else {
+                Fly.FlyMethod(list.get(i), false);
+                Player player = list.get(i);
+                NotifyChat.remove(player);
+                NotifyTitle.remove(player);
+                NotifyBossBar.remove(player);
+                NotifySounds.remove(player);
+                NotifyChat.put(player, true);
+                NotifyTitle.put(player, true);
+                NotifyBossBar.put(player, true);
+                NotifySounds.put(player, true);
+            }
         }
         flyers.clear();
     }

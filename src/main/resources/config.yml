@@ -38,22 +38,19 @@ speed-target-message: true
 
 
 #tempfly
-#//ce//
-#//update this soon//
-temp-target-namereveal: "allowed you to fly for"
-temp-target: "You can fly for"
-temp-left: "of flight left!"
-
 #//ca//
-tempfly-message: "%target% can fly for %hours% hours, %minutes% minutes and %seconds% seconds"
+tempfly-message: "%target% can fly for &b&l%hours%&r hours, &b&l%minutes%&r minutes and &b&l%seconds%&r seconds"
+tempfly-target: "%player% allowed you to fly for &b&l%hours%&r hours, &b&l%minutes%&r minutes and &b&l%seconds%&r seconds"
+tempfly-player: "You can fly for &b&l%hours%&r hours, &b&l%minutes%&r minutes and &b&l%seconds%&r seconds"
 
+tempfly-target-message: true
 
-#//ce//
-temp-hours: "hours"
-temp-minutes: "minutes"
-temp-seconds: "seconds"
-temp-target-message: true
-temp-player-name-reveal: true
+timefly-high: "&b&l%hours%&r hours, &b&l%minutes%&r minutes, and &b&l%seconds%&r seconds of flight left"
+timefly-medium: "&b&l%minutes%&6 minutes, and &b&l%seconds%&6 seconds of flight left"
+timefly-low: "&4&l%seconds%&c seconds of flight left"
+
+tempfly-timeleft: "&cTime left:"
+tempfly-notimeleft: "&c&lNo time left!"
 
 temp-sound-high: BLOCK_NOTE_BLOCK_HAT
 temp-sound-medium: BLOCK_NOTE_BLOCK_HAT
@@ -70,8 +67,9 @@ temp-sound-no: BLOCK_BELL_USE
 
 #timefly
 #//ce//
-timefly-nofly-you: "You are not temp-flying !"
-timefly-nofly-target: "This player is not tem-flying !"
+timefly-nofly-you: "You are not temp-flying!"
+timefly-nofly-target: "This player is not tem-flying!"
+
 
 #//ca//
 timefly-structure: "&b&l%hours%&r hours, &b&l%minutes%&r minutes, and &b&l%seconds%&r seconds of flight left"
@@ -80,10 +78,9 @@ timefly-structure: "&b&l%hours%&r hours, &b&l%minutes%&r minutes, and &b&l%secon
 
 
 
-
 #Flyers
 #//ca//
-flyers-noone: "No one has the permission to fly !"
+flyers-noone: "No one has the permission to fly!"
 
 
 
@@ -100,11 +97,11 @@ flyalert-all: "&cAll %state%"
 
 
 #All of this is in RED so //ce//
-invalid-player: "This player is invalid !"
+invalid-player: "This player is invalid!"
 no-args: "This command require an argument"
 wrong-args: "Wrong argument. See the command usage"
-no-permission: "You don't have the permission to use this command !"
-no-damage: "You can't hit entities while flying !"
+no-permission: "You don't have the permission to use this command!"
+no-damage: "You can't hit entities while flying!"
 reload-message: "Configuration reloaded"
 
 
