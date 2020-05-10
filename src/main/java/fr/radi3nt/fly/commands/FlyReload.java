@@ -45,7 +45,7 @@ public class FlyReload implements CommandExecutor {
                     List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
                     for (int i = 0; i < list.size(); i++) {
                         if (list.get(i).hasPermission("fly.admin")) {
-                            list.get(i).sendMessage(Prefix + " " + ChatColor.RED + ReloadMessage);
+                            list.get(i).sendMessage(Prefix + " " + ChatColor.RED + ChatColor.BOLD + ReloadMessage);
                             timer = System.currentTimeMillis();
                         /*/Player op = list.get(i);
                         Bukkit.getScheduler().runTaskLater(plugin, () -> {
