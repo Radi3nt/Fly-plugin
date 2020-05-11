@@ -91,6 +91,7 @@ flyers-noone: "No one has the permission to fly!"
 flyalert-chat: "&cChat %state%"
 flyalert-title: "&cTitle %state%"
 flyalert-sounds: "&cSounds %state%"
+flyalert-bossbar: "&cBossbar %state%"
 flyalert-all: "&cAll %state%"
 
 

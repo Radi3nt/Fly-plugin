@@ -7,6 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.SoundCategory;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -41,39 +45,14 @@ public final class MainFly extends JavaPlugin {
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Fly Plugin by " + ChatColor.AQUA + ChatColor.BOLD + "Radi3nt");
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "If you have any issues, please report it");
 
-        getServer().getPluginManager().registerEvents(new GetEntityDamaged(), this);
-        getServer().getPluginManager().registerEvents(new OnWorldChange(), this);
-        getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
-        getServer().getPluginManager().registerEvents(new PlayerFlying(), this);
-        getServer().getPluginManager().registerEvents(new OnGamemodeChange(), this);
-        getServer().getPluginManager().registerEvents(new PlayerRespawn(), this);
-        getServer().getPluginManager().registerEvents(new OnPlayerDisconnect(), this);
-        getServer().getPluginManager().registerEvents(new OnFlyGuiClick(), this);
+        RegisterEvents();
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Registered Events");
+        RegisterCommands();
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Registered Commands");
 
-        getCommand("fly").setExecutor(new Fly());
-        getCommand("fly").setTabCompleter(new fr.radi3nt.fly.tab.Fly());
-
-        getCommand("flyspeed").setExecutor(new FlySpeed());
-        getCommand("flyspeed").setTabCompleter(new fr.radi3nt.fly.tab.FlySpeed());
-
-        getCommand("tempfly").setExecutor(new Tempfly());
-        getCommand("tempfly").setTabCompleter(new fr.radi3nt.fly.tab.Tempfly());
-
-        getCommand("timefly").setExecutor(new GetFlyTime());
-        getCommand("timefly").setTabCompleter(new fr.radi3nt.fly.tab.GetFlyTime());
-
-        getCommand("flyalert").setExecutor(new FlyAlert());
-        getCommand("flyalert").setTabCompleter(new fr.radi3nt.fly.tab.FlyAlert());
-
-
-        getCommand("flygui").setExecutor(new FlyGui());
-
-        getCommand("flyers").setExecutor(new Flyers());
-
-        getCommand("flyreload").setExecutor(new FlyReload());
 
         checker task = new checker();
-        task.runTaskTimer(this, 0, 1);
+        task.runTaskTimer(this, 2, 1);
 
 
         File locations = new File("plugins/FlyPlugin", "flyers.yml");
@@ -114,6 +93,9 @@ public final class MainFly extends JavaPlugin {
                 FlyMethod(player, true);
                 timer.put(player.getName(), System.currentTimeMillis());
                 time.put(player.getName(), timeleft);
+                HashMap<Player,BossBar> bossbar = checker.bossbar;
+                bossbar.put(player, Bukkit.createBossBar("Charging ...", BarColor.WHITE, BarStyle.SOLID, new BarFlag[0]));
+                bossbar.get(player).addPlayer(player);
             }
         }
     }
@@ -134,7 +116,17 @@ public final class MainFly extends JavaPlugin {
             }
             if (list.get(i).getGameMode().equals(GameMode.CREATIVE)) {
                 list.get(i).setAllowFlight(true);
+                HashMap<Player,BossBar> bossbar = checker.bossbar;
+                if (bossbar.containsKey(list.get(i))) {
+                    bossbar.get(list.get(i)).removePlayer(list.get(i));
+                    bossbar.remove(list.get(i));
+                }
             } else {
+                HashMap<Player,BossBar> bossbar = checker.bossbar;
+                if (bossbar.containsKey(list.get(i))) {
+                    bossbar.get(list.get(i)).removePlayer(list.get(i));
+                    bossbar.remove(list.get(i));
+                }
                 Player player = list.get(i);
                 NotifyChat.remove(player);
                 NotifyTitle.remove(player);
@@ -149,24 +141,38 @@ public final class MainFly extends JavaPlugin {
         flyers.clear();
     }
 
-    public static int ReturnHours(int timeleft) {
-        int heures = timeleft / 3600;
-        return heures;
+    public void RegisterEvents() {
+        getServer().getPluginManager().registerEvents(new GetEntityDamaged(), this);
+        getServer().getPluginManager().registerEvents(new OnWorldChange(), this);
+        getServer().getPluginManager().registerEvents(new OnPlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new PlayerFlying(), this);
+        getServer().getPluginManager().registerEvents(new OnGamemodeChange(), this);
+        getServer().getPluginManager().registerEvents(new PlayerRespawn(), this);
+        getServer().getPluginManager().registerEvents(new OnPlayerDisconnect(), this);
+        getServer().getPluginManager().registerEvents(new OnFlyGuiClick(), this);
     }
 
-    public static int ReturnMinutes(int timeleft) {
-        int heures = timeleft / 3600;
-        int minutes = (timeleft - (timeleft / 3600) *3600) / 60;
-        return minutes;
+    public void RegisterCommands() {
+        getCommand("fly").setExecutor(new Fly());
+        getCommand("fly").setTabCompleter(new fr.radi3nt.fly.tab.Fly());
+
+        getCommand("flyspeed").setExecutor(new FlySpeed());
+        getCommand("flyspeed").setTabCompleter(new fr.radi3nt.fly.tab.FlySpeed());
+
+        getCommand("tempfly").setExecutor(new Tempfly());
+        getCommand("tempfly").setTabCompleter(new fr.radi3nt.fly.tab.Tempfly());
+
+        getCommand("timefly").setExecutor(new GetFlyTime());
+        getCommand("timefly").setTabCompleter(new fr.radi3nt.fly.tab.GetFlyTime());
+
+        getCommand("flyalert").setExecutor(new FlyAlert());
+        getCommand("flyalert").setTabCompleter(new fr.radi3nt.fly.tab.FlyAlert());
+
+
+        getCommand("flygui").setExecutor(new FlyGui());
+
+        getCommand("flyers").setExecutor(new Flyers());
+
+        getCommand("flyreload").setExecutor(new FlyReload());
     }
-
-    public static int ReturnSeconds(int timeleft) {
-        int heures = timeleft / 3600;
-        int minutes = (timeleft - (timeleft / 3600) *3600) / 60;
-        int seconds = timeleft - (heures*3600 + minutes*60);
-        return seconds;
-    }
-
-
-
 }

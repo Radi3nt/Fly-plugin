@@ -8,6 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -51,7 +55,8 @@ public class checker extends BukkitRunnable {
     HashMap<Player, Boolean> NotifyBossBar = FlyAlert.NotifyBossBar;
     HashMap<Player, Boolean> NotifySounds = FlyAlert.NotifySounds;
 
-    int timem = 86400;
+    public static HashMap<Player, BossBar> bossbar = new HashMap<>();
+    public static HashMap<Player, Integer> timem = new HashMap<>();
 
     @Override
     public void run() {
@@ -63,6 +68,7 @@ public class checker extends BukkitRunnable {
                 e.printStackTrace();
             }
         }
+
         FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (int i = 0; i < list.size(); i++) {
@@ -71,54 +77,79 @@ public class checker extends BukkitRunnable {
                 int secondes = time.get(list.get(i).getName());
                 long timeleft = ((timer.get(list.get(i).getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
                 loc.set("flyers." + player.getName() , timeleft);
-                if (timeleft > timem){
-                    timem = (int) timeleft;
+                if (bossbar.containsKey(player)) {
+                    if (!NotifyBossBar.get(player)) {
+                        bossbar.remove(player);
+                    }
+                } else {
+                    if (NotifyBossBar.get(player)) {
+                        bossbar.put(player, Bukkit.createBossBar("timeleft", BarColor.GREEN, BarStyle.SOLID, new BarFlag[0]));
+                        bossbar.get(player).addPlayer(player);
+                    }
                 }
-                if (timeleft == 3600 && timem > 3600) {
+
+
+                bossbar.get(player).setProgress(timeleft/((float)secondes));
+                if (timeleft > 3600) {
+                    bossbar.get(player).setTitle("TimeLeft: " + ChatColor.GREEN + ChatColor.BOLD + timeleft);
+                    bossbar.get(player).setColor(BarColor.GREEN);
+                } else if (timeleft > 60){
+                    bossbar.get(player).setTitle("TimeLeft: " + ChatColor.GOLD + ChatColor.BOLD + timeleft);
+                    bossbar.get(player).setColor(BarColor.YELLOW);
+                } else {
+                    bossbar.get(player).setTitle("TimeLeft: " + ChatColor.DARK_RED + ChatColor.BOLD + timeleft);
+                    bossbar.get(player).setColor(BarColor.RED);
+                }
+                if (timeleft > timem.get(player)){
+                    timem.put(player, (int) timeleft);
+                }
+                if (timeleft == 3600 && timem.get(player) > 3600) {
                     High(player, timeleft);
-                    timem = 3600;
+                    timem.put(player, 3600);
                 }
-                if (timeleft == 1800 && timem > 1800) {
+                if (timeleft == 1800 && timem.get(player) > 1800) {
                     High(player, timeleft);
-                    timem = 1800;
+                    timem.put(player, 1800);
                 }
-                if (timeleft == 900 && timem > 900) {
+                if (timeleft == 900 && timem.get(player) > 900) {
                     High(player, timeleft);
-                    timem = 900;
+                    timem.put(player, 900);
                 }
-                if (timeleft == 300 && timem > 300) {
+                if (timeleft == 300 && timem.get(player) > 300) {
                     High(player, timeleft);
-                    timem = 300;
+                    timem.put(player, 300);
                 }
-                if (timeleft == 60 && timem > 60) {
+                if (timeleft == 60 && timem.get(player) > 60) {
                     Medium(player, timeleft);
-                    timem = 60;
+                    timem.put(player, 60);
                 }
-                if (timeleft == 30 && timem > 30) {
+                if (timeleft == 30 && timem.get(player) > 30) {
                     Medium(player, timeleft);
-                    timem = 30;
+                    timem.put(player, 30);
                 }
-                if (timeleft == 15 && timem > 15) {
+                if (timeleft == 15 && timem.get(player) > 15) {
                     Medium(player, timeleft);
-                    timem = 15;
+                    timem.put(player, 15);
                 }
-                if (timeleft == 5 && timem > 5) {
+                if (timeleft == 5 && timem.get(player) > 5) {
                     Medium(player, timeleft);
-                    timem = 5;
+                    timem.put(player, 5);
                 }
-                if (timeleft == 3 && timem > 3) {
+                if (timeleft == 3 && timem.get(player) > 3) {
                     Low(player, timeleft);
-                    timem = 3;
+                    timem.put(player, 3);
                 }
-                if (timeleft == 2 && timem > 2) {
+                if (timeleft == 2 && timem.get(player) > 2) {
                     Low(player, timeleft);
-                    timem = 2;
+                    timem.put(player, 2);
                 }
-                if (timeleft == 1 && timem > 1) {
+                if (timeleft == 1 && timem.get(player) > 1) {
                     Low(player, timeleft);
-                    timem = 1;
+                    timem.put(player, 1);
                 }
                 if (timeleft <= 0) {
+                    bossbar.get(player).removePlayer(player);
+                    bossbar.remove(player);
                     loc.set("flyers." + player.getName() , null);
                     String NoTimeLeftU = NoTimeLeftMessage.toUpperCase();
                     player.sendTitle(NoTimeLeftU, "", 20,30,20);
@@ -133,7 +164,7 @@ public class checker extends BukkitRunnable {
                     timer.remove(player.getName());
                     Tempfly.time.remove(player.getName());
                     time.remove(player.getName());
-                    timem = 100;
+                    timem.remove(player);
                 }
             }
         }

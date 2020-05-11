@@ -1,6 +1,7 @@
 package fr.radi3nt.fly.commands;
 
 import fr.radi3nt.fly.MainFly;
+import fr.radi3nt.fly.timer.checker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.SoundCategory;
@@ -26,6 +27,8 @@ public class Tempfly implements CommandExecutor {
     public static Map<String, Integer> time = new HashMap<>();
     public ArrayList<String> flyers = Fly.flyers;
 
+
+    HashMap<Player, Integer> timem = checker.timem;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -84,6 +87,7 @@ public class Tempfly implements CommandExecutor {
                             flyers.remove(target.getName());
                             loc.set("flyers." + target.getName() , time.get(target.getName()));
                             FlyMethod(target, true);
+                            timem.put(target, 100000);
                             timer.put(target.getName(), System.currentTimeMillis());
                                 int timeleft = time.get(target.getName());
                                 int heures = (timeleft / 3600);
@@ -139,6 +143,7 @@ public class Tempfly implements CommandExecutor {
                                 player.playSound(player.getLocation(), "minecraft:block.note_block.pling", SoundCategory.AMBIENT, 100, 2);
                                 loc.set("flyers." + target.getName() , time.get(target.getName()));                                FlyMethod(target, true);
                                 timer.put(target.getName(), System.currentTimeMillis());
+                                timem.put(target, 100000);
                                 int timeleft = time.get(target.getName());
                                 int heures = (timeleft / 3600);
                                 int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
@@ -166,6 +171,7 @@ public class Tempfly implements CommandExecutor {
                             flyers.remove(player.getName());
                             loc.set("flyers." + player.getName() , time.get(player.getName()));
                             FlyMethod(player, true);
+                            timem.put(player, 100000);
                             timer.put(player.getName(), System.currentTimeMillis());
                             int timeleft = time.get(player.getName());
                             int heures = (timeleft / 3600);

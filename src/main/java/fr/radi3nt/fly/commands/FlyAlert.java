@@ -31,6 +31,7 @@ public class FlyAlert implements CommandExecutor {
         String Chat = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-chat")) + ChatColor.RESET;
         String Title = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-title")) + ChatColor.RESET;
         String Sounds = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-sounds")) + ChatColor.RESET;
+        String Bossbar = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-bossbar")) + ChatColor.RESET;
         String All = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-all")) + ChatColor.RESET;
 
 
@@ -87,20 +88,22 @@ public class FlyAlert implements CommandExecutor {
                         }
                         break;
 
-                    /*/case "bossbar":
+                    case "bossbar":
                         if (args[1].equals("on")) {
                             NotifyBossBar.remove(player);
                             NotifyBossBar.put(player, true);
-                            sender.sendMessage(Prefix + " " + "Bar enabled");
+                            String BossbarR = Bossbar.replace("%state%", Estate);
+                            sender.sendMessage(Prefix + " " + BossbarR);
                         } else if (args[1].equals("off")) {
                             NotifyBossBar.remove(player);
                             NotifyBossBar.put(player, false);
-                            sender.sendMessage(Prefix + " " + "Bar disabled");
+                            String BossbarR = Bossbar.replace("%state%", Dstate);
+                            sender.sendMessage(Prefix + " " + BossbarR);
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
                         break;
-                        /*/
+
 
                     case "all":
                         if (args[1].equals("on")) {

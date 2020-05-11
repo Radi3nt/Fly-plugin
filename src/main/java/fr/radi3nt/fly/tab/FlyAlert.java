@@ -13,7 +13,7 @@ public class FlyAlert implements TabCompleter {
         if (args.length == 1) {
             List<String> things = new ArrayList<>();
             things.add("chat");
-            //things.add("bossbar");
+            things.add("bossbar");
             things.add("title");
             things.add("sounds");
             things.add("all");
