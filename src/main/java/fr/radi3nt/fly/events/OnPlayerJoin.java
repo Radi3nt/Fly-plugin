@@ -5,15 +5,22 @@ import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 
 public class OnPlayerJoin implements Listener {
 
@@ -35,7 +42,7 @@ public class OnPlayerJoin implements Listener {
 
 
     @EventHandler
-    public void OnPlayerJoin(PlayerJoinEvent e){
+    public void OnPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         NotifyChat.remove(player);
         NotifyTitle.remove(player);
@@ -57,14 +64,36 @@ public class OnPlayerJoin implements Listener {
         }
         flyers.remove(player.getName());
         player.setInvulnerable(false);
-            if (player.hasPermission("fly.admin")) {
-                if (Message) {
-                    player.sendMessage(  ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
-                    player.sendMessage(  ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD + "Radi3nt" + ChatColor.AQUA + "    |");
-                    player.sendMessage(  ChatColor.AQUA + " |         Version: " + ChatColor.GREEN + ChatColor.BOLD + "1.2.3b" + ChatColor.AQUA + "        |");
-                    player.sendMessage(  ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
-                }
+        if (player.hasPermission("fly.admin")) {
+            if (Message) {
+                player.sendMessage(ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
+                player.sendMessage(ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD + "Radi3nt" + ChatColor.AQUA + "    |");
+                player.sendMessage(ChatColor.AQUA + " |         Version: " + ChatColor.GREEN + ChatColor.BOLD + "1.2.3b" + ChatColor.AQUA + "      |");
+                player.sendMessage(ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
             }
         }
 
+
+            File locations = new File("plugins/FlyPlugin", "flyers.yml");
+            if (!locations.exists()) {
+                try {
+                    locations.createNewFile();
+                } catch (IOException event) {
+                    event.printStackTrace();
+                }
+            }
+            FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
+            if (loc.get("flyers." + player.getName()) != null) {
+                Integer timeleft = (Integer) loc.get("flyers." + player.getName());
+                FlyMethod(player, true);
+                timer.put(player.getName(), System.currentTimeMillis());
+                time.put(player.getName(), timeleft);
+                Location ploc = player.getLocation();
+                int y = ploc.getBlockY() - 1;
+                ploc.add(ploc.getBlockX(), y, ploc.getBlockZ());
+                if (ploc.getBlock().getType().isAir()) {
+                    player.setFlying(true);
+                }
+            }
     }
+}

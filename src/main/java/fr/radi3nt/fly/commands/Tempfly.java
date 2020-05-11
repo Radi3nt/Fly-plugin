@@ -7,37 +7,54 @@ import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Tempfly implements CommandExecutor {
 
+    Plugin plugin = MainFly.getPlugin(MainFly.class);
+
     public static Map<String, Long> timer = new HashMap<>();
     public static Map<String, Integer> time = new HashMap<>();
     public ArrayList<String> flyers = Fly.flyers;
 
 
-    Plugin plugin = MainFly.getPlugin(MainFly.class);
-
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
-    String WrongArgs = plugin.getConfig().getString("wrong-args");
-    String NoArgs = plugin.getConfig().getString("no-args");
-    String InvalidPlayer = plugin.getConfig().getString("invalid-player");
-    String NoPermission = plugin.getConfig().getString("no-permission");
-
-
-    String MessagePT = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-message"));
-    String MessageTP = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-target"));
-    String MessageP = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-player"));
-
-    Boolean TargetMessage = plugin.getConfig().getBoolean("tempfly-target-message");
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        String WrongArgs = plugin.getConfig().getString("wrong-args");
+        String NoArgs = plugin.getConfig().getString("no-args");
+        String InvalidPlayer = plugin.getConfig().getString("invalid-player");
+        String NoPermission = plugin.getConfig().getString("no-permission");
+
+
+        String MessagePT = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-message"));
+        String MessageTP = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-target"));
+        String MessageP = ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("tempfly-player"));
+
+        Boolean TargetMessage = plugin.getConfig().getBoolean("tempfly-target-message");
+
+
+        File locations = new File("plugins/FlyPlugin", "flyers.yml");
+        if (!locations.exists()) {
+            try {
+                locations.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+            FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
+
+
         if (!(sender instanceof Player)) {
             if (args.length < 1) {
                 sender.sendMessage(Prefix + " " + NoArgs);
@@ -65,6 +82,7 @@ public class Tempfly implements CommandExecutor {
                         if (time.get(target.getName()) > 0 && time.get(target.getName()) < 86400) {
                             flyers.remove(target.getName());
                             flyers.remove(target.getName());
+                            loc.set("flyers." + target.getName() , time.get(target.getName()));
                             FlyMethod(target, true);
                             timer.put(target.getName(), System.currentTimeMillis());
                                 int timeleft = time.get(target.getName());
@@ -119,7 +137,7 @@ public class Tempfly implements CommandExecutor {
                                 flyers.remove(target);
                                 flyers.remove(target);
                                 player.playSound(player.getLocation(), "minecraft:block.note_block.pling", SoundCategory.AMBIENT, 100, 2);
-                                FlyMethod(target, true);
+                                loc.set("flyers." + target.getName() , time.get(target.getName()));                                FlyMethod(target, true);
                                 timer.put(target.getName(), System.currentTimeMillis());
                                 int timeleft = time.get(target.getName());
                                 int heures = (timeleft / 3600);
@@ -146,6 +164,7 @@ public class Tempfly implements CommandExecutor {
                     if (time.get(player.getName()) > 0 && time.get(player.getName()) < 86400) {
                         if (player.hasPermission("fly.tempfly." + time.get(player.getName()))) {
                             flyers.remove(player.getName());
+                            loc.set("flyers." + player.getName() , time.get(player.getName()));
                             FlyMethod(player, true);
                             timer.put(player.getName(), System.currentTimeMillis());
                             int timeleft = time.get(player.getName());
@@ -166,6 +185,11 @@ public class Tempfly implements CommandExecutor {
             } else {
             player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
         }
+        }
+        try {
+            loc.save(locations);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return true;
     }

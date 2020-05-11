@@ -45,11 +45,11 @@ tempfly-player: "You can fly for &b&l%hours%&r hours, &b&l%minutes%&r minutes an
 
 tempfly-target-message: true
 
-timefly-high: "&b&l%hours%&r hours, &b&l%minutes%&r minutes, and &b&l%seconds%&r seconds of flight left"
-timefly-medium: "&b&l%minutes%&6 minutes, and &b&l%seconds%&6 seconds of flight left"
+timefly-high: "&b&l%hours%&2 hours of flight left"
+timefly-medium: "&b&l%minutes%&6 minutes of flight left"
 timefly-low: "&4&l%seconds%&c seconds of flight left"
 
-tempfly-timeleft: "&cTime left:"
+tempfly-timeleft: "&4Time left:"
 tempfly-notimeleft: "&c&lNo time left!"
 
 temp-sound-high: BLOCK_NOTE_BLOCK_HAT

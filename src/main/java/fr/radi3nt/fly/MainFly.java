@@ -8,12 +8,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 
 public final class MainFly extends JavaPlugin {
 
@@ -69,6 +76,16 @@ public final class MainFly extends JavaPlugin {
         task.runTaskTimer(this, 0, 1);
 
 
+        File locations = new File("plugins/FlyPlugin", "flyers.yml");
+        if (!locations.exists()) {
+            try {
+                locations.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
+
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
@@ -83,9 +100,20 @@ public final class MainFly extends JavaPlugin {
             NotifyTitle.put(player, true);
             NotifyBossBar.put(player, true);
             NotifySounds.put(player, true);
+
+
             if (player.getGameMode().equals(GameMode.CREATIVE)) {
                 player.setAllowFlight(true);
                 player.setFlying(true);
+            }
+
+            Map<String, Long> timer = Tempfly.timer;
+            Map<String, Integer> time = Tempfly.time;
+            if (loc.get("flyers." + player.getName()) != null) {
+                Integer timeleft = (Integer) loc.get("flyers." + player.getName());
+                FlyMethod(player, true);
+                timer.put(player.getName(), System.currentTimeMillis());
+                time.put(player.getName(), timeleft);
             }
         }
     }
@@ -107,7 +135,6 @@ public final class MainFly extends JavaPlugin {
             if (list.get(i).getGameMode().equals(GameMode.CREATIVE)) {
                 list.get(i).setAllowFlight(true);
             } else {
-                Fly.FlyMethod(list.get(i), false);
                 Player player = list.get(i);
                 NotifyChat.remove(player);
                 NotifyTitle.remove(player);
