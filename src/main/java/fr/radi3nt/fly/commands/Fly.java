@@ -73,7 +73,7 @@ public class Fly implements CommandExecutor {
                         String FSPr = FlySomeonePlayer.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", "console");
                         sender.sendMessage(Prefix + " " + FSPr);
                         if (TargetSendMessage) {
-                            String FSTr = FlySomeoneTarget.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", "console");
+                            String FSTr = FlySomeoneTarget.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", "console");
                             target.sendMessage(Prefix + " " + FSTr);
                         }
                     }

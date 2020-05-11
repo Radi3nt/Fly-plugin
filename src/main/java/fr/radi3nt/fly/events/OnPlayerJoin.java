@@ -5,6 +5,7 @@ import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -54,12 +55,14 @@ public class OnPlayerJoin implements Listener {
         NotifySounds.put(player, true);
         if (player.getAllowFlight()) {
             if (!player.hasPermission("fly.join")) {
-                player.setFlying(false);
-                player.setAllowFlight(false);
-                player.setInvulnerable(false);
-                flyers.remove(player.getName());
-                timer.remove(player.getName());
-                time.remove(player.getName());
+                if (!player.getGameMode().equals(GameMode.CREATIVE) && !player.getGameMode().equals(GameMode.SPECTATOR)) {
+                    player.setFlying(false);
+                    player.setAllowFlight(false);
+                    player.setInvulnerable(false);
+                    flyers.remove(player.getName());
+                    timer.remove(player.getName());
+                    time.remove(player.getName());
+                }
             }
         }
         flyers.remove(player.getName());
@@ -73,7 +76,7 @@ public class OnPlayerJoin implements Listener {
             }
         }
 
-
+        if (player.hasPermission("fly.join")) {
             File locations = new File("plugins/FlyPlugin", "flyers.yml");
             if (!locations.exists()) {
                 try {
@@ -95,5 +98,6 @@ public class OnPlayerJoin implements Listener {
                     player.setFlying(true);
                 }
             }
+        }
     }
 }

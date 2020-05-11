@@ -88,7 +88,7 @@ public class Tempfly implements CommandExecutor {
                                 int timeleft = time.get(target.getName());
                                 int heures = (timeleft / 3600);
                                 int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
-                                int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                                int seconds = timeleft - (heures*3600 + minutes*60);
                                 String TimeleftPT = MessagePT.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%target%", target.getName());
                                 sender.sendMessage(Prefix + " " + TimeleftPT);
                                 if (TargetMessage) {
@@ -142,7 +142,7 @@ public class Tempfly implements CommandExecutor {
                                 int timeleft = time.get(target.getName());
                                 int heures = (timeleft / 3600);
                                 int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
-                                int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                                int seconds = timeleft - (heures*3600 + minutes*60);
                                 String TimeleftPT = MessagePT.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%target%", target.getName());
                                 sender.sendMessage(Prefix + " " + TimeleftPT);
                                 if (TargetMessage) {
@@ -170,7 +170,7 @@ public class Tempfly implements CommandExecutor {
                             int timeleft = time.get(player.getName());
                             int heures = (timeleft / 3600);
                             int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
-                            int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+                            int seconds = timeleft - (heures*3600 + minutes*60);
                             String TimeleftP = MessageP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
                             sender.sendMessage(Prefix + " " + TimeleftP);
                         } else {
