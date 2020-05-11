@@ -71,7 +71,7 @@ public class OnPlayerJoin implements Listener {
             if (Message) {
                 player.sendMessage(ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
                 player.sendMessage(ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD + "Radi3nt" + ChatColor.AQUA + "    |");
-                player.sendMessage(ChatColor.AQUA + " |         Version: " + ChatColor.GREEN + ChatColor.BOLD + "1.2.3b" + ChatColor.AQUA + "      |");
+                player.sendMessage(ChatColor.AQUA + " |        Version: " + ChatColor.GREEN + ChatColor.BOLD + "1.2.3c" + ChatColor.AQUA + "      |");
                 player.sendMessage(ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
             }
         }
