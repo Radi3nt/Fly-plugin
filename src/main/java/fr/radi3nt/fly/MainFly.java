@@ -40,7 +40,11 @@ public final class MainFly extends JavaPlugin {
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
     ConsoleCommandSender console = Bukkit.getConsoleSender();
 
+
+    //--------------------------------------------------//
     public static final String VERSION = "1.2.3d";
+    //--------------------------------------------------//
+
 
     @Override
     public void onEnable() {
@@ -64,6 +68,8 @@ public final class MainFly extends JavaPlugin {
         FlyVerify flyverif = new FlyVerify();
         flyverif.runTaskTimer(this, 0, 1);
 
+
+        this.getConfig().set("version", VERSION);
 
         File locations = new File("plugins/FlyPlugin", "flyers.yml");
         if (!locations.exists()) {

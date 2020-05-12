@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
+import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
 import static fr.radi3nt.fly.timer.checker.timem;
 
 public class OnPlayerJoin implements Listener {
@@ -57,10 +58,12 @@ public class OnPlayerJoin implements Listener {
         NotifyTitle.remove(player);
         NotifyBossBar.remove(player);
         NotifySounds.remove(player);
+        NotifyDust.remove(player);
         NotifyChat.put(player, true);
         NotifyTitle.put(player, true);
         NotifyBossBar.put(player, true);
         NotifySounds.put(player, true);
+        NotifyDust.put(player, true);
         if (player.getAllowFlight()) {
             if (!player.hasPermission("fly.join")) {
                 if (!player.getGameMode().equals(GameMode.CREATIVE) && !player.getGameMode().equals(GameMode.SPECTATOR)) {

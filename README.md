@@ -53,7 +53,7 @@ To install the plugin, please follow the following steps:
   - `flyspeed <1-9> [player]` - Allow to chage fly speed for yourself or another player
   - `tempfly <time in seconds>[ player]` - Allow to fly for yourself or another player **temporally**
   - `timefly [player]` - Get the time fly left
-  - `flyalert` Toggle your tempfly notifications
+  - `flyalert` Toggle your tempfly notifications (And for admins to toggle dust)
   - `flyers` - List all the player that can fly
   - `flygui` - Open you the fly GUI !
   - `flyreload` - Simply reload the fly-plugin config
@@ -73,8 +73,10 @@ To install the plugin, please follow the following steps:
   
   - `fly.gui` - Allow opening the gui (default perm to use)
   
+  - `fly.admin` - Admin Stuff (Dust)
+  
   - `fly.gamemode` - Allow to keep your flight ability when changing gamemode
-  - `fly.join` - Coming soon
+  - `fly.join` - Allow players to keep their flight ability when reconnecting
   - `fly.respawn` - Allow to keep your flight ability when respawn
   - `fly.changeworld` - Allow to keep your flight ability when changing world
   
