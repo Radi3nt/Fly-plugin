@@ -4,9 +4,15 @@ import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
+import fr.radi3nt.fly.utilis.UpdateCheck;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -22,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
+import static fr.radi3nt.fly.timer.checker.timem;
 
 public class OnPlayerJoin implements Listener {
 
@@ -40,6 +47,7 @@ public class OnPlayerJoin implements Listener {
     String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
     String version = plugin.getConfig().getString("version");
     Boolean Message = plugin.getConfig().getBoolean("credits-message");
+    Boolean UpdateChecking = plugin.getConfig().getBoolean("update-check");
 
 
     @EventHandler
@@ -71,8 +79,25 @@ public class OnPlayerJoin implements Listener {
             if (Message) {
                 player.sendMessage(ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
                 player.sendMessage(ChatColor.AQUA + " |   Fly plugin by " + ChatColor.GREEN + ChatColor.BOLD + "Radi3nt" + ChatColor.AQUA + "    |");
-                player.sendMessage(ChatColor.AQUA + " |        Version: " + ChatColor.GREEN + ChatColor.BOLD + "1.2.3c" + ChatColor.AQUA + "      |");
+                player.sendMessage(ChatColor.AQUA + " |        Version: " + ChatColor.GREEN + ChatColor.BOLD + MainFly.VERSION + ChatColor.AQUA + "       |");
                 player.sendMessage(ChatColor.BLUE + " " + ChatColor.STRIKETHROUGH + "------------------------");
+            }
+            if (UpdateChecking) {
+                if (!UpdateCheck.upToDate) {
+                    if (plugin.getServer().getBukkitVersion().equals("1.12.2")) {
+
+                    }
+                    TextComponent tc = new TextComponent();
+                    tc.setText(ChatColor.BLUE + " → spigot link");
+                    tc.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/fly-plugin-tempfly-gui.77618"));
+                    tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("➤ Click here to get the link").create()));
+
+
+                    player.sendMessage(Prefix + " Update found: " + UpdateCheck.latest + ", currently on version " + MainFly.VERSION + ".\n The update can be found here :");
+
+
+                    player.spigot().sendMessage(tc);
+                }
             }
         }
 
@@ -91,10 +116,11 @@ public class OnPlayerJoin implements Listener {
                 FlyMethod(player, true);
                 timer.put(player.getName(), System.currentTimeMillis());
                 time.put(player.getName(), timeleft);
+                timem.put(player, 100000);
                 Location ploc = player.getLocation();
                 int y = ploc.getBlockY() - 1;
-                ploc.add(ploc.getBlockX(), y, ploc.getBlockZ());
-                if (ploc.getBlock().getType().isAir()) {
+                ploc.add(0, y, 0);
+                if (ploc.getBlock().getType().equals(Material.AIR)) {
                     player.setFlying(true);
                 }
             }

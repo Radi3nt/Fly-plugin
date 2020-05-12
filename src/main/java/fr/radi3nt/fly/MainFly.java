@@ -2,13 +2,14 @@ package fr.radi3nt.fly;
 
 import fr.radi3nt.fly.commands.*;
 import fr.radi3nt.fly.events.*;
+import fr.radi3nt.fly.timer.FlyVerify;
 import fr.radi3nt.fly.timer.checker;
+import fr.radi3nt.fly.utilis.UpdateCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.SoundCategory;
 import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.ConsoleCommandSender;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
+import static fr.radi3nt.fly.timer.checker.timem;
 
 public final class MainFly extends JavaPlugin {
 
@@ -36,6 +38,8 @@ public final class MainFly extends JavaPlugin {
     public ArrayList<String> flyers = Fly.flyers;
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
     ConsoleCommandSender console = Bukkit.getConsoleSender();
+
+    public static final String VERSION = "1.2.3d";
 
     @Override
     public void onEnable() {
@@ -50,9 +54,14 @@ public final class MainFly extends JavaPlugin {
         RegisterCommands();
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Registered Commands");
 
-
         checker task = new checker();
         task.runTaskTimer(this, 2, 1);
+
+        UpdateCheck updater = new UpdateCheck();
+        updater.run();
+
+        FlyVerify flyverif = new FlyVerify();
+        flyverif.runTaskTimer(this, 0, 1);
 
 
         File locations = new File("plugins/FlyPlugin", "flyers.yml");
@@ -93,8 +102,9 @@ public final class MainFly extends JavaPlugin {
                 FlyMethod(player, true);
                 timer.put(player.getName(), System.currentTimeMillis());
                 time.put(player.getName(), timeleft);
+                timem.put(player, 100000);
                 HashMap<Player,BossBar> bossbar = checker.bossbar;
-                bossbar.put(player, Bukkit.createBossBar("Charging ...", BarColor.WHITE, BarStyle.SOLID, new BarFlag[0]));
+                bossbar.put(player, Bukkit.createBossBar("Charging ...", BarColor.WHITE, BarStyle.SOLID));
                 bossbar.get(player).addPlayer(player);
             }
         }

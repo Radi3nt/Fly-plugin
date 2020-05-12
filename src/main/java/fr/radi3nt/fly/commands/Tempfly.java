@@ -2,9 +2,7 @@ package fr.radi3nt.fly.commands;
 
 import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.timer.checker;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.SoundCategory;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,12 +10,16 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public class Tempfly implements CommandExecutor {
 
@@ -165,18 +167,27 @@ public class Tempfly implements CommandExecutor {
                         player.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
                     }
                 } else {
-                    time.put(player.getName(), Integer.parseInt((sb.toString())));
-                    if (time.get(player.getName()) > 0 && time.get(player.getName()) < 86400) {
-                        if (player.hasPermission("fly.tempfly." + time.get(player.getName()))) {
+
+                    if (Integer.parseInt((sb.toString())) > 0 && Integer.parseInt((sb.toString())) < 86400) {
+                        int maxcount = 0;
+                        for (int i = 0; i < 86400; i++) {
+
+                            if (player.hasPermission("fly.tempfly." + i)) {
+                                maxcount = i;
+                            }
+
+                        }
+                        if (maxcount >= Integer.parseInt((sb.toString()))) {
+                            time.put(player.getName(), Integer.parseInt((sb.toString())));
                             flyers.remove(player.getName());
-                            loc.set("flyers." + player.getName() , time.get(player.getName()));
+                            loc.set("flyers." + player.getName(), time.get(player.getName()));
                             FlyMethod(player, true);
                             timem.put(player, 100000);
                             timer.put(player.getName(), System.currentTimeMillis());
                             int timeleft = time.get(player.getName());
                             int heures = (timeleft / 3600);
-                            int minutes = ((timeleft - (timeleft / 3600) *3600) / 60);
-                            int seconds = timeleft - (heures*3600 + minutes*60);
+                            int minutes = ((timeleft - (timeleft / 3600) * 3600) / 60);
+                            int seconds = timeleft - (heures * 3600 + minutes * 60);
                             String TimeleftP = MessageP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
                             sender.sendMessage(Prefix + " " + TimeleftP);
                         } else {
@@ -205,6 +216,27 @@ public class Tempfly implements CommandExecutor {
         player.setAllowFlight(state);
         if (state) {
             flyers.add(player.getName());
+            Boolean Particles = plugin.getConfig().getBoolean("particles");
+            if (Particles) {
+                new BukkitRunnable() {
+                    final Location loc = player.getLocation();
+                    final double r = 1;
+                    double t = 0;
+
+                    public void run() {
+                        t = t + Math.PI / 16;
+                        double x = r * cos(t);
+                        double y = 0.225 * t;
+                        double z = r * sin(t);
+                        loc.add(x, y, z);
+                        player.getWorld().spawnParticle(Particle.FLAME, loc.getX(), loc.getY(), loc.getZ(), 1, 0, 0, 0, 0, null, true);
+                        loc.subtract(x, y, z);
+                        if (t > Math.PI * 3) {
+                            this.cancel();
+                        }
+                    }
+                }.runTaskTimer(plugin, 0, 1);
+            }
         } else {
             flyers.remove(player.getName());
             player.setInvulnerable(false);

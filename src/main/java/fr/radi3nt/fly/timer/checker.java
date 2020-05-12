@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -72,35 +71,37 @@ public class checker extends BukkitRunnable {
         FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (int i = 0; i < list.size(); i++) {
+            Player player = list.get(i);
             if (timer.containsKey(list.get(i).getName())) {
-                Player player = list.get(i);
                 int secondes = time.get(list.get(i).getName());
                 long timeleft = ((timer.get(list.get(i).getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
                 loc.set("flyers." + player.getName() , timeleft);
                 if (bossbar.containsKey(player)) {
                     if (!NotifyBossBar.get(player)) {
+                        bossbar.get(player).removePlayer(player);
                         bossbar.remove(player);
                     }
                 } else {
                     if (NotifyBossBar.get(player)) {
-                        bossbar.put(player, Bukkit.createBossBar("timeleft", BarColor.GREEN, BarStyle.SOLID, new BarFlag[0]));
+                        bossbar.put(player, Bukkit.createBossBar("Charging", BarColor.WHITE, BarStyle.SOLID));
                         bossbar.get(player).addPlayer(player);
                     }
                 }
 
-
-                bossbar.get(player).setProgress(timeleft/((float)secondes));
-                if (timeleft > 3600) {
-                    bossbar.get(player).setTitle("TimeLeft: " + ChatColor.GREEN + ChatColor.BOLD + timeleft);
-                    bossbar.get(player).setColor(BarColor.GREEN);
-                } else if (timeleft > 60){
-                    bossbar.get(player).setTitle("TimeLeft: " + ChatColor.GOLD + ChatColor.BOLD + timeleft);
-                    bossbar.get(player).setColor(BarColor.YELLOW);
-                } else {
-                    bossbar.get(player).setTitle("TimeLeft: " + ChatColor.DARK_RED + ChatColor.BOLD + timeleft);
-                    bossbar.get(player).setColor(BarColor.RED);
+                if (NotifyBossBar.get(player)) {
+                    bossbar.get(player).setProgress(timeleft / ((float) secondes));
+                    if (timeleft > 3600) {
+                        bossbar.get(player).setTitle("➤ " + TimeLeftMessage + " " + ChatColor.GREEN + ChatColor.BOLD + timeleft);
+                        bossbar.get(player).setColor(BarColor.GREEN);
+                    } else if (timeleft > 60) {
+                        bossbar.get(player).setTitle("➤ " + TimeLeftMessage + " " + ChatColor.GOLD + ChatColor.BOLD + timeleft);
+                        bossbar.get(player).setColor(BarColor.YELLOW);
+                    } else {
+                        bossbar.get(player).setTitle("➤ " + TimeLeftMessage + " " + ChatColor.DARK_RED + ChatColor.BOLD + timeleft);
+                        bossbar.get(player).setColor(BarColor.RED);
+                    }
                 }
-                if (timeleft > timem.get(player)){
+                if (timeleft > timem.get(player)) {
                     timem.put(player, (int) timeleft);
                 }
                 if (timeleft == 3600 && timem.get(player) > 3600) {
@@ -148,11 +149,15 @@ public class checker extends BukkitRunnable {
                     timem.put(player, 1);
                 }
                 if (timeleft <= 0) {
-                    bossbar.get(player).removePlayer(player);
-                    bossbar.remove(player);
-                    loc.set("flyers." + player.getName() , null);
+                    if (!NotifyBossBar.get(player)) {
+                        if (bossbar.containsKey(player)) {
+                            bossbar.get(player).removePlayer(player);
+                            bossbar.remove(player);
+                        }
+                    }
+                    loc.set("flyers." + player.getName(), null);
                     String NoTimeLeftU = NoTimeLeftMessage.toUpperCase();
-                    player.sendTitle(NoTimeLeftU, "", 20,30,20);
+                    player.sendTitle(NoTimeLeftU, "", 20, 30, 20);
                     player.sendMessage(Prefix + " " + NoTimeLeftMessage);
                     player.playSound(player.getLocation(), "minecraft:block.note_block.pling", SoundCategory.AMBIENT, 100, (float) 1.5);
                     player.playSound(player.getLocation(), SoundNo, 100, 1);
@@ -165,6 +170,11 @@ public class checker extends BukkitRunnable {
                     Tempfly.time.remove(player.getName());
                     time.remove(player.getName());
                     timem.remove(player);
+                }
+            } else {
+                if (bossbar.containsKey(player)) {
+                    bossbar.get(player).removePlayer(player);
+                    bossbar.remove(player);
                 }
             }
         }
