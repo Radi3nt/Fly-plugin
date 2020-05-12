@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
+
 public class FlyVerify extends BukkitRunnable {
 
 
@@ -27,7 +29,7 @@ public class FlyVerify extends BukkitRunnable {
         for (int i = 0; i < list.size(); i++) {
             Player player = list.get(i);
             if (player.hasPermission("fly.admin")) {
-                if (true) { //TODO HashMap for option
+                if (NotifyDust.get(player)) {
                     for (int p = 0; p < list.size(); p++) {
                         Player target = list.get(i);
                         if (flyers.contains(target.getName())) {

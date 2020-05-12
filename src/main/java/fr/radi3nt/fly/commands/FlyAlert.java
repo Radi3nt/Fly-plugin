@@ -16,6 +16,7 @@ public class FlyAlert implements CommandExecutor {
     public static HashMap<Player, Boolean> NotifyTitle = new HashMap<>();
     public static HashMap<Player, Boolean> NotifyBossBar = new HashMap<>();
     public static HashMap<Player, Boolean> NotifySounds = new HashMap<>();
+    public static HashMap<Player, Boolean> NotifyDust = new HashMap<>();
 
 
     @Override
@@ -132,6 +133,26 @@ public class FlyAlert implements CommandExecutor {
                             player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         }
                         break;
+
+                    case "dust":
+                        if (player.hasPermission("fly.admin")) {
+                            if (args[1].equals("on")) {
+                                NotifyDust.remove(player);
+                                NotifyDust.put(player, true);
+                                sender.sendMessage(Prefix + " You turned on dust");
+                            } else if (args[1].equals("off")) {
+                                NotifyDust.remove(player);
+                                NotifyDust.put(player, false);
+                                sender.sendMessage(Prefix + " You turned off dust");
+                            } else {
+                                player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
+                            }
+                        } else {
+                            player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
+                        }
+                        break;
+
+
                     default:
                         player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                         break;

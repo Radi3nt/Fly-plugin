@@ -17,6 +17,9 @@ public class FlyAlert implements TabCompleter {
             things.add("title");
             things.add("sounds");
             things.add("all");
+            if (sender.hasPermission("fly.admin")) {
+                things.add("dust");
+            }
             return things;
         }
 

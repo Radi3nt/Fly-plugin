@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
+import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
 import static fr.radi3nt.fly.timer.checker.timem;
 
 public final class MainFly extends JavaPlugin {
@@ -84,10 +85,12 @@ public final class MainFly extends JavaPlugin {
             NotifyTitle.remove(player);
             NotifyBossBar.remove(player);
             NotifySounds.remove(player);
+            NotifyDust.remove(player);
             NotifyChat.put(player, true);
             NotifyTitle.put(player, true);
             NotifyBossBar.put(player, true);
             NotifySounds.put(player, true);
+            NotifyDust.put(player, true);
 
 
             if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) {
@@ -118,6 +121,7 @@ public final class MainFly extends JavaPlugin {
         NotifyTitle.clear();
         NotifyChat.clear();
         NotifySounds.clear();
+        NotifyDust.clear();
         for (int i = 0; i < list.size(); i++){
             if (list.get(i).hasPermission("fly.admin")) {
                 list.get(i).sendMessage(Prefix + ChatColor.RED + " Reloading is not very compatible with the plugin ... \n We highly recommend to restart your server, \n if you don't want to have some hackers flying around");
@@ -142,10 +146,12 @@ public final class MainFly extends JavaPlugin {
                 NotifyTitle.remove(player);
                 NotifyBossBar.remove(player);
                 NotifySounds.remove(player);
+                NotifyDust.remove(player);
                 NotifyChat.put(player, true);
                 NotifyTitle.put(player, true);
                 NotifyBossBar.put(player, true);
                 NotifySounds.put(player, true);
+                NotifyDust.put(player, true);
             }
         }
         flyers.clear();
