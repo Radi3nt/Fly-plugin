@@ -229,9 +229,9 @@ version: 1.2.3b
 - [X] Pass the 1.1.0 version of the plugin
 - [X] Adding command `tempfly`
 - [X] Add command `flyers`
-- [ ] Add colors code for all config messages
+- [X] Add colors code for all config messages
 - [ ] Finish config messages
-- [ ] Add a bossbar
+- [X] Add a bossbar
 - [ ] No big problem in it
 - [ ] Have some contributors
 - [ ] Used on a known server
