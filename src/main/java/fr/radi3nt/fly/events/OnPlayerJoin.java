@@ -45,14 +45,16 @@ public class OnPlayerJoin implements Listener {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
-    String version = plugin.getConfig().getString("version");
-    Boolean Message = plugin.getConfig().getBoolean("credits-message");
-    Boolean UpdateChecking = plugin.getConfig().getBoolean("update-check");
-
 
     @EventHandler
     public void OnPlayerJoin(PlayerJoinEvent e) {
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        String version = plugin.getConfig().getString("version");
+        Boolean Message = plugin.getConfig().getBoolean("credits-message");
+        Boolean UpdateChecking = plugin.getConfig().getBoolean("update-check");
+
+
         Player player = e.getPlayer();
         NotifyChat.remove(player);
         NotifyTitle.remove(player);

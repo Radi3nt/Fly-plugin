@@ -30,23 +30,7 @@ public class checker extends BukkitRunnable {
     public Map<String, Integer> time = Tempfly.time;
     ArrayList<String> flyers = Fly.flyers;
     Plugin plugin = MainFly.getPlugin(MainFly.class);
-    String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
-
-
-    String TimeHigh = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-high") + ChatColor.RESET);
-    String TimeMedium = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-medium") + ChatColor.RESET);
-    String TimeLow = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-low") + ChatColor.RESET);
-
-    String TimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-timeleft") + ChatColor.RESET);
-    String NoTimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-notimeleft") + ChatColor.RESET);
-
-
-    Sound SoundHigh = Sound.valueOf(plugin.getConfig().getString("temp-sound-high"));
-    Sound SoundMedium = Sound.valueOf(plugin.getConfig().getString("temp-sound-medium"));
-    Sound SoundLow = Sound.valueOf(plugin.getConfig().getString("temp-sound-low"));
-    Sound SoundLast = Sound.valueOf(plugin.getConfig().getString("temp-sound-last"));
-    Sound SoundNo = Sound.valueOf(plugin.getConfig().getString("temp-sound-no"));
 
 
     HashMap<Player, Boolean> NotifyChat = FlyAlert.NotifyChat;
@@ -59,6 +43,18 @@ public class checker extends BukkitRunnable {
 
     @Override
     public void run() {
+
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
+
+        String TimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-timeleft") + ChatColor.RESET);
+        String NoTimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-notimeleft") + ChatColor.RESET);
+
+
+        Sound SoundNo = Sound.valueOf(plugin.getConfig().getString("temp-sound-no"));
+
+
         File locations = new File("plugins/FlyPlugin", "flyers.yml");
         if (!locations.exists()) {
             try {
@@ -186,28 +182,44 @@ public class checker extends BukkitRunnable {
     }
 
     public void PlayHighSound(Player player) {
+        Sound SoundHigh = Sound.valueOf(plugin.getConfig().getString("temp-sound-high"));
+
         player.playSound(player.getLocation(), SoundHigh, SoundCategory.AMBIENT, 100, (float) 1);
     }
 
     public void PlayMediumSound(Player player) {
+
+        Sound SoundMedium = Sound.valueOf(plugin.getConfig().getString("temp-sound-medium"));
+
         player.playSound(player.getLocation(), SoundMedium, SoundCategory.AMBIENT, 100, (float) 1);
     }
 
     public void PlayLowSound(Player player) {
+
+        Sound SoundLow = Sound.valueOf(plugin.getConfig().getString("temp-sound-low"));
+
         player.playSound(player.getLocation(), SoundLow, SoundCategory.AMBIENT, 100, (float) 1);
     }
 
 
     public void High(Player player, long timeleft) {
 
+        String TimeHigh = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-high") + ChatColor.RESET);
+        String TimeMedium = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-medium") + ChatColor.RESET);
+
+
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
+        String TimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-timeleft") + ChatColor.RESET);
+
 
         if (NotifySounds.get(player)) {
             PlayHighSound(player);
         }
         int heures = (int) (timeleft / 3600);
-        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
-        int seconds = (int) (timeleft - (heures*3600 + minutes*60));
-        if (timeleft<3600) {
+        int minutes = (int) ((timeleft - (timeleft / 3600) * 3600) / 60);
+        int seconds = (int) (timeleft - (heures * 3600 + minutes * 60));
+        if (timeleft < 3600) {
             if (NotifyChat.get(player)) {
                 String TimeleftR = TimeMedium.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
                 player.sendMessage(Prefix + " " + TimeleftR);
@@ -223,14 +235,22 @@ public class checker extends BukkitRunnable {
 
     public void Medium(Player player, long timeleft) {
 
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
+        String TimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-timeleft") + ChatColor.RESET);
+
+
+        String TimeMedium = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-medium") + ChatColor.RESET);
+        String TimeLow = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-low") + ChatColor.RESET);
+
 
         if (NotifySounds.get(player)) {
             PlayMediumSound(player);
         }
         int heures = (int) (timeleft / 3600);
-        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
-        int seconds = (int) (timeleft - (heures*3600 + minutes*60));
-        if (timeleft<60) {
+        int minutes = (int) ((timeleft - (timeleft / 3600) * 3600) / 60);
+        int seconds = (int) (timeleft - (heures * 3600 + minutes * 60));
+        if (timeleft < 60) {
             if (NotifyChat.get(player)) {
                 String TimeleftR = TimeLow.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
                 player.sendMessage(Prefix + " " + TimeleftR);
@@ -253,13 +273,20 @@ public class checker extends BukkitRunnable {
 
     public void Low(Player player, long timeleft) {
 
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+
+        String TimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-timeleft") + ChatColor.RESET);
+
+
+        String TimeLow = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("timefly-low") + ChatColor.RESET);
+
 
         if (NotifySounds.get(player)) {
             PlayLowSound(player);
         }
         int heures = (int) (timeleft / 3600);
-        int minutes = (int) ((timeleft - (timeleft / 3600) *3600) / 60);
-        int seconds = (int) (timeleft - (heures*3600 + minutes*60));
+        int minutes = (int) ((timeleft - (timeleft / 3600) * 3600) / 60);
+        int seconds = (int) (timeleft - (heures * 3600 + minutes * 60));
         if (NotifyChat.get(player)) {
             String TimeleftR = TimeLow.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
             player.sendMessage(Prefix + " " + TimeleftR);
