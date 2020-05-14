@@ -11,12 +11,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class UpdateCheck {
 
     public static boolean upToDate = false;
-    public static boolean minorVersion = true;
+    public static boolean MajorVersion = false;
+    public static String PreRelease = "false";
     public static String latest = "";
+    ArrayList<String> lines = new ArrayList<String>();
     Plugin plugin = MainFly.getPlugin(MainFly.class);
     String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
@@ -38,21 +41,25 @@ public class UpdateCheck {
         }
 
         try {
-            latest = IOUtils.readLines(in).get(0);
+            lines = (ArrayList<String>) IOUtils.readLines(in);
+            //latest = IOUtils.readLines(in).get(0);
+            //PreRelease = IOUtils.readLines(in).get(1);
         } catch (IOException e) {
             console.sendMessage(Prefix + " Unable to determine update!");
             e.printStackTrace();
         } finally {
             IOUtils.closeQuietly(in);
         }
+        latest = lines.get(0);
+        PreRelease = lines.get(1);
 
         console.sendMessage(Prefix + " Latest version is " + latest);
         upToDate = MainFly.VERSION.equals(latest);
         if (!upToDate) {
-            Integer lnumber = Integer.valueOf(latest.charAt(3));
-            Integer cnumber = Integer.valueOf(MainFly.VERSION.charAt(3));
-            if (lnumber > cnumber) {
-                minorVersion = false;
+            Integer lnumber = (int) latest.charAt(2);
+            Integer cnumber = (int) MainFly.VERSION.charAt(2);
+            if (lnumber != cnumber) {
+                MajorVersion = true;
             }
         }
         if (upToDate) {

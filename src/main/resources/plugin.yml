@@ -20,7 +20,7 @@ commands:
     aliases: [fr, freload, flyr]
   tempfly:
     description: Temp-fly someone
-    usage: /tempfly [seconds] [player]
+    usage: /tempfly <seconds> [player]
     aliases: [tempf, tf, tfly]
   flyers:
     description: Give you the list of the flyers
@@ -36,3 +36,6 @@ commands:
     description: Toggle your tempfly notifications
     usage: /flyalert <chat|title|sounds|all> <on|off>
     aliases: [falert, fnotify, flya, flyn]
+  flyupdate:
+    description: Check for updates
+    usage: /flyupdate

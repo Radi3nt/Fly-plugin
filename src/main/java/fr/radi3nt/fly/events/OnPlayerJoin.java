@@ -89,17 +89,25 @@ public class OnPlayerJoin implements Listener {
             }
             if (UpdateChecking) {
                 if (!UpdateCheck.upToDate) {
-                    if (plugin.getServer().getBukkitVersion().equals("1.12.2")) {
-
-                    }
                     TextComponent tc = new TextComponent();
                     tc.setText(ChatColor.BLUE + " → spigot link");
                     tc.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/fly-plugin-tempfly-gui.77618"));
                     tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("➤ Click here to get the link").create()));
 
 
-                    player.sendMessage(Prefix + " Update found: " + UpdateCheck.latest + ", currently on version " + MainFly.VERSION + ".\n The update can be found here :");
-
+                    if (UpdateCheck.PreRelease.equals("true")) {
+                        if (UpdateCheck.MajorVersion) {
+                            player.sendMessage(Prefix + " Update found: " + UpdateCheck.latest + ", currently on version " + MainFly.VERSION + ".\n This is a MAJOR pre-release version! The update can be found here :");
+                        } else {
+                            player.sendMessage(Prefix + " Update found: " + UpdateCheck.latest + ", currently on version " + MainFly.VERSION + ".\n This is a minor pre-release version! The update can be found here :");
+                        }
+                    } else {
+                        if (UpdateCheck.MajorVersion) {
+                            player.sendMessage(Prefix + " Update found: " + UpdateCheck.latest + ", currently on version " + MainFly.VERSION + ".\n This is a MAJOR version! The update can be found here :");
+                        } else {
+                            player.sendMessage(Prefix + " Update found: " + UpdateCheck.latest + ", currently on version " + MainFly.VERSION + ".\n This is a minor version! The update can be found here :");
+                        }
+                    }
 
                     player.spigot().sendMessage(tc);
                 }
