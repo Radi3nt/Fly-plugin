@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateCheck {
 
@@ -19,7 +20,7 @@ public class UpdateCheck {
     public static boolean MajorVersion = false;
     public static String PreRelease = "false";
     public static String latest = "";
-    ArrayList<String> lines = new ArrayList<String>();
+    List<String> lines = new ArrayList();
     Plugin plugin = MainFly.getPlugin(MainFly.class);
     String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
@@ -41,7 +42,8 @@ public class UpdateCheck {
         }
 
         try {
-            lines = (ArrayList<String>) IOUtils.readLines(in);
+            lines.clear();
+            lines = IOUtils.readLines(in);
             //latest = IOUtils.readLines(in).get(0);
             //PreRelease = IOUtils.readLines(in).get(1);
         } catch (IOException e) {
@@ -52,6 +54,8 @@ public class UpdateCheck {
         }
         latest = lines.get(0);
         PreRelease = lines.get(1);
+        console.sendMessage(PreRelease);
+
 
         console.sendMessage(Prefix + " Latest version is " + latest);
         upToDate = MainFly.VERSION.equals(latest);
