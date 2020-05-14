@@ -54,7 +54,7 @@ public class UpdateCheck {
         }
         latest = lines.get(0);
         PreRelease = lines.get(1);
-        console.sendMessage(PreRelease);
+        console.sendMessage(Prefix + " This is a pre-release: " + PreRelease);
 
 
         console.sendMessage(Prefix + " Latest version is " + latest);
