@@ -52,6 +52,7 @@ public class checker extends BukkitRunnable {
         String NoTimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-notimeleft") + ChatColor.RESET);
 
 
+
         Sound SoundNo = Sound.valueOf(plugin.getConfig().getString("temp-sound-no"));
 
 
@@ -86,10 +87,10 @@ public class checker extends BukkitRunnable {
 
                 if (NotifyBossBar.get(player)) {
                     bossbar.get(player).setProgress(timeleft / ((float) secondes));
-                    if (timeleft > 3600) {
+                    if ((timeleft / ((float) secondes)) > 0.75) {
                         bossbar.get(player).setTitle("➤ " + TimeLeftMessage + " " + ChatColor.GREEN + ChatColor.BOLD + timeleft);
                         bossbar.get(player).setColor(BarColor.GREEN);
-                    } else if (timeleft > 60) {
+                    } else if ((timeleft / ((float) secondes)) > 0.25) {
                         bossbar.get(player).setTitle("➤ " + TimeLeftMessage + " " + ChatColor.GOLD + ChatColor.BOLD + timeleft);
                         bossbar.get(player).setColor(BarColor.YELLOW);
                     } else {
@@ -292,7 +293,7 @@ public class checker extends BukkitRunnable {
             player.sendMessage(Prefix + " " + TimeleftR);
         }
         if (NotifyTitle.get(player)) {
-            player.sendTitle(TimeLeftMessage, ChatColor.RED + String.valueOf(timeleft), 20,30,20);
+            player.sendTitle(TimeLeftMessage, ChatColor.RED + String.valueOf(timeleft), 20, 30, 20);
         }
 
     }

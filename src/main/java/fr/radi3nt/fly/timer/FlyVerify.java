@@ -37,14 +37,14 @@ public class FlyVerify extends BukkitRunnable {
                                 if (timer.containsKey(target.getName())) {
                                     Location tloc = target.getLocation();
                                     Double x = tloc.getX();
-                                    Double y = tloc.getY() + 2.3;
+                                    Double y = tloc.getY() + 2.1;
                                     Double z = tloc.getZ();
                                     tloc.add(0, 2, 0);
                                     player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0.001, 1, 0, 1, new Particle.DustOptions(Color.YELLOW, 1));
                                 } else {
                                     Location tloc = target.getLocation();
                                     Double x = tloc.getX();
-                                    Double y = tloc.getY() + 2.3;
+                                    Double y = tloc.getY() + 2.1;
                                     Double z = tloc.getZ();
                                     tloc.add(0, 2, 0);
                                     player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0.001, 1, 0, 1, new Particle.DustOptions(Color.GREEN, 1));
@@ -52,7 +52,7 @@ public class FlyVerify extends BukkitRunnable {
                             } else {
                                 Location tloc = target.getLocation();
                                 Double x = tloc.getX();
-                                Double y = tloc.getY() + 2;
+                                Double y = tloc.getY() + 2.1;
                                 Double z = tloc.getZ();
                                 tloc.add(0, 2, 0);
                                 player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0.001, 1, 0, 1, new Particle.DustOptions(Color.RED, 1));

@@ -136,6 +136,7 @@ public class Fly implements CommandExecutor {
     public static void FlyMethod(Player player, boolean state) {
         player.setAllowFlight(state);
         if (state) {
+            flyers.remove(player.getName());
             flyers.add(player.getName());
         } else {
             flyers.remove(player.getName());

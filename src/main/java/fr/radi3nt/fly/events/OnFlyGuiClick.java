@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
+import static fr.radi3nt.fly.timer.checker.timem;
 
 public class OnFlyGuiClick implements Listener {
 
@@ -77,10 +78,11 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                            players.remove(player);
+
                             player.closeInventory();
                         }
                     }
+                    break;
 
                 case LIME_WOOL:
                     if (target == player) {
@@ -106,6 +108,7 @@ public class OnFlyGuiClick implements Listener {
                             player.closeInventory();
                         }
                     }
+                    break;
 
                 case GOLD_BLOCK:
                     if (target.getName().equalsIgnoreCase(player.getName())) {
@@ -131,12 +134,13 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         }
                     }
+
             }
 
             e.setCancelled(true);
         } else if (e.getView().getTitle().equalsIgnoreCase(ChatColor.GOLD + "        === Tempfly GUI ===")) {
             Player targettf = players.get(player);
-            if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "hours")) {
+            if (e.getCurrentItem().getType().equals(Material.DAMAGED_ANVIL)) {
                 int HoursI;
                 if (e.getClick().isLeftClick()) {
                     if (e.getClick().isShiftClick()) {
@@ -183,7 +187,10 @@ public class OnFlyGuiClick implements Listener {
                         }
                     }
                 }
-            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "minutes")) {
+                ItemMeta meta = e.getCurrentItem().getItemMeta();
+                meta.setDisplayName(ChatColor.GOLD + String.valueOf(Hours.get(player)) + " hours");
+                e.getCurrentItem().setItemMeta(meta);
+            } else if (e.getCurrentItem().getType().equals(Material.CHIPPED_ANVIL)) {
                 int MinuteI;
                 if (e.getClick().isLeftClick()) {
                     if (e.getClick().isShiftClick()) {
@@ -230,7 +237,10 @@ public class OnFlyGuiClick implements Listener {
                             }
                         }
                 }
-            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "seconds")) {
+                ItemMeta meta = e.getCurrentItem().getItemMeta();
+                meta.setDisplayName(ChatColor.GOLD + String.valueOf(Minutes.get(player)) + " minutes");
+                e.getCurrentItem().setItemMeta(meta);
+            } else if (e.getCurrentItem().getType().equals(Material.ANVIL)) {
                 int SecondesI;
                 if (e.getClick().isLeftClick()) {
                     if (e.getClick().isShiftClick()) {
@@ -241,16 +251,16 @@ public class OnFlyGuiClick implements Listener {
                     } else {
                         if (Secondes.get(player) > 58) {
                             SecondesI = 58;
-                                    Secondes.remove(player);
-                                    Secondes.put(player, SecondesI);
-                                }
-                                SecondesI = Secondes.get(player);
-                                SecondesI++;
-                                e.getCurrentItem().setAmount(SecondesI);
-                                Secondes.remove(player);
-                                Secondes.put(player, SecondesI);
-                            }
-                        } else if (e.getClick().isRightClick()) {
+                            Secondes.remove(player);
+                            Secondes.put(player, SecondesI);
+                        }
+                        SecondesI = Secondes.get(player);
+                        SecondesI++;
+                        e.getCurrentItem().setAmount(SecondesI);
+                        Secondes.remove(player);
+                        Secondes.put(player, SecondesI);
+                    }
+                } else if (e.getClick().isRightClick()) {
                             if (e.getClick().isShiftClick()) {
                                 SecondesI = 0;
                                 e.getCurrentItem().setAmount(1);
@@ -276,24 +286,33 @@ public class OnFlyGuiClick implements Listener {
                                     }
                                 }
                             }
-                        }
-                } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Continue")) {
+                }
+                ItemMeta meta = e.getCurrentItem().getItemMeta();
+                meta.setDisplayName(ChatColor.GOLD + String.valueOf(Secondes.get(player)) + " seconds");
+                e.getCurrentItem().setItemMeta(meta);
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Continue")) {
                 int TimeLeft = ((Hours.get(player) * 3600) + (Minutes.get(player) * 60) + (Secondes.get(player)));
-                flyers.remove(targettf.getName());
-                targettf.setAllowFlight(true);
-                flyers.add(targettf.getName());
-                Tempfly.time.put(targettf.getName(), TimeLeft);
-                Tempfly.timer.put(targettf.getName(), System.currentTimeMillis());
-                String MessageP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-player"));
-                String MessageTP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-target"));
-                int heures = (TimeLeft / 3600);
-                int minutes = ((TimeLeft - (TimeLeft / 3600) * 3600) / 60);
-                int seconds = TimeLeft - (heures * 3600 + minutes * 60);
-                String TimeleftP = MessageP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
-                player.sendMessage(Prefix + " " + TimeleftP);
-                if (TargetMessage) {
-                    String TimeleftTP = MessageTP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%player%", player.getName());
-                    targettf.sendMessage(Prefix + " " + TimeleftTP);
+                if (!(TimeLeft == 0)) {
+                    flyers.remove(targettf.getName());
+                    targettf.setAllowFlight(true);
+                    flyers.add(targettf.getName());
+                    Tempfly.time.put(targettf.getName(), TimeLeft);
+                    Tempfly.timer.put(targettf.getName(), System.currentTimeMillis());
+                    timem.put(targettf, 100000);
+                    String MessageP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-player"));
+                    String MessageTP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-target"));
+                    int heures = (TimeLeft / 3600);
+                    int minutes = ((TimeLeft - (TimeLeft / 3600) * 3600) / 60);
+                    int seconds = TimeLeft - (heures * 3600 + minutes * 60);
+                    String TimeleftP = MessageP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
+                    player.sendMessage(Prefix + " " + TimeleftP);
+                    if (TargetMessage) {
+                        String TimeleftTP = MessageTP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%player%", player.getName());
+                        targettf.sendMessage(Prefix + " " + TimeleftTP);
+                    }
+                } else {
+                    String WrongArgs = plugin.getConfig().getString("wrong-args");
+                    player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                 }
                 players.remove(player);
                 player.closeInventory();
@@ -330,11 +349,6 @@ public class OnFlyGuiClick implements Listener {
 
     public void TempflyMethod(Player player, Player target) {
 
-        String TempLeft = plugin.getConfig().getString("temp-left");
-        String TempMinute = plugin.getConfig().getString("temp-minutes");
-        String TempSecond = plugin.getConfig().getString("temp-seconds");
-        String TempHours = plugin.getConfig().getString("temp-hours");
-
         if (player.hasPermission("fly.gui.*")) {
             Inventory tempflygui = Bukkit.createInventory(player, 36, ChatColor.GOLD + "        === Tempfly GUI ===");
 
@@ -347,8 +361,8 @@ public class OnFlyGuiClick implements Listener {
 
 
             ArrayList<String> loreT = new ArrayList<>();
-            loreT.add(ChatColor.DARK_RED + "left click to add");
-            loreT.add(ChatColor.DARK_RED + "right click to remove");
+            loreT.add(ChatColor.BLUE + "- Left click to add");
+            loreT.add(ChatColor.BLUE + "- Right click to remove");
 
             ItemMeta validerItemMeta = valider.getItemMeta();
 
@@ -360,17 +374,17 @@ public class OnFlyGuiClick implements Listener {
 
 
             ItemMeta smeta = secondes.getItemMeta();
-            smeta.setDisplayName(ChatColor.GOLD + "seconds");
+            smeta.setDisplayName(ChatColor.GOLD + "0 seconds");
             smeta.setLore(loreT);
             secondes.setItemMeta(smeta);
 
             ItemMeta mmeta = minute.getItemMeta();
-            mmeta.setDisplayName(ChatColor.GOLD + "minutes");
+            mmeta.setDisplayName(ChatColor.GOLD + "0 minutes");
             mmeta.setLore(loreT);
             minute.setItemMeta(mmeta);
 
             ItemMeta hmeta = heures.getItemMeta();
-            hmeta.setDisplayName(ChatColor.GOLD + "hours");
+            hmeta.setDisplayName(ChatColor.GOLD + "0 hours");
             hmeta.setLore(loreT);
             heures.setItemMeta(hmeta);
 
