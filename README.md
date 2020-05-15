@@ -56,6 +56,7 @@ To install the plugin, please follow the following steps:
   - `flyalert` Toggle your tempfly notifications (And for admins to toggle dust)
   - `flyers` - List all the player that can fly
   - `flygui` - Open you the fly GUI !
+  - `flyupdate` - Update check the plugin
   - `flyreload` - Simply reload the fly-plugin config
   
 ## Permissions
