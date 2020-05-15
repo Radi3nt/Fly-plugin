@@ -31,7 +31,7 @@ public class FlyVerify extends BukkitRunnable {
             if (player.hasPermission("fly.admin")) {
                 if (NotifyDust.get(player)) {
                     for (int p = 0; p < list.size(); p++) {
-                        Player target = list.get(i);
+                        Player target = list.get(p);
                         if (flyers.contains(target.getName())) {
                             if (target.isFlying()) {
                                 if (timer.containsKey(target.getName())) {

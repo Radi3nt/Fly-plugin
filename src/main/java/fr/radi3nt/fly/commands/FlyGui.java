@@ -15,13 +15,12 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class FlyGui implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    static public HashMap<Player, Player> players = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -95,7 +94,6 @@ public class FlyGui implements CommandExecutor {
                         flygui.setItem(4, playerhead);
 
 
-                        players.put(player, target);
                         player.openInventory(flygui);
                     } else {
                         sender.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
@@ -104,8 +102,38 @@ public class FlyGui implements CommandExecutor {
                     sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
                 }
             } else {
-                sender.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
-            }
+                Player player = (Player) sender;
+                Inventory playerlist = Bukkit.createInventory(player, 54, ChatColor.GOLD + "         === Player list ===");
+
+                List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
+                    for (int i = 0; i < list.size(); i++) {
+
+                        Player target = list.get(i);
+                        ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
+                        SkullMeta sk = (SkullMeta) playerhead.getItemMeta();
+                        ArrayList<String> loreh = new ArrayList<>();
+                        if (target.getAllowFlight()) {
+                            sk.setDisplayName(ChatColor.GREEN + target.getName());
+                            if (target.isFlying()) {
+                                loreh.add(ChatColor.GREEN + target.getName() + " is flying");
+                            } else {
+                                loreh.add(ChatColor.DARK_RED + target.getName() + " isn't flying");
+                            }
+                            sk.setLore(loreh);
+                        } else {
+                            sk.setDisplayName(ChatColor.DARK_RED + target.getName());
+                            loreh.add(ChatColor.DARK_RED + target.getName() + " isn't flying");
+                            sk.setLore(loreh);
+                        }
+                        sk.setOwner(target.getName());
+                        playerhead.setItemMeta(sk);
+
+                        playerlist.addItem(playerhead);
+
+
+                    }
+                    player.openInventory(playerlist);
+                }
             } else {
             sender.sendMessage(Prefix + ChatColor.RED + " This command MUST be run by a player");
         }

@@ -2,7 +2,6 @@ package fr.radi3nt.fly.events;
 
 import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
-import fr.radi3nt.fly.commands.FlyGui;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,13 +37,11 @@ public class OnFlyGuiClick implements Listener {
 
 
 
-    public HashMap<Player, Player> players = FlyGui.players;
 
     @EventHandler
     public void OnFlyGuiClick(InventoryClickEvent e) {
 
         Boolean TargetMessage = plugin.getConfig().getBoolean("temp-target-message");
-        Boolean PlayerNameReveal = plugin.getConfig().getBoolean("temp-player-name-reveal");
 
         String NoPermission = plugin.getConfig().getString("no-permission");
 
@@ -53,28 +50,26 @@ public class OnFlyGuiClick implements Listener {
 
 
         Player player = (Player) e.getWhoClicked();
-        Inventory inventory = e.getInventory();
 
         if (e.getView().getTitle().equalsIgnoreCase(ChatColor.GOLD + "           === Fly GUI ===")) {
-            Player target = players.get(player);
+            String name = e.getView().getItem(4).getItemMeta().getDisplayName();
+            name = ChatColor.stripColor(name);
+            Player target = player.getServer().getPlayer(name);
             switch (e.getCurrentItem().getType()) {
                 case RED_WOOL:
                     if (target == player) {
                         if (player.hasPermission("fly.fly")) {
                             player.closeInventory();
                             TargetFly(target, player, false);
-                            players.remove(player);
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                            players.remove(player);
                             player.closeInventory();
                         }
                     } else {
                         if (player.hasPermission("fly.others")) {
                             player.closeInventory();
                             TargetFly(target, player, false);
-                            players.remove(player);
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
@@ -89,22 +84,18 @@ public class OnFlyGuiClick implements Listener {
                         if (player.hasPermission("fly.fly")) {
                             player.closeInventory();
                             TargetFly(target, player, true);
-                            players.remove(player);
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                            players.remove(player);
                             player.closeInventory();
                         }
                     } else {
                         if (player.hasPermission("fly.others")) {
                             player.closeInventory();
                             TargetFly(target, player, true);
-                            players.remove(player);
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                            players.remove(player);
                             player.closeInventory();
                         }
                     }
@@ -118,7 +109,6 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                            players.remove(player);
                             player.closeInventory();
                             break;
                         }
@@ -129,7 +119,6 @@ public class OnFlyGuiClick implements Listener {
                             break;
                         }  else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                            players.remove(player);
                             player.closeInventory();
                             break;
                         }
@@ -139,7 +128,9 @@ public class OnFlyGuiClick implements Listener {
 
             e.setCancelled(true);
         } else if (e.getView().getTitle().equalsIgnoreCase(ChatColor.GOLD + "        === Tempfly GUI ===")) {
-            Player targettf = players.get(player);
+            String name = e.getView().getItem(4).getItemMeta().getDisplayName();
+            name = ChatColor.stripColor(name);
+            Player targettf = player.getServer().getPlayer(name);
             if (e.getCurrentItem().getType().equals(Material.DAMAGED_ANVIL)) {
                 int HoursI;
                 if (e.getClick().isLeftClick()) {
@@ -314,11 +305,71 @@ public class OnFlyGuiClick implements Listener {
                     String WrongArgs = plugin.getConfig().getString("wrong-args");
                     player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                 }
-                players.remove(player);
                 player.closeInventory();
             }
             e.setCancelled(true);
+            } else if (e.getView().getTitle().equalsIgnoreCase(ChatColor.GOLD + "         === Player list ===")) {
+            String name = e.getCurrentItem().getItemMeta().getDisplayName();
+            name = ChatColor.stripColor(name);
+            Player target = player.getServer().getPlayer(name);
+            Inventory flygui = Bukkit.createInventory(player, 36, ChatColor.GOLD + "           === Fly GUI ===");
+
+            ItemStack on = new ItemStack(Material.LIME_WOOL);
+            ItemStack off = new ItemStack(Material.RED_WOOL);
+            ItemStack tempfly = new ItemStack(Material.GOLD_BLOCK);
+
+            ItemMeta metaOn = on.getItemMeta();
+            metaOn.setDisplayName(ChatColor.GREEN + "ON");
+            ArrayList<String> loreOn = new ArrayList<>();
+            loreOn.add("Activate fly for " + target.getName());
+            metaOn.setLore(loreOn);
+            on.setItemMeta(metaOn);
+
+            ItemMeta metaOff = off.getItemMeta();
+            metaOff.setDisplayName(ChatColor.DARK_RED + "OFF");
+            ArrayList<String> loreOff = new ArrayList<>();
+            loreOff.add("Disable fly for " + target.getName());
+            metaOff.setLore(loreOff);
+            off.setItemMeta(metaOff);
+
+            ItemMeta meta = tempfly.getItemMeta();
+            meta.setDisplayName(ChatColor.GOLD + "Tempfly");
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("Set temp-fly for " + target.getName());
+            meta.setLore(lore);
+            tempfly.setItemMeta(meta);
+
+
+            ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
+            SkullMeta sk = (SkullMeta) playerhead.getItemMeta();
+            ArrayList<String> loreh = new ArrayList<>();
+            if (target.getAllowFlight()) {
+                sk.setDisplayName(ChatColor.GREEN + target.getName());
+                if (target.isFlying()) {
+                    loreh.add(ChatColor.GREEN + target.getName() + " is flying");
+                } else {
+                    loreh.add(ChatColor.DARK_RED + target.getName() + " isn't flying");
+                }
+                sk.setLore(loreh);
+            } else {
+                sk.setDisplayName(ChatColor.DARK_RED + target.getName());
+                loreh.add(ChatColor.DARK_RED + target.getName() + " isn't flying");
+                sk.setLore(loreh);
             }
+            sk.setOwner(target.getName());
+            playerhead.setItemMeta(sk);
+
+
+            flygui.setItem(20, on);
+            flygui.setItem(24, off);
+            flygui.setItem(31, tempfly);
+            flygui.setItem(4, playerhead);
+
+
+            player.openInventory(flygui);
+
+            e.setCancelled(true);
+        }
         }
 
     public void TargetFly(Player target, Player player, boolean state) {
@@ -349,7 +400,7 @@ public class OnFlyGuiClick implements Listener {
 
     public void TempflyMethod(Player player, Player target) {
 
-        if (player.hasPermission("fly.gui.*")) {
+        if (player.hasPermission("fly.gui")) {
             Inventory tempflygui = Bukkit.createInventory(player, 36, ChatColor.GOLD + "        === Tempfly GUI ===");
 
             ItemStack secondes = new ItemStack(Material.ANVIL);
