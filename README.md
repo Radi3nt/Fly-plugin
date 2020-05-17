@@ -214,7 +214,7 @@ reload-melody: true
 credits-message: true
 
 #DON'T CHANGE IT !
-version: 1.2.3f
+version: 1.2.3g
   ```
   
 </details>
