@@ -309,67 +309,67 @@ public class OnFlyGuiClick implements Listener {
             }
             e.setCancelled(true);
             } else if (e.getView().getTitle().equalsIgnoreCase(ChatColor.GOLD + "         === Player list ===")) {
-            String name = e.getCurrentItem().getItemMeta().getDisplayName();
-            name = ChatColor.stripColor(name);
-            Player target = player.getServer().getPlayer(name);
-            Inventory flygui = Bukkit.createInventory(player, 36, ChatColor.GOLD + "           === Fly GUI ===");
+                String name = e.getCurrentItem().getItemMeta().getDisplayName();
+                name = ChatColor.stripColor(name);
+                Player target = player.getServer().getPlayer(name);
+                Inventory flygui = Bukkit.createInventory(player, 36, ChatColor.GOLD + "           === Fly GUI ===");
 
-            ItemStack on = new ItemStack(Material.LIME_WOOL);
-            ItemStack off = new ItemStack(Material.RED_WOOL);
-            ItemStack tempfly = new ItemStack(Material.GOLD_BLOCK);
+                ItemStack on = new ItemStack(Material.LIME_WOOL);
+                ItemStack off = new ItemStack(Material.RED_WOOL);
+                ItemStack tempfly = new ItemStack(Material.GOLD_BLOCK);
 
-            ItemMeta metaOn = on.getItemMeta();
-            metaOn.setDisplayName(ChatColor.GREEN + "ON");
-            ArrayList<String> loreOn = new ArrayList<>();
-            loreOn.add("Activate fly for " + target.getName());
-            metaOn.setLore(loreOn);
-            on.setItemMeta(metaOn);
+                ItemMeta metaOn = on.getItemMeta();
+                metaOn.setDisplayName(ChatColor.GREEN + "ON");
+                ArrayList<String> loreOn = new ArrayList<>();
+                loreOn.add("Activate fly for " + target.getName());
+                metaOn.setLore(loreOn);
+                on.setItemMeta(metaOn);
 
-            ItemMeta metaOff = off.getItemMeta();
-            metaOff.setDisplayName(ChatColor.DARK_RED + "OFF");
-            ArrayList<String> loreOff = new ArrayList<>();
-            loreOff.add("Disable fly for " + target.getName());
-            metaOff.setLore(loreOff);
-            off.setItemMeta(metaOff);
+                ItemMeta metaOff = off.getItemMeta();
+                metaOff.setDisplayName(ChatColor.DARK_RED + "OFF");
+                ArrayList<String> loreOff = new ArrayList<>();
+                loreOff.add("Disable fly for " + target.getName());
+                metaOff.setLore(loreOff);
+                off.setItemMeta(metaOff);
 
-            ItemMeta meta = tempfly.getItemMeta();
-            meta.setDisplayName(ChatColor.GOLD + "Tempfly");
-            ArrayList<String> lore = new ArrayList<>();
-            lore.add("Set temp-fly for " + target.getName());
-            meta.setLore(lore);
-            tempfly.setItemMeta(meta);
+                ItemMeta meta = tempfly.getItemMeta();
+                meta.setDisplayName(ChatColor.GOLD + "Tempfly");
+                ArrayList<String> lore = new ArrayList<>();
+                lore.add("Set temp-fly for " + target.getName());
+                meta.setLore(lore);
+                tempfly.setItemMeta(meta);
 
 
-            ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
-            SkullMeta sk = (SkullMeta) playerhead.getItemMeta();
-            ArrayList<String> loreh = new ArrayList<>();
-            if (target.getAllowFlight()) {
-                sk.setDisplayName(ChatColor.GREEN + target.getName());
-                if (target.isFlying()) {
-                    loreh.add(ChatColor.GREEN + target.getName() + " is flying");
+                ItemStack playerhead = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
+                SkullMeta sk = (SkullMeta) playerhead.getItemMeta();
+                ArrayList<String> loreh = new ArrayList<>();
+                if (target.getAllowFlight()) {
+                    sk.setDisplayName(ChatColor.GREEN + target.getName());
+                    if (target.isFlying()) {
+                        loreh.add(ChatColor.GREEN + target.getName() + " is flying");
+                    } else {
+                        loreh.add(ChatColor.DARK_RED + target.getName() + " isn't flying");
+                    }
+                    sk.setLore(loreh);
                 } else {
+                    sk.setDisplayName(ChatColor.DARK_RED + target.getName());
                     loreh.add(ChatColor.DARK_RED + target.getName() + " isn't flying");
+                    sk.setLore(loreh);
                 }
-                sk.setLore(loreh);
-            } else {
-                sk.setDisplayName(ChatColor.DARK_RED + target.getName());
-                loreh.add(ChatColor.DARK_RED + target.getName() + " isn't flying");
-                sk.setLore(loreh);
+                sk.setOwner(target.getName());
+                playerhead.setItemMeta(sk);
+
+
+                flygui.setItem(20, on);
+                flygui.setItem(24, off);
+                flygui.setItem(31, tempfly);
+                flygui.setItem(4, playerhead);
+
+
+                player.openInventory(flygui);
             }
-            sk.setOwner(target.getName());
-            playerhead.setItemMeta(sk);
-
-
-            flygui.setItem(20, on);
-            flygui.setItem(24, off);
-            flygui.setItem(31, tempfly);
-            flygui.setItem(4, playerhead);
-
-
-            player.openInventory(flygui);
 
             e.setCancelled(true);
-        }
         }
 
     public void TargetFly(Player target, Player player, boolean state) {
