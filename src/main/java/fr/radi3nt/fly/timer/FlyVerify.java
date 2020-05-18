@@ -2,10 +2,7 @@ package fr.radi3nt.fly.timer;
 
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.Tempfly;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -28,6 +25,20 @@ public class FlyVerify extends BukkitRunnable {
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (int i = 0; i < list.size(); i++) {
             Player player = list.get(i);
+
+            if (player.hasPermission("fly.gamemode")) {
+                if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                    player.setAllowFlight(true);
+                    if (!flyers.contains(player.getName())) {
+                       flyers.add(player.getName());
+                    }
+                }
+            }
+
+            if (!player.getAllowFlight()) {
+                flyers.remove(player.getName());
+            }
+
             if (player.hasPermission("fly.admin")) {
                 if (NotifyDust.get(player)) {
                     for (int p = 0; p < list.size(); p++) {
