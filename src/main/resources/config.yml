@@ -113,6 +113,10 @@ on-state: "&2&lon"
 off-state: "&c&loff"
 
 
+#This option enable the perm fly.cooldown.<seconds>
+cooldown-per-player: false
+stack-tempfly: false
+
 
 
 #//ca//
