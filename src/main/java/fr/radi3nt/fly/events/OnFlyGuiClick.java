@@ -367,9 +367,9 @@ public class OnFlyGuiClick implements Listener {
 
 
                 player.openInventory(flygui);
-            }
 
-            e.setCancelled(true);
+                e.setCancelled(true);
+            }
         }
 
     public void TargetFly(Player target, Player player, boolean state) {
