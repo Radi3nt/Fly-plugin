@@ -6,7 +6,7 @@
 
     <groupId>fr.radi3nt.fly</groupId>
     <artifactId>FlyPlugin</artifactId>
-    <version>1.2.3g</version>
+    <version>1.2.3e</version>
     <packaging>jar</packaging>
 
     <name>FlyPlugin</name>
