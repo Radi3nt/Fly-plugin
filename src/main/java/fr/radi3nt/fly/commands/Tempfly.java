@@ -187,7 +187,7 @@ public class Tempfly implements CommandExecutor {
 
                                     if (maxcount >= Integer.parseInt((sb.toString()))) {
                                         if (time.containsKey(player.getName())) {
-                                            time.put(player.getName(), Integer.parseInt((sb.toString())) + time.get(player.getName()));
+                                            time.put(player.getName(), (int) (Integer.parseInt((sb.toString())) + ((timer.get(player.getName()) / 1000) + time.get(player.getName())) - (System.currentTimeMillis() / 1000)));
                                         } else {
                                             time.put(player.getName(), Integer.parseInt((sb.toString())));
                                         }
@@ -196,7 +196,7 @@ public class Tempfly implements CommandExecutor {
                                         FlyMethod(player, true);
                                         timem.put(player, 100000);
                                         if (timer.containsKey(player.getName())) {
-                                            timer.put(player.getName(), System.currentTimeMillis() - ((timer.get(player.getName()) / 1000) + time.get(player)) - (System.currentTimeMillis() / 1000));
+                                            timer.put(player.getName(), System.currentTimeMillis());
                                         } else {
                                             timer.put(player.getName(), System.currentTimeMillis());
                                         }
