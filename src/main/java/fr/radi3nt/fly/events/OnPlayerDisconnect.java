@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static fr.radi3nt.fly.timer.checker.timem;
+
 public class OnPlayerDisconnect implements Listener {
 
     ArrayList<String> flyers = Fly.flyers;
@@ -34,6 +36,8 @@ public class OnPlayerDisconnect implements Listener {
         timer.remove(player.getName());
         time.remove(player.getName());
         time.remove(player.getName());
+        timem.remove(player);
+        timem.remove(player);
 
         NotifyChat.remove(player);
         NotifyTitle.remove(player);

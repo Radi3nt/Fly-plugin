@@ -28,9 +28,6 @@ public class GetFlyTime implements CommandExecutor {
         String NoFlyHe = plugin.getConfig().getString("timefly-nofly-target");
 
         String NoPermission = plugin.getConfig().getString("no-permission");
-        String TempMinute = plugin.getConfig().getString("temp-minutes");
-        String TempSecond = plugin.getConfig().getString("temp-seconds");
-        String TempHours = plugin.getConfig().getString("temp-hours");
 
         String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
