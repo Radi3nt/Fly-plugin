@@ -115,7 +115,7 @@ off-state: "&c&loff"
 
 #This option enable the perm fly.cooldown.<seconds>
 cooldown-per-player: false
-stack-tempfly: false
+stack-tempfly: true
 
 
 

@@ -45,6 +45,7 @@ public class Tempfly implements CommandExecutor {
 
 
         Boolean IsCooldown = plugin.getConfig().getBoolean("cooldown-per-player");
+        Boolean Stackable = plugin.getConfig().getBoolean("stack-tempfly");
 
 
         String MessagePT = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-message"));
@@ -87,7 +88,15 @@ public class Tempfly implements CommandExecutor {
                     if (!(args.length == 1)) {
                         Player target = Bukkit.getPlayerExact(args[1]);
                         if (target instanceof Player) {
-                            time.put(target.getName(), Integer.parseInt((sb.toString())));
+                            if (Stackable) {
+                                if (time.containsKey(target.getName())) {
+                                    time.put(target.getName(), (int) (Integer.parseInt((sb.toString())) + ((timer.get(target.getName()) / 1000) + time.get(target.getName())) - (System.currentTimeMillis() / 1000)));
+                                } else {
+                                    time.put(target.getName(), Integer.parseInt((sb.toString())));
+                                }
+                            } else {
+                                time.put(target.getName(), Integer.parseInt((sb.toString())));
+                            }
                             if (time.get(target.getName()) > 0 && time.get(target.getName()) < 86400) {
                                 flyers.remove(target.getName());
                                 flyers.remove(target.getName());
@@ -143,7 +152,15 @@ public class Tempfly implements CommandExecutor {
                                 if (player.hasPermission("fly.tempflyothers")) {
                                     Player target = Bukkit.getPlayerExact(args[1]);
                                     if (target instanceof Player) {
-                                        time.put(target.getName(), Integer.parseInt((sb.toString())));
+                                        if (Stackable) {
+                                            if (time.containsKey(target.getName())) {
+                                                time.put(target.getName(), (int) (Integer.parseInt((sb.toString())) + ((timer.get(target.getName()) / 1000) + time.get(target.getName())) - (System.currentTimeMillis() / 1000)));
+                                            } else {
+                                                time.put(target.getName(), Integer.parseInt((sb.toString())));
+                                            }
+                                        } else {
+                                            time.put(target.getName(), Integer.parseInt((sb.toString())));
+                                        }
                                         if (time.get(target.getName()) > 0 && time.get(target.getName()) < 86400) {
                                             flyers.remove(target.getName());
                                             flyers.remove(target.getName());
@@ -186,8 +203,12 @@ public class Tempfly implements CommandExecutor {
                                     }
 
                                     if (maxcount >= Integer.parseInt((sb.toString()))) {
-                                        if (time.containsKey(player.getName())) {
-                                            time.put(player.getName(), (int) (Integer.parseInt((sb.toString())) + ((timer.get(player.getName()) / 1000) + time.get(player.getName())) - (System.currentTimeMillis() / 1000)));
+                                        if (Stackable) {
+                                            if (time.containsKey(player.getName())) {
+                                                time.put(player.getName(), (int) (Integer.parseInt((sb.toString())) + ((timer.get(player.getName()) / 1000) + time.get(player.getName())) - (System.currentTimeMillis() / 1000)));
+                                            } else {
+                                                time.put(player.getName(), Integer.parseInt((sb.toString())));
+                                            }
                                         } else {
                                             time.put(player.getName(), Integer.parseInt((sb.toString())));
                                         }
@@ -195,11 +216,7 @@ public class Tempfly implements CommandExecutor {
                                         loc.set("flyers." + player.getName(), time.get(player.getName()));
                                         FlyMethod(player, true);
                                         timem.put(player, 100000);
-                                        if (timer.containsKey(player.getName())) {
-                                            timer.put(player.getName(), System.currentTimeMillis());
-                                        } else {
-                                            timer.put(player.getName(), System.currentTimeMillis());
-                                        }
+                                        timer.put(player.getName(), System.currentTimeMillis());
                                         int timeleft = time.get(player.getName());
                                         int heures = (timeleft / 3600);
                                         int minutes = ((timeleft - (timeleft / 3600) * 3600) / 60);
