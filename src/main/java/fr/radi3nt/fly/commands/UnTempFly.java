@@ -6,18 +6,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.io.File;
-import java.io.IOException;
-
-import static fr.radi3nt.fly.commands.Fly.flyers;
+import static fr.radi3nt.fly.commands.FlyAlert.*;
 import static fr.radi3nt.fly.commands.Tempfly.time;
 import static fr.radi3nt.fly.commands.Tempfly.timer;
-import static fr.radi3nt.fly.timer.checker.timem;
 
 public class UnTempFly implements CommandExecutor {
 
@@ -33,6 +27,7 @@ public class UnTempFly implements CommandExecutor {
         String NoFlyYou = plugin.getConfig().getString("timefly-nofly-you");
         String NoFlyHe = plugin.getConfig().getString("timefly-nofly-target");
 
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 0) {
@@ -41,27 +36,26 @@ public class UnTempFly implements CommandExecutor {
                         player.setAllowFlight(false);
                         player.setFlying(false);
                         player.setInvulnerable(false);
-                        flyers.remove(player.getName());
-                        flyers.remove(player.getName());
-                        timer.remove(player.getName());
-                        timer.remove(player.getName());
-                        time.remove(player.getName());
-                        time.remove(player.getName());
-                        timem.remove(player);
-                        timem.remove(player);
+                        time.put(player.getName(), 1);
+                        timer.put(player.getName(), System.currentTimeMillis());
 
+                        Boolean Chat = NotifyChat.get(player);
+                        Boolean BossBar = NotifyBossBar.get(player);
+                        Boolean Title = NotifyTitle.get(player);
+                        Boolean Sounds = NotifySounds.get(player);
 
-                        File locations = new File("plugins/FlyPlugin", "flyers.yml");
-                        if (!locations.exists()) {
-                            try {
-                                locations.createNewFile();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
+                        NotifyChat.put(player, false);
+                        NotifyBossBar.put(player, false);
+                        NotifyTitle.put(player, false);
+                        NotifySounds.put(player, false);
 
-                        loc.set("flyers." + player.getName(), null);
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            NotifyChat.put(player, Chat);
+                            NotifyBossBar.put(player, BossBar);
+                            NotifyTitle.put(player, Title);
+                            NotifySounds.put(player, Sounds);
+                        }, 50L);
+
 
                         String Off = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("off-state")) + ChatColor.RESET;
                         String FlyYoureself = plugin.getConfig().getString("fly-yourself");
@@ -81,27 +75,25 @@ public class UnTempFly implements CommandExecutor {
                             target.setAllowFlight(false);
                             target.setFlying(false);
                             target.setInvulnerable(false);
-                            flyers.remove(target.getName());
-                            flyers.remove(target.getName());
-                            timer.remove(target.getName());
-                            timer.remove(target.getName());
-                            time.remove(target.getName());
-                            time.remove(target.getName());
-                            timem.remove(target);
-                            timem.remove(target);
+                            time.put(target.getName(), 1);
+                            timer.put(target.getName(), System.currentTimeMillis());
 
+                            Boolean Chat = NotifyChat.get(target);
+                            Boolean BossBar = NotifyBossBar.get(target);
+                            Boolean Title = NotifyTitle.get(target);
+                            Boolean Sounds = NotifySounds.get(target);
 
-                            File locations = new File("plugins/FlyPlugin", "flyers.yml");
-                            if (!locations.exists()) {
-                                try {
-                                    locations.createNewFile();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
+                            NotifyChat.put(target, false);
+                            NotifyBossBar.put(target, false);
+                            NotifyTitle.put(target, false);
+                            NotifySounds.put(target, false);
 
-                            loc.set("flyers." + target.getName(), null);
+                            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                NotifyChat.put(target, Chat);
+                                NotifyBossBar.put(target, BossBar);
+                                NotifyTitle.put(target, Title);
+                                NotifySounds.put(target, Sounds);
+                            }, 50L);
 
                             String Off = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("off-state")) + ChatColor.RESET;
                             Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
@@ -134,27 +126,28 @@ public class UnTempFly implements CommandExecutor {
                         target.setAllowFlight(false);
                         target.setFlying(false);
                         target.setInvulnerable(false);
-                        flyers.remove(target.getName());
-                        flyers.remove(target.getName());
-                        timer.remove(target.getName());
-                        timer.remove(target.getName());
-                        time.remove(target.getName());
-                        time.remove(target.getName());
-                        timem.remove(target);
-                        timem.remove(target);
+                        time.put(target.getName(), 1);
+                        timer.put(target.getName(), System.currentTimeMillis());
+                        Boolean Chat = NotifyChat.get(target);
+                        Boolean BossBar = NotifyBossBar.get(target);
+                        Boolean Title = NotifyTitle.get(target);
+                        Boolean Sounds = NotifySounds.get(target);
+
+                        NotifyChat.put(target, false);
+                        NotifyBossBar.put(target, false);
+                        NotifyTitle.put(target, false);
+                        NotifySounds.put(target, false);
+
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                            NotifyChat.put(target, Chat);
+                            NotifyBossBar.put(target, BossBar);
+                            NotifyTitle.put(target, Title);
+                            NotifySounds.put(target, Sounds);
+                            }, 50L);
 
 
-                        File locations = new File("plugins/FlyPlugin", "flyers.yml");
-                        if (!locations.exists()) {
-                            try {
-                                locations.createNewFile();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
 
-                        loc.set("flyers." + target.getName(), null);
+
 
                         String Off = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("off-state")) + ChatColor.RESET;
                         Boolean TargetSendMessage = plugin.getConfig().getBoolean("fly-target-message");
