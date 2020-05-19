@@ -22,6 +22,9 @@ commands:
     description: Temp-fly someone
     usage: /tempfly <seconds> [player]
     aliases: [tempf, tf, tfly]
+  unfly:
+    description: Remove someone in tempfly
+    usage: /unfly [player]
   flyers:
     description: Give you the list of the flyers
     usage: /flyers

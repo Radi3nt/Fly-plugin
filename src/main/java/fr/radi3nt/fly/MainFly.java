@@ -184,6 +184,8 @@ public final class MainFly extends JavaPlugin {
         getCommand("tempfly").setExecutor(new Tempfly());
         getCommand("tempfly").setTabCompleter(new fr.radi3nt.fly.tab.Tempfly());
 
+        getCommand("unfly").setExecutor(new UnTempFly());
+
         getCommand("timefly").setExecutor(new GetFlyTime());
         getCommand("timefly").setTabCompleter(new fr.radi3nt.fly.tab.GetFlyTime());
 
