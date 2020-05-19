@@ -131,7 +131,7 @@ public class OnPlayerJoin implements Listener {
                 time.put(player.getName(), timeleft);
                 timem.put(player, 100000);
                 Location ploc = player.getLocation();
-                int y = ploc.getBlockY() - 1;
+                int y = ploc.getBlockY() - 2;
                 ploc.add(0, y, 0);
                 if (ploc.getBlock().getType().equals(Material.AIR)) {
                     player.setFlying(true);
