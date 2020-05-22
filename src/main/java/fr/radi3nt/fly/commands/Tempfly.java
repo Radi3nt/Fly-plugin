@@ -1,7 +1,7 @@
 package fr.radi3nt.fly.commands;
 
 import fr.radi3nt.fly.MainFly;
-import fr.radi3nt.fly.timer.checker;
+import fr.radi3nt.fly.timer.TempCheck;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
@@ -32,7 +33,7 @@ public class Tempfly implements CommandExecutor {
     public ArrayList<String> flyers = Fly.flyers;
 
 
-    HashMap<Player, Integer> timem = checker.timem;
+    HashMap<Player, Integer> timem = TempCheck.timem;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -289,6 +290,7 @@ public class Tempfly implements CommandExecutor {
             } else {
                 flyers.remove(player.getName());
                 player.setInvulnerable(false);
+                GroundHitters.add(player);
             }
     }
 

@@ -12,6 +12,7 @@ import org.bukkit.plugin.Plugin;
 import static fr.radi3nt.fly.commands.FlyAlert.*;
 import static fr.radi3nt.fly.commands.Tempfly.time;
 import static fr.radi3nt.fly.commands.Tempfly.timer;
+import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
 
 public class UnTempFly implements CommandExecutor {
 
@@ -36,6 +37,8 @@ public class UnTempFly implements CommandExecutor {
                         player.setAllowFlight(false);
                         player.setFlying(false);
                         player.setInvulnerable(false);
+                        GroundHitters.add(player);
+
                         time.put(player.getName(), 1);
                         timer.put(player.getName(), System.currentTimeMillis());
 
@@ -77,6 +80,9 @@ public class UnTempFly implements CommandExecutor {
                             target.setInvulnerable(false);
                             time.put(target.getName(), 1);
                             timer.put(target.getName(), System.currentTimeMillis());
+
+                            GroundHitters.add(target);
+
 
                             Boolean Chat = NotifyChat.get(target);
                             Boolean BossBar = NotifyBossBar.get(target);
@@ -132,6 +138,9 @@ public class UnTempFly implements CommandExecutor {
                         Boolean BossBar = NotifyBossBar.get(target);
                         Boolean Title = NotifyTitle.get(target);
                         Boolean Sounds = NotifySounds.get(target);
+
+                        GroundHitters.add(target);
+
 
                         NotifyChat.put(target, false);
                         NotifyBossBar.put(target, false);

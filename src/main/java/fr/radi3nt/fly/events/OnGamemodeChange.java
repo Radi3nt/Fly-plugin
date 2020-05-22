@@ -13,7 +13,8 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static fr.radi3nt.fly.timer.checker.timem;
+import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
+import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public class OnGamemodeChange implements Listener {
 
@@ -35,10 +36,11 @@ public class OnGamemodeChange implements Listener {
             if (!player.hasPermission("fly.gamemode")) {
                 player.setAllowFlight(false);
                 player.setFlying(false);
-                time.remove(player);
-                timer.remove(player);
+                time.remove(player.getName());
+                timer.remove(player.getName());
                 timem.remove(player);
                 flyers.remove(player.getName());
+                GroundHitters.add(player);
             }
         }
     }

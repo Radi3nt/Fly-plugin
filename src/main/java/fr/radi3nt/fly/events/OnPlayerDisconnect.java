@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static fr.radi3nt.fly.timer.checker.timem;
+import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public class OnPlayerDisconnect implements Listener {
 

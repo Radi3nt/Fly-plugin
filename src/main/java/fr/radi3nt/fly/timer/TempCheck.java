@@ -24,7 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class checker extends BukkitRunnable {
+import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
+
+public class TempCheck extends BukkitRunnable {
 
     public Map<String, Long> timer = Tempfly.timer;
     public Map<String, Integer> time = Tempfly.time;
@@ -162,6 +164,7 @@ public class checker extends BukkitRunnable {
                     player.setAllowFlight(false);
                     player.setFlying(false);
                     player.setInvulnerable(false);
+                    GroundHitters.add(player);
                     Tempfly.timer.remove(player.getName());
                     timer.remove(player.getName());
                     Tempfly.time.remove(player.getName());

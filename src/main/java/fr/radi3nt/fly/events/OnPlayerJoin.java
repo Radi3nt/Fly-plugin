@@ -29,7 +29,7 @@ import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
-import static fr.radi3nt.fly.timer.checker.timem;
+import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public class OnPlayerJoin implements Listener {
 
