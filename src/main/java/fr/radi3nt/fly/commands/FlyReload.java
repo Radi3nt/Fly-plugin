@@ -36,8 +36,6 @@ public class FlyReload implements CommandExecutor {
             Player player_c = (Player) sender;
             if (player_c.hasPermission("fly.reload")) {
                 plugin.reloadConfig();
-                plugin.getConfig().options().copyDefaults();
-                plugin.saveConfig();
                 int secondes = CooldownTime;
                 long timeleft = ((timer / 1000) + secondes) - (System.currentTimeMillis() / 1000);
                 String cooldown = CooldownMessage.replace("%timeleft%", String.valueOf(timeleft));
@@ -106,8 +104,6 @@ public class FlyReload implements CommandExecutor {
         } else {
             plugin.reloadConfig();
             sender.sendMessage(Prefix + " " + ChatColor.RED + ReloadMessage);
-            plugin.getConfig().options().copyDefaults();
-            plugin.saveDefaultConfig();
         }
         return true;
     }
