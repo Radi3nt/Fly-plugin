@@ -29,6 +29,7 @@ import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
+import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
 import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public class OnPlayerJoin implements Listener {
@@ -138,5 +139,11 @@ public class OnPlayerJoin implements Listener {
                 }
             }
         }
+        Location ploc = player.getLocation();
+        int y = ploc.getBlockY() - 2;
+        if (ploc.getBlock().getType().equals(Material.AIR)) {
+            GroundHitters.add(player);
+        }
+
     }
 }

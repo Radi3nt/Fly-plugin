@@ -10,31 +10,44 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Math.*;
 
 public class OnGroundHit implements Listener {
 
+    Plugin plugin = MainFly.getPlugin(MainFly.class);
+
+
     public static ArrayList<Player> GroundHitters = new ArrayList<>();
+
 
     @EventHandler
     public void OnFallDamage(EntityDamageEvent e) {
+
+        Boolean ActiveFallwave = plugin.getConfig().getBoolean("active-fallwave");
+        Boolean ActiveFallwaveAlways = plugin.getConfig().getBoolean("active-fallwave-always");
+
         if (e.getEntity() instanceof Player){
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
                 Player player = (Player) e.getEntity();
-                if (GroundHitters.contains(player)) {
-                    Boolean Particles = MainFly.getPlugin(MainFly.class).getConfig().getBoolean("particles");
-                    if (Particles) {
+                if (ActiveFallwave) {
+                    if (ActiveFallwaveAlways) {
                         float fDist = player.getFallDistance();
                         HitMethod(player, fDist);
+                        GroundHitters.remove(player);
+                    } else {
+                        if (GroundHitters.contains(player)) {
+                            float fDist = player.getFallDistance();
+                            HitMethod(player, fDist);
+                            GroundHitters.remove(player);
+                            e.setCancelled(true);
+                        }
                     }
-                    GroundHitters.remove(player);
-                    e.setCancelled(true);
                 }
             }
         }
@@ -47,7 +60,6 @@ public class OnGroundHit implements Listener {
 
 
         Location playerLocation = player.getLocation();
-        List<Entity> nearbyEntities = player.getNearbyEntities(radius, radius, radius);
         new BukkitRunnable() {
             double t = 0;
             public void run() {
