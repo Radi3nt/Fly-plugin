@@ -36,7 +36,7 @@ public class Cosmetics extends BukkitRunnable {
         if (Particles) {
             for (int i = 0; i < list.size(); i++) {
                 Player player = list.get(i);
-                if (player.isFlying()) {
+                if (player.isFlying() && !player.getGameMode().equals(GameMode.SPECTATOR)) {
                     if (player.hasPermission("fly.shield")) {
 
                         for (Entity entity : player.getNearbyEntities(1.25, 1.25, 1.25)) {
@@ -46,7 +46,7 @@ public class Cosmetics extends BukkitRunnable {
                                     Location exploadloc = new Location(player.getWorld(), (target.getLocation().getX() + player.getLocation().getX())/2, (target.getLocation().getY() + player.getLocation().getY())/2, (target.getLocation().getZ() + player.getLocation().getZ())/2);
                                     player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, exploadloc, 4, 0, 0, 0, 0);
                                     Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
-                                    entity.setVelocity(fromPlayerToTarget.multiply(1));
+                                    entity.setVelocity(fromPlayerToTarget.multiply(0.4));
                                 } else {
                                     Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
                                     entity.setVelocity(fromPlayerToTarget.multiply(0.25));
@@ -188,7 +188,7 @@ public class Cosmetics extends BukkitRunnable {
                 if (NotifyDust.get(player)) {
                     for (int p = 0; p < list.size(); p++) {
                         Player target = list.get(p);
-                        if (flyers.contains(target.getName())) {
+                        if (flyers.contains(target.getName()) && !target.getGameMode().equals(GameMode.SPECTATOR)) {
                             if (target.isFlying()) {
                                 if (timer.containsKey(target.getName())) {
                                     Location tloc = target.getLocation();
@@ -196,14 +196,14 @@ public class Cosmetics extends BukkitRunnable {
                                     Double y = tloc.getY() + 2.1;
                                     Double z = tloc.getZ();
                                     tloc.add(0, 2, 0);
-                                    player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0.001, 1, 0, 1, new Particle.DustOptions(Color.YELLOW, 1));
+                                    player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0, 0, 0, 0, new Particle.DustOptions(Color.YELLOW, 1));
                                 } else {
                                     Location tloc = target.getLocation();
                                     Double x = tloc.getX();
                                     Double y = tloc.getY() + 2.1;
                                     Double z = tloc.getZ();
                                     tloc.add(0, 2, 0);
-                                    player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0.001, 1, 0, 1, new Particle.DustOptions(Color.GREEN, 1));
+                                    player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0, 0, 0, 0, new Particle.DustOptions(Color.GREEN, 1));
                                 }
                             } else {
                                 Location tloc = target.getLocation();
@@ -211,7 +211,7 @@ public class Cosmetics extends BukkitRunnable {
                                 Double y = tloc.getY() + 2.1;
                                 Double z = tloc.getZ();
                                 tloc.add(0, 2, 0);
-                                player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0.001, 1, 0, 1, new Particle.DustOptions(Color.RED, 1));
+                                player.spawnParticle(Particle.REDSTONE, x, y, z, 0, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));
                             }
                         }
                     }
@@ -223,7 +223,7 @@ public class Cosmetics extends BukkitRunnable {
                 if (GroundHitters.contains(player)) {
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
                         GroundHitters.remove(player);
-                    }, 40L);
+                    }, 4L);
                 }
             }
 
