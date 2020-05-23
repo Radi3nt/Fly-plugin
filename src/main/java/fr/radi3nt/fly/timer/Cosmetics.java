@@ -24,6 +24,8 @@ public class Cosmetics extends BukkitRunnable {
     Plugin plugin = MainFly.getPlugin(MainFly.class);
     int number = 0;
 
+    public static ArrayList<Player> pushed = new ArrayList<>();
+
     @Override
     public void run() {
 
@@ -102,9 +104,68 @@ public class Cosmetics extends BukkitRunnable {
 
                 }
                 if (!(perm == 0)) {
+                    int reelradius = 20;
+                    Location floorLocation = new Location(player.getLocation().getWorld(), player.getLocation().getBlockX(), perm + 2, player.getLocation().getBlockZ());
                     if (player.getLocation().getBlockY() >= perm) {
-                        Vector vector = new Vector(player.getLocation().toVector().getX()/2, player.getLocation().toVector().getY(), player.getLocation().toVector().getZ()/2);
-                        player.setVelocity(vector.multiply(-0.01));
+                        if (!pushed.contains(player)) {
+                            pushed.add(player);
+                            new BukkitRunnable() {
+
+                                double t = 0;
+                                Location playerLocation = player.getLocation();
+
+                                public void run() {
+
+                                    t = t + 0.1 * Math.PI;
+                                    for (double theta = 0; theta <= 2 * Math.PI; theta = theta + Math.PI / 16) {
+                                        double x = t * cos(theta);
+                                        double y = 2 * Math.exp(-0.1 * t) * sin(t) + 0.2;
+                                        double z = t * sin(theta);
+                                        playerLocation.add(x, y, z);
+                                        if (t>0.9) {
+                                            player.spawnParticle(Particle.END_ROD, playerLocation, 1, 0, 0, 0, 0);
+                                        }
+                                        playerLocation.subtract(x, y, z);
+
+
+                                    }
+                                    if (t > 20) {
+                                        pushed.remove(player);
+                                        this.cancel();
+                                    }
+                                    if (t > 15) {
+                                        pushed.remove(player);
+                                    }
+
+                                }
+
+                            }.runTaskTimer(MainFly.getPlugin(MainFly.class), 1L, 1L);
+                        }
+                            Vector vector = new Vector(player.getLocation().toVector().getX() / 2, player.getLocation().toVector().getY(), player.getLocation().toVector().getZ() / 2);
+                            player.setVelocity(vector.multiply(-0.02));
+
+                    }
+                    if (Particles) {
+                        if (perm - reelradius < player.getLocation().getBlockY()) {
+                            //Display
+                            int radius = reelradius - (perm - player.getLocation().getBlockY());
+
+                            int ox = 0;
+                            int oy = 0; // origin
+
+                            for (int x = -radius; x < radius; x++)
+                            {
+                                int height = (int) Math.sqrt(radius * radius - x * x);
+
+                                for (int y = -height; y < height; y++) {
+                                    floorLocation.add(x + ox, 0,y + oy);
+                                    player.spawnParticle(Particle.END_ROD, floorLocation, 1, 0, 0, 0, 0);
+                                    floorLocation.subtract(x + ox, 0,y + oy);
+                                }
+                            }
+
+
+                        }
                     }
                 }
             }
