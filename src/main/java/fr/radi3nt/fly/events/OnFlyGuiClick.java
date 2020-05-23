@@ -61,30 +61,30 @@ public class OnFlyGuiClick implements Listener {
                 case RED_WOOL:
                     if (target == player) {
                         if (player.hasPermission("fly.fly")) {
-                            if (timer.containsKey(player.getName())) {
-                                player.setAllowFlight(false);
-                                player.setFlying(false);
-                                player.setInvulnerable(false);
-                                time.put(player.getName(), 1);
-                                timer.put(player.getName(), System.currentTimeMillis());
-                                Boolean Chat = NotifyChat.get(player);
-                                Boolean BossBar = NotifyBossBar.get(player);
-                                Boolean Title = NotifyTitle.get(player);
-                                Boolean Sounds = NotifySounds.get(player);
+                            if (Tempfly.timer.containsKey(target.getName())) {
+                                target.setAllowFlight(false);
+                                target.setFlying(false);
+                                target.setInvulnerable(false);
+                                time.put(target.getName(), 1);
+                                Tempfly.timer.put(target.getName(), System.currentTimeMillis());
+                                Boolean Chat = NotifyChat.get(target);
+                                Boolean BossBar = NotifyBossBar.get(target);
+                                Boolean Title = NotifyTitle.get(target);
+                                Boolean Sounds = NotifySounds.get(target);
 
-                                GroundHitters.add(player);
+                                GroundHitters.add(target);
 
 
-                                NotifyChat.put(player, false);
-                                NotifyBossBar.put(player, false);
-                                NotifyTitle.put(player, false);
-                                NotifySounds.put(player, false);
+                                NotifyChat.put(target, false);
+                                NotifyBossBar.put(target, false);
+                                NotifyTitle.put(target, false);
+                                NotifySounds.put(target, false);
 
                                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                                    NotifyChat.put(player, Chat);
-                                    NotifyBossBar.put(player, BossBar);
-                                    NotifyTitle.put(player, Title);
-                                    NotifySounds.put(player, Sounds);
+                                    NotifyChat.put(target, Chat);
+                                    NotifyBossBar.put(target, BossBar);
+                                    NotifyTitle.put(target, Title);
+                                    NotifySounds.put(target, Sounds);
                                 }, 50L);
                             }
                             player.closeInventory();
@@ -96,12 +96,12 @@ public class OnFlyGuiClick implements Listener {
                         }
                     } else {
                         if (player.hasPermission("fly.others")) {
-                            if (timer.containsKey(player.getName())) {
+                            if (Tempfly.timer.containsKey(target.getName())) {
                                 target.setAllowFlight(false);
                                 target.setFlying(false);
                                 target.setInvulnerable(false);
                                 time.put(target.getName(), 1);
-                                timer.put(target.getName(), System.currentTimeMillis());
+                                Tempfly.timer.put(target.getName(), System.currentTimeMillis());
                                 Boolean Chat = NotifyChat.get(target);
                                 Boolean BossBar = NotifyBossBar.get(target);
                                 Boolean Title = NotifyTitle.get(target);
@@ -370,7 +370,7 @@ public class OnFlyGuiClick implements Listener {
 
                 ItemStack on = new ItemStack(Material.LIME_WOOL);
                 ItemStack off = new ItemStack(Material.RED_WOOL);
-                ItemStack tempfly = new ItemStack(Material.GOLD_BLOCK);
+                ItemStack tempfly = new ItemStack(Material.CLOCK);
 
                 ItemMeta metaOn = on.getItemMeta();
                 metaOn.setDisplayName(ChatColor.GREEN + "ON");
