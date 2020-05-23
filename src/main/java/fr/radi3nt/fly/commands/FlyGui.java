@@ -44,7 +44,7 @@ public class FlyGui implements CommandExecutor {
 
                         ItemStack on = new ItemStack(Material.LIME_WOOL);
                         ItemStack off = new ItemStack(Material.RED_WOOL);
-                        ItemStack tempfly = new ItemStack(Material.GOLD_BLOCK);
+                        ItemStack tempfly = new ItemStack(Material.CLOCK);
 
                         ItemMeta metaOn = on.getItemMeta();
                         metaOn.setDisplayName(ChatColor.GREEN + "ON");
