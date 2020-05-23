@@ -32,10 +32,20 @@ public class Cosmetics extends BukkitRunnable {
         // SHIELD
 
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
+        ArrayList<String> flyers = Fly.flyers;
+        Map<String, Long> timer = Tempfly.timer;
+
         Boolean Particles = plugin.getConfig().getBoolean("particles");
-        if (Particles) {
+        Boolean ShieldContact = plugin.getConfig().getBoolean("shield-contact-reaction");
+        Integer Reelradius = plugin.getConfig().getInt("height-floor-radius");
+
+
+
             for (int i = 0; i < list.size(); i++) {
                 Player player = list.get(i);
+
+
+                //SIELD
                 if (player.isFlying() && !player.getGameMode().equals(GameMode.SPECTATOR)) {
                     if (player.hasPermission("fly.shield")) {
 
@@ -43,17 +53,22 @@ public class Cosmetics extends BukkitRunnable {
                             if (entity instanceof Player) {
                                 Player target = (Player) entity;
                                 if (target.isFlying() && target.hasPermission("fly.shield")) {
-                                    Location exploadloc = new Location(player.getWorld(), (target.getLocation().getX() + player.getLocation().getX())/2, (target.getLocation().getY() + player.getLocation().getY())/2, (target.getLocation().getZ() + player.getLocation().getZ())/2);
-                                    player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, exploadloc, 4, 0, 0, 0, 0);
-                                    Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
-                                    entity.setVelocity(fromPlayerToTarget.multiply(0.4));
+                                    if (ShieldContact) {
+                                        Location exploadloc = new Location(player.getWorld(), (target.getLocation().getX() + player.getLocation().getX()) / 2, (target.getLocation().getY() + player.getLocation().getY()) / 2, (target.getLocation().getZ() + player.getLocation().getZ()) / 2);
+                                        player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, exploadloc, 4, 0, 0, 0, 0);
+                                        Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
+                                        entity.setVelocity(fromPlayerToTarget.multiply(0.4));
+                                    } else {
+                                        Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
+                                        entity.setVelocity(fromPlayerToTarget.multiply(0.25));
+                                    }
                                 } else {
                                     Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
                                     entity.setVelocity(fromPlayerToTarget.multiply(0.25));
                                 }
                             }
                         }
-
+                        if (Particles) {
                         if (number >= 4) {
                             for (int p = 0; p < list.size(); p++) {
                                 Player target = list.get(p);
@@ -81,17 +96,6 @@ public class Cosmetics extends BukkitRunnable {
                     }
                 }
             }
-        }
-
-        // DUST + FLYERS AUTO REMOVE
-
-        ArrayList<String> flyers = Fly.flyers;
-        Map<String, Long> timer = Tempfly.timer;
-
-
-        for (int i = 0; i < list.size(); i++) {
-            Player player = list.get(i);
-
 
             //HEIGHT LIMIT
             if (player.isFlying()) {
@@ -104,7 +108,7 @@ public class Cosmetics extends BukkitRunnable {
 
                 }
                 if (!(perm == 0)) {
-                    int reelradius = 20;
+                    int reelradius = Reelradius;
                     Location floorLocation = new Location(player.getLocation().getWorld(), player.getLocation().getBlockX(), perm + 2, player.getLocation().getBlockZ());
                     if (player.getLocation().getBlockY() >= perm) {
                         if (!pushed.contains(player)) {
@@ -170,9 +174,9 @@ public class Cosmetics extends BukkitRunnable {
                 }
             }
 
-
+            //CREATIVE REDO
             if (player.hasPermission("fly.gamemode")) {
-                if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) {
                     player.setAllowFlight(true);
                     if (!flyers.contains(player.getName())) {
                         flyers.add(player.getName());
@@ -180,10 +184,12 @@ public class Cosmetics extends BukkitRunnable {
                 }
             }
 
+            //FLYERS REMOVER
             if (!player.getAllowFlight()) {
                 flyers.remove(player.getName());
             }
 
+            //DUST
             if (player.hasPermission("fly.admin")) {
                 if (NotifyDust.get(player)) {
                     for (int p = 0; p < list.size(); p++) {
@@ -217,7 +223,8 @@ public class Cosmetics extends BukkitRunnable {
                     }
                 }
             }
-            //Others
+
+            //AUTO GROUND REMOVE
 
             if (player.isOnGround()) {
                 if (GroundHitters.contains(player)) {
@@ -226,11 +233,6 @@ public class Cosmetics extends BukkitRunnable {
                     }, 4L);
                 }
             }
-
         }
-
-
-
-
     }
 }

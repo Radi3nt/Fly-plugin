@@ -118,6 +118,13 @@ cooldown-per-player: false
 stack-tempfly: true
 
 
+height-floor-radius: 20
+shield-contact-reaction: true
+
+active-fallwave: true
+active-fallwave-always: false
+
+
 
 #//ca//
 cooldown-message: "&cCommand on cooldown for &b&l%timeleft%&c seconds"
