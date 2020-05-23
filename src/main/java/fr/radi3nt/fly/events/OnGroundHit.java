@@ -84,7 +84,7 @@ public class OnGroundHit implements Listener {
                          if (e.getLocation().distance(playerLocation) < 1.25) {
                              Vector vector = new Vector(0, (radius*2 - t)/hight, 0);
                              Vector fromPlayerToTarget = e.getLocation().toVector().subtract(player.getLocation().toVector());
-                             fromPlayerToTarget.multiply(hight/15);
+                             fromPlayerToTarget.multiply(((radius*2 - t)/hight)/5);
                              fromPlayerToTarget.setY(vector.getY());
                              e.setVelocity(fromPlayerToTarget);
                          }
