@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class Cosmetics extends BukkitRunnable {
     int number = 0;
 
     public static ArrayList<Player> pushed = new ArrayList<>();
+    public static HashMap<Player, Integer> MaxHeight = new HashMap<>();
 
     @Override
     public void run() {
@@ -99,76 +101,82 @@ public class Cosmetics extends BukkitRunnable {
 
             //HEIGHT LIMIT
             if (player.isFlying()) {
-                int perm = 0;
-                for (int height = 0; height < 256 ; height++) {
+                if (player.hasPermission("fly.height")) {
+                    int perm = 0;
+                    if (!MaxHeight.containsKey(player)) {
 
-                    if (player.hasPermission("fly.height." + height)) {
-                        perm = height;
-                    }
+                        for (int height = 0; height < 256; height++) {
 
-                }
-                if (!(perm == 0)) {
-                    int reelradius = Reelradius;
-                    Location floorLocation = new Location(player.getLocation().getWorld(), player.getLocation().getBlockX(), perm + 2, player.getLocation().getBlockZ());
-                    if (player.getLocation().getBlockY() >= perm) {
-                        if (!pushed.contains(player)) {
-                            pushed.add(player);
-                            new BukkitRunnable() {
-
-                                double t = 0;
-                                Location playerLocation = player.getLocation();
-
-                                public void run() {
-
-                                    t = t + 0.1 * Math.PI;
-                                    for (double theta = 0; theta <= 2 * Math.PI; theta = theta + Math.PI / 16) {
-                                        double x = t * cos(theta);
-                                        double y = 2 * Math.exp(-0.1 * t) * sin(t) + 0.2;
-                                        double z = t * sin(theta);
-                                        playerLocation.add(x, y, z);
-                                        if (t>0.9) {
-                                            player.spawnParticle(Particle.END_ROD, playerLocation, 1, 0, 0, 0, 0);
-                                        }
-                                        playerLocation.subtract(x, y, z);
-
-
-                                    }
-                                    if (t > 20) {
-                                        pushed.remove(player);
-                                        this.cancel();
-                                    }
-                                    if (t > 15) {
-                                        pushed.remove(player);
-                                    }
-
-                                }
-
-                            }.runTaskTimer(MainFly.getPlugin(MainFly.class), 1L, 1L);
+                            if (player.hasPermission("fly.height." + height)) {
+                                perm = height;
+                            }
                         }
+                        MaxHeight.put(player, perm);
+                    }
+                    perm = MaxHeight.get(player);
+                    if (!(perm == 0)) {
+                        int reelradius = Reelradius;
+                        Location floorLocation = new Location(player.getLocation().getWorld(), player.getLocation().getBlockX(), perm + 2, player.getLocation().getBlockZ());
+                        if (player.getLocation().getBlockY() >= perm) {
+                            if (!pushed.contains(player)) {
+                                pushed.add(player);
+                                new BukkitRunnable() {
+
+                                    double t = 0;
+                                    Location playerLocation = player.getLocation();
+
+                                    public void run() {
+
+                                        t = t + 0.1 * Math.PI;
+                                        for (double theta = 0; theta <= 2 * Math.PI; theta = theta + Math.PI / 16) {
+                                            double x = t * cos(theta);
+                                            double y = 2 * Math.exp(-0.1 * t) * sin(t) + 0.2;
+                                            double z = t * sin(theta);
+                                            playerLocation.add(x, y, z);
+                                            if (t > 0.9) {
+                                                player.spawnParticle(Particle.END_ROD, playerLocation, 1, 0, 0, 0, 0);
+                                            }
+                                            playerLocation.subtract(x, y, z);
+
+
+                                        }
+                                        if (t > 20) {
+                                            pushed.remove(player);
+                                            this.cancel();
+                                        }
+                                        if (t > 15) {
+                                            pushed.remove(player);
+                                        }
+
+                                    }
+
+                                }.runTaskTimer(MainFly.getPlugin(MainFly.class), 1L, 1L);
+                            }
                             Vector vector = new Vector(player.getLocation().toVector().getX() / 2, player.getLocation().toVector().getY(), player.getLocation().toVector().getZ() / 2);
                             player.setVelocity(vector.multiply(-0.02));
 
-                    }
-                    if (Particles) {
-                        if (perm - reelradius < player.getLocation().getBlockY()) {
-                            //Display
-                            int radius = reelradius - (perm - player.getLocation().getBlockY());
 
-                            int ox = 0;
-                            int oy = 0; // origin
+                        }
+                        if (Particles) {
+                            if (perm - reelradius < player.getLocation().getBlockY()) {
+                                //Display
+                                int radius = reelradius - (perm - player.getLocation().getBlockY());
 
-                            for (int x = -radius; x < radius; x++)
-                            {
-                                int height = (int) Math.sqrt(radius * radius - x * x);
+                                int ox = 0;
+                                int oy = 0; // origin
 
-                                for (int y = -height; y < height; y++) {
-                                    floorLocation.add(x + ox, 0,y + oy);
-                                    player.spawnParticle(Particle.END_ROD, floorLocation, 1, 0, 0, 0, 0);
-                                    floorLocation.subtract(x + ox, 0,y + oy);
+                                for (int x = -radius; x < radius; x++) {
+                                    int height = (int) Math.sqrt(radius * radius - x * x);
+
+                                    for (int y = -height; y < height; y++) {
+                                        floorLocation.add(x + ox, 0, y + oy);
+                                        player.spawnParticle(Particle.END_ROD, floorLocation, 1, 0, 0, 0, 0);
+                                        floorLocation.subtract(x + ox, 0, y + oy);
+                                    }
                                 }
+
+
                             }
-
-
                         }
                     }
                 }

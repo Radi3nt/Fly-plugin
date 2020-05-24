@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static fr.radi3nt.fly.timer.Cosmetics.MaxHeight;
 import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public class OnPlayerDisconnect implements Listener {
@@ -43,6 +44,8 @@ public class OnPlayerDisconnect implements Listener {
         NotifyTitle.remove(player);
         NotifyBossBar.remove(player);
         NotifySounds.remove(player);
+
+        MaxHeight.remove(player);
 
     }
 
