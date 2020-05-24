@@ -44,8 +44,6 @@ public class UpdateCheck {
         try {
             lines.clear();
             lines = IOUtils.readLines(in);
-            //latest = IOUtils.readLines(in).get(0);
-            //PreRelease = IOUtils.readLines(in).get(1);
         } catch (IOException e) {
             console.sendMessage(Prefix + " Unable to determine update!");
             e.printStackTrace();
@@ -71,13 +69,5 @@ public class UpdateCheck {
         } else {
             console.sendMessage(Prefix + " Plugin is out of date! Please update");
         }
-    }
-
-    public boolean upToDate() {
-        return upToDate;
-    }
-
-    public String getLatestVersion() {
-        return latest;
     }
 }

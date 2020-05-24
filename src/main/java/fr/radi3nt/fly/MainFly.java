@@ -38,7 +38,7 @@ public final class MainFly extends JavaPlugin {
 
     public ArrayList<String> flyers = Fly.flyers;
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
-    ConsoleCommandSender console = Bukkit.getConsoleSender();
+    private ConsoleCommandSender console = Bukkit.getConsoleSender();
 
 
     //--------------------------------------------------//
@@ -55,21 +55,16 @@ public final class MainFly extends JavaPlugin {
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "If you have any issues, please report it");
 
         RegisterEvents();
-        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Registered Events");
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.RED + "Registered Events");
         RegisterCommands();
-        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Registered Commands");
-
-        TempCheck task = new TempCheck();
-        task.runTaskTimer(this, 2, 1);
-
-        UpdateCheck updater = new UpdateCheck();
-        updater.run();
-
-        Cosmetics cosmetics = new Cosmetics();
-        cosmetics.runTaskTimer(this, 1, 1);
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.RED + "Registered Commands");
+        RegisterRunnables();
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.RED + "Registered Runnables");
 
 
         this.getConfig().set("version", VERSION);
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Updating version ...");
+
 
         File locations = new File("plugins/FlyPlugin", "flyers.yml");
         if (!locations.exists()) {
@@ -83,6 +78,7 @@ public final class MainFly extends JavaPlugin {
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Config update finished");
 
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (int i = 0; i < list.size(); i++){
@@ -201,5 +197,21 @@ public final class MainFly extends JavaPlugin {
         getCommand("flyupdate").setExecutor(new FlyUpdate());
 
         getCommand("flyreload").setExecutor(new FlyReload());
+    }
+
+    public void RegisterRunnables() {
+        TempCheck task = new TempCheck();
+        task.runTaskTimer(this, 2, 1);
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "TempCheck runnable activated");
+
+        Cosmetics cosmetics = new Cosmetics();
+        cosmetics.runTaskTimer(this, 1, 1);
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Cosmetics runnable activated");
+
+
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Starting update checker");
+        UpdateCheck updater = new UpdateCheck();
+        updater.run();
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Update checked");
     }
 }
