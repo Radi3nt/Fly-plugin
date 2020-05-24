@@ -33,7 +33,7 @@ public class OnGamemodeChange implements Listener {
         if (gamemode.equals(GameMode.CREATIVE)) {
                 player.setAllowFlight(true);
                 player.setFlying(true);
-        } else if (player.getGameMode().equals(GameMode.CREATIVE)) {
+        } else if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) {
             if (!player.hasPermission("fly.gamemode")) {
                 player.setAllowFlight(false);
                 player.setFlying(false);
@@ -61,8 +61,8 @@ public class OnGamemodeChange implements Listener {
                     }, 50L);
                 }
                 flyers.remove(player.getName());
-                GroundHitters.add(player);
             }
+            GroundHitters.add(player);
         }
     }
 }

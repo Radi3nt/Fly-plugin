@@ -54,19 +54,21 @@ public class Cosmetics extends BukkitRunnable {
                         for (Entity entity : player.getNearbyEntities(1.25, 1.25, 1.25)) {
                             if (entity instanceof Player) {
                                 Player target = (Player) entity;
-                                if (target.isFlying() && target.hasPermission("fly.shield")) {
-                                    if (ShieldContact) {
-                                        Location exploadloc = new Location(player.getWorld(), (target.getLocation().getX() + player.getLocation().getX()) / 2, (target.getLocation().getY() + player.getLocation().getY()) / 2, (target.getLocation().getZ() + player.getLocation().getZ()) / 2);
-                                        player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, exploadloc, 4, 0, 0, 0, 0);
-                                        Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
-                                        entity.setVelocity(fromPlayerToTarget.multiply(0.4));
+                                if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
+                                    if (target.isFlying() && target.hasPermission("fly.shield")) {
+                                        if (ShieldContact) {
+                                            Location exploadloc = new Location(player.getWorld(), (target.getLocation().getX() + player.getLocation().getX()) / 2, (target.getLocation().getY() + player.getLocation().getY()) / 2, (target.getLocation().getZ() + player.getLocation().getZ()) / 2);
+                                            player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, exploadloc, 4, 0, 0, 0, 0);
+                                            Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
+                                            entity.setVelocity(fromPlayerToTarget.multiply(0.4));
+                                        } else {
+                                            Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
+                                            entity.setVelocity(fromPlayerToTarget.multiply(0.25));
+                                        }
                                     } else {
                                         Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
                                         entity.setVelocity(fromPlayerToTarget.multiply(0.25));
                                     }
-                                } else {
-                                    Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
-                                    entity.setVelocity(fromPlayerToTarget.multiply(0.25));
                                 }
                             }
                         }
@@ -152,8 +154,21 @@ public class Cosmetics extends BukkitRunnable {
 
                                 }.runTaskTimer(MainFly.getPlugin(MainFly.class), 1L, 1L);
                             }
-                            Vector vector = new Vector(player.getLocation().toVector().getX() / 2, player.getLocation().toVector().getY(), player.getLocation().toVector().getZ() / 2);
-                            player.setVelocity(vector.multiply(-0.02));
+                            if (player.hasPermission("fly.height")) {
+                                for (int height = 0; height < 256; height++) {
+
+                                    if (player.hasPermission("fly.height." + height)) {
+                                        perm = height;
+                                    }
+                                }
+                            }
+                            if (player.isOp()) {
+                                MaxHeight.put(player, 0);
+                            } else {
+                                MaxHeight.put(player, perm);
+                            }
+                            Vector vector = new Vector(0, player.getLocation().toVector().getY(), 0);
+                            player.setVelocity(vector.multiply(-0.2));
 
 
                         }
@@ -169,6 +184,9 @@ public class Cosmetics extends BukkitRunnable {
                                     int height = (int) Math.sqrt(radius * radius - x * x);
 
                                     for (int y = -height; y < height; y++) {
+                                        if (radius > reelradius) {
+                                            radius = reelradius;
+                                        }
                                         floorLocation.add(x + ox, 0, y + oy);
                                         player.spawnParticle(Particle.END_ROD, floorLocation, 1, 0, 0, 0, 0);
                                         floorLocation.subtract(x + ox, 0, y + oy);
@@ -238,7 +256,7 @@ public class Cosmetics extends BukkitRunnable {
                 if (GroundHitters.contains(player)) {
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
                         GroundHitters.remove(player);
-                    }, 4L);
+                    }, 40L);
                 }
             }
         }

@@ -130,6 +130,7 @@ public class Fly implements CommandExecutor {
             }
         } else {
             FlyMethod(target, false);
+            GroundHitters.add(player);
             String FSPr = FlySomeonePlayer.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", player.getName());
             player.sendMessage(Prefix + " " + FSPr);
             if (TargetSendMessage) {
