@@ -62,7 +62,7 @@ public final class MainFly extends JavaPlugin {
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.RED + "Registered Runnables");
 
 
-        this.getConfig().set("version", VERSION);
+
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Updating version ...");
 
 
@@ -78,6 +78,7 @@ public final class MainFly extends JavaPlugin {
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+        getConfig().set("version", VERSION);
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Config update finished");
 
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
@@ -205,7 +206,7 @@ public final class MainFly extends JavaPlugin {
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "TempCheck runnable activated");
 
         Cosmetics cosmetics = new Cosmetics();
-        cosmetics.runTaskTimer(this, 1, 1);
+        cosmetics.runTaskTimer(this, 2, 1);
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Cosmetics runnable activated");
 
 
