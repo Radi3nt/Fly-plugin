@@ -38,11 +38,9 @@ public final class MainFly extends JavaPlugin {
 
     public ArrayList<String> flyers = Fly.flyers;
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
-    private ConsoleCommandSender console = Bukkit.getConsoleSender();
-
-
     //--------------------------------------------------//
-    public static final String VERSION = "1.2.3i";
+    public static final String VERSION = "1.2.3j";
+    private final ConsoleCommandSender console = Bukkit.getConsoleSender();
     //--------------------------------------------------//
 
 
@@ -170,6 +168,8 @@ public final class MainFly extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnPlayerDisconnect(), this);
         getServer().getPluginManager().registerEvents(new OnFlyGuiClick(), this);
         getServer().getPluginManager().registerEvents(new OnGroundHit(), this);
+        getServer().getPluginManager().registerEvents(new OnPlayerMove(), this);
+
     }
 
     public void RegisterCommands() {
