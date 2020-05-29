@@ -125,7 +125,7 @@ public class Cosmetics extends BukkitRunnable {
                                 new BukkitRunnable() {
 
                                     double t = 0;
-                                    Location playerLocation = player.getLocation();
+                                    final Location playerLocation = player.getLocation();
 
                                     public void run() {
 
@@ -153,19 +153,6 @@ public class Cosmetics extends BukkitRunnable {
                                     }
 
                                 }.runTaskTimer(MainFly.getPlugin(MainFly.class), 1L, 1L);
-                            }
-                            if (player.hasPermission("fly.height")) {
-                                for (int height = 0; height < 256; height++) {
-
-                                    if (player.hasPermission("fly.height." + height)) {
-                                        perm = height;
-                                    }
-                                }
-                            }
-                            if (player.isOp()) {
-                                MaxHeight.put(player, 0);
-                            } else {
-                                MaxHeight.put(player, perm);
                             }
                             Vector vector = new Vector(0, player.getLocation().toVector().getY(), 0);
                             player.setVelocity(vector.multiply(-0.2));
