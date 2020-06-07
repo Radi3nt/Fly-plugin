@@ -81,13 +81,13 @@ public class OnGroundHit implements Listener {
                     }
 
                     for (Entity e : player.getNearbyEntities(20, 20, 20)) {
-                         if (e.getLocation().distance(playerLocation) < 1.25) {
-                             Vector vector = new Vector(0, (radius*2 - t)/hight, 0);
-                             Vector fromPlayerToTarget = e.getLocation().toVector().subtract(player.getLocation().toVector());
-                             fromPlayerToTarget.multiply(((radius*2 - t)/hight)/5);
-                             fromPlayerToTarget.setY(vector.getY());
-                             e.setVelocity(fromPlayerToTarget);
-                         }
+                        if (e.getLocation().distance(playerLocation) < 1.25) {
+                            Vector vector = new Vector(0, (radius * 2 - t) / hight, 0);
+                            Vector fromPlayerToTarget = e.getLocation().toVector().subtract(player.getLocation().toVector());
+                            fromPlayerToTarget.multiply(((radius * 2 - t) / hight) / 5);
+                            fromPlayerToTarget.setY(vector.getY());
+                            e.setVelocity(fromPlayerToTarget);
+                        }
                     }
 
                     playerLocation.subtract(x, y, z);

@@ -152,7 +152,7 @@ public class UnTempFly implements CommandExecutor {
                             NotifyBossBar.put(target, BossBar);
                             NotifyTitle.put(target, Title);
                             NotifySounds.put(target, Sounds);
-                            }, 50L);
+                        }, 50L);
 
 
 

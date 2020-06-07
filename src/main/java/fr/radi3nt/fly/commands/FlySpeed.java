@@ -135,17 +135,17 @@ public class FlySpeed implements CommandExecutor {
                                 String TargetMessageR = TargetMessage.replace("%player%", "console").replace("%speed%", String.valueOf(FlySpeedI));
                                 target.sendMessage(Prefix + " " + TargetMessageR);
                             }
-                                } else {
-                                    sender.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                                }
-                            } else {
-                                sender.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
-                            }
                         } else {
-                            sender.sendMessage(Prefix + " " + ChatColor.RED + InvalidPlayer);
+                            sender.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
                         }
-
                     } else {
+                        sender.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
+                    }
+                } else {
+                    sender.sendMessage(Prefix + " " + ChatColor.RED + InvalidPlayer);
+                }
+
+            } else {
                 sender.sendMessage(Prefix + " " + ChatColor.RED + NoArgs);
             }
         }

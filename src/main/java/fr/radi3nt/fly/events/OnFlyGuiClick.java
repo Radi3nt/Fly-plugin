@@ -44,11 +44,8 @@ public class OnFlyGuiClick implements Listener {
     @EventHandler
     public void OnFlyGuiClick(InventoryClickEvent e) {
 
-        Boolean TargetMessage = plugin.getConfig().getBoolean("temp-target-message");
-
+        Boolean TargetMessage = plugin.getConfig().getBoolean("tempfly-target-message");
         String NoPermission = plugin.getConfig().getString("no-permission");
-
-
         String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
 
@@ -345,12 +342,12 @@ public class OnFlyGuiClick implements Listener {
                     Tempfly.time.put(targettf.getName(), TimeLeft);
                     Tempfly.timer.put(targettf.getName(), System.currentTimeMillis());
                     timem.put(targettf, 100000);
-                    String MessageP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-player"));
+                    String MessageP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-message"));
                     String MessageTP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-target"));
                     int heures = (TimeLeft / 3600);
                     int minutes = ((TimeLeft - (TimeLeft / 3600) * 3600) / 60);
                     int seconds = TimeLeft - (heures * 3600 + minutes * 60);
-                    String TimeleftP = MessageP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds));
+                    String TimeleftP = MessageP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%target%", targettf.getName());
                     player.sendMessage(Prefix + " " + TimeleftP);
                     if (TargetMessage) {
                         String TimeleftTP = MessageTP.replace("%hours%", String.valueOf(heures)).replace("%minutes%", String.valueOf(minutes)).replace("%seconds%", String.valueOf(seconds)).replace("%player%", player.getName());

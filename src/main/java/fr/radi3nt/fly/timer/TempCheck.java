@@ -69,12 +69,11 @@ public class TempCheck extends BukkitRunnable {
 
         FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
-        for (int i = 0; i < list.size(); i++) {
-            Player player = list.get(i);
-            if (timer.containsKey(list.get(i).getName())) {
-                int secondes = time.get(list.get(i).getName());
-                long timeleft = ((timer.get(list.get(i).getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
-                loc.set("flyers." + player.getName() , timeleft);
+        for (Player player : list) {
+            if (timer.containsKey(player.getName())) {
+                int secondes = time.get(player.getName());
+                long timeleft = ((timer.get(player.getName()) / 1000) + secondes) - (System.currentTimeMillis() / 1000);
+                loc.set("flyers." + player.getName(), timeleft);
                 if (bossbar.containsKey(player)) {
                     if (!NotifyBossBar.get(player)) {
                         bossbar.get(player).removePlayer(player);

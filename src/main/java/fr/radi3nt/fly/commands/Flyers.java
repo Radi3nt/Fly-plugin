@@ -95,74 +95,74 @@ public class Flyers implements CommandExecutor {
             } else {
                 sender.sendMessage(Prefix + ChatColor.RED + " " + NoPermission);
             }
-            } else {
-                if (flyers.size() == 0) {
-                    sender.sendMessage(Prefix + " " + NoOnePerm);
-                }
-                if (flyers.size() == 1) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0));
-                }
-                if (flyers.size() == 2) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1));
-                }
-                if (flyers.size() == 3) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1) + ", " + flyers.get(2));
-                }
-                if (flyers.size() == 4) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1) + ", " + flyers.get(2) + ", " + flyers.get(3));
-                }
-                if (flyers.size() > 5) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1) + ", " + flyers.get(2) + ", " + flyers.get(3) + ", " + flyers.get(4));
-                }
-                shift = 5;
-                if (flyers.size() == 1 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift));
-                }
-                if (flyers.size() == 2 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift));
-                }
-                if (flyers.size() == 3 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift));
-                }
-                if (flyers.size() == 4 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift));
-                }
-                if (flyers.size() > 5 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift) + ", " + flyers.get(4 + shift));
-                }
-                shift = 10;
-                if (flyers.size() == 1 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift));
-                }
-                if (flyers.size() == 2 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift));
-                }
-                if (flyers.size() == 3 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift));
-                }
-                if (flyers.size() == 4 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift));
-                }
-                if (flyers.size() > 5 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift) + ", " + flyers.get(4 + shift));
-                }
-                shift = 15;
-                if (flyers.size() == 1 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift));
-                }
-                if (flyers.size() == 2 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift));
-                }
-                if (flyers.size() == 3 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift));
-                }
-                if (flyers.size() == 4 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift));
-                }
-                if (flyers.size() > 5 + shift) {
-                    sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift) + ", " + flyers.get(4 + shift));
-                }
+        } else {
+            if (flyers.size() == 0) {
+                sender.sendMessage(Prefix + " " + NoOnePerm);
             }
+            if (flyers.size() == 1) {
+                sender.sendMessage(Prefix + " " + flyers.get(0));
+            }
+            if (flyers.size() == 2) {
+                sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1));
+            }
+            if (flyers.size() == 3) {
+                sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1) + ", " + flyers.get(2));
+            }
+            if (flyers.size() == 4) {
+                sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1) + ", " + flyers.get(2) + ", " + flyers.get(3));
+            }
+            if (flyers.size() > 5) {
+                sender.sendMessage(Prefix + " " + flyers.get(0) + ", " + flyers.get(1) + ", " + flyers.get(2) + ", " + flyers.get(3) + ", " + flyers.get(4));
+            }
+            shift = 5;
+            if (flyers.size() == 1 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift));
+            }
+            if (flyers.size() == 2 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift));
+            }
+            if (flyers.size() == 3 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift));
+            }
+            if (flyers.size() == 4 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift));
+            }
+            if (flyers.size() > 5 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift) + ", " + flyers.get(4 + shift));
+            }
+            shift = 10;
+            if (flyers.size() == 1 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift));
+            }
+            if (flyers.size() == 2 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift));
+            }
+            if (flyers.size() == 3 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift));
+            }
+            if (flyers.size() == 4 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift));
+            }
+            if (flyers.size() > 5 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift) + ", " + flyers.get(4 + shift));
+            }
+            shift = 15;
+            if (flyers.size() == 1 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift));
+            }
+            if (flyers.size() == 2 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift));
+            }
+            if (flyers.size() == 3 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift));
+            }
+            if (flyers.size() == 4 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift));
+            }
+            if (flyers.size() > 5 + shift) {
+                sender.sendMessage(Prefix + " " + flyers.get(0 + shift) + ", " + flyers.get(1 + shift) + ", " + flyers.get(2 + shift) + ", " + flyers.get(3 + shift) + ", " + flyers.get(4 + shift));
+            }
+        }
         return true;
     }
 }

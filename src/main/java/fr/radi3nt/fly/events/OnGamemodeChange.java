@@ -31,8 +31,8 @@ public class OnGamemodeChange implements Listener {
         Player player = e.getPlayer();
         player.setInvulnerable(false);
         if (gamemode.equals(GameMode.CREATIVE)) {
-                player.setAllowFlight(true);
-                player.setFlying(true);
+            player.setAllowFlight(true);
+            player.setFlying(true);
         } else if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) {
             if (!player.hasPermission("fly.gamemode")) {
                 player.setAllowFlight(false);
