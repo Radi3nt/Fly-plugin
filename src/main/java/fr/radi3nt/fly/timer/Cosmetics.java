@@ -249,6 +249,101 @@ public class Cosmetics extends BukkitRunnable {
                     }, 40L);
                 }
             }
+
+
+            //Flying Area
+            File FlyingZone = new File("plugins/FlyPlugin", "FlyingZones.yml");
+            if (!FlyingZone.exists()) {
+                try {
+                    FlyingZone.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            FileConfiguration FlyingZoneConfig = YamlConfiguration.loadConfiguration(FlyingZone);
+            try {
+                for (String zones : FlyingZoneConfig.getConfigurationSection("Zones").getKeys(false)) {
+                    String world = FlyingZoneConfig.getString("Zones." + zones + ".World");
+                    int Ox = FlyingZoneConfig.getInt("Zones." + zones + ".Ox");
+                    int Oy = FlyingZoneConfig.getInt("Zones." + zones + ".Oy");
+                    int Oz = FlyingZoneConfig.getInt("Zones." + zones + ".Oz");
+
+                    int Ix = FlyingZoneConfig.getInt("Zones." + zones + ".Ix");
+                    int Iy = FlyingZoneConfig.getInt("Zones." + zones + ".Iy");
+                    int Iz = FlyingZoneConfig.getInt("Zones." + zones + ".Iz");
+
+
+                    if (Ox < Ix) {
+                        xO(Ox, Oy, Oz, Ix, Iy, Iz, world, player);
+                    } else {
+                        xI(Ox, Oy, Oz, Ix, Iy, Iz, world, player);
+                    }
+                }
+
+            } catch (Exception e) {
+                //Exception
+            }
+
         }
     }
+
+    public void xO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Player player) {
+        for (int x = Ox; x < Ix; x++) {
+            if (Oy < Iy) {
+                yO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
+            } else {
+                yI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
+            }
+        }
+    }
+
+    public void yO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Player player) {
+        for (int y = Oy; y < Iy; y++) {
+            if (Oz < Iz) {
+                zO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
+            } else {
+                zI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
+            }
+        }
+    }
+
+    public void zO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Integer y, Player player) {
+        for (int z = Oz; z < Iz; z++) {
+            Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
+            if (player.getLocation().getBlock().equals(checkLoc.getBlock())) {
+                System.out.println("Il est dedans");
+            }
+        }
+    }
+
+    public void xI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Player player) {
+        for (int x = Ix; x < Ox; x++) {
+            if (Oy < Iy) {
+                yO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
+            } else {
+                yI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
+            }
+        }
+    }
+
+    public void yI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Player player) {
+        for (int y = Iy; y < Oy; y++) {
+            if (Oz < Iz) {
+                zO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
+            } else {
+                zI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
+            }
+        }
+    }
+
+    public void zI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Integer y, Player player) {
+        for (int z = Iz; z < Oz; z++) {
+            Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
+            if (player.getLocation().equals(checkLoc)) {
+                System.out.println("Il est dedans");
+            }
+        }
+    }
+
+
 }
