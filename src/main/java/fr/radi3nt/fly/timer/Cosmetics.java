@@ -4,12 +4,16 @@ import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,37 +46,36 @@ public class Cosmetics extends BukkitRunnable {
         Integer Reelradius = plugin.getConfig().getInt("height-floor-radius");
 
 
+        for (int i = 0; i < list.size(); i++) {
+            Player player = list.get(i);
 
-            for (int i = 0; i < list.size(); i++) {
-                Player player = list.get(i);
 
+            //SIELD
+            if (player.isFlying() && !player.getGameMode().equals(GameMode.SPECTATOR)) {
+                if (player.hasPermission("fly.shield")) {
 
-                //SIELD
-                if (player.isFlying() && !player.getGameMode().equals(GameMode.SPECTATOR)) {
-                    if (player.hasPermission("fly.shield")) {
-
-                        for (Entity entity : player.getNearbyEntities(1.25, 1.25, 1.25)) {
-                            if (entity instanceof Player) {
-                                Player target = (Player) entity;
-                                if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
-                                    if (target.isFlying() && target.hasPermission("fly.shield")) {
-                                        if (ShieldContact) {
-                                            Location exploadloc = new Location(player.getWorld(), (target.getLocation().getX() + player.getLocation().getX()) / 2, (target.getLocation().getY() + player.getLocation().getY()) / 2, (target.getLocation().getZ() + player.getLocation().getZ()) / 2);
-                                            player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, exploadloc, 4, 0, 0, 0, 0);
-                                            Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
-                                            entity.setVelocity(fromPlayerToTarget.multiply(0.4));
-                                        } else {
-                                            Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
-                                            entity.setVelocity(fromPlayerToTarget.multiply(0.25));
-                                        }
+                    for (Entity entity : player.getNearbyEntities(1.25, 1.25, 1.25)) {
+                        if (entity instanceof Player) {
+                            Player target = (Player) entity;
+                            if (!target.getGameMode().equals(GameMode.SPECTATOR)) {
+                                if (target.isFlying() && target.hasPermission("fly.shield")) {
+                                    if (ShieldContact) {
+                                        Location exploadloc = new Location(player.getWorld(), (target.getLocation().getX() + player.getLocation().getX()) / 2, (target.getLocation().getY() + player.getLocation().getY()) / 2, (target.getLocation().getZ() + player.getLocation().getZ()) / 2);
+                                        player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, exploadloc, 4, 0, 0, 0, 0);
+                                        Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
+                                        entity.setVelocity(fromPlayerToTarget.multiply(0.4));
                                     } else {
                                         Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
                                         entity.setVelocity(fromPlayerToTarget.multiply(0.25));
                                     }
+                                } else {
+                                    Vector fromPlayerToTarget = entity.getLocation().toVector().subtract(player.getLocation().toVector());
+                                    entity.setVelocity(fromPlayerToTarget.multiply(0.25));
                                 }
                             }
                         }
-                        if (Particles) {
+                    }
+                    if (Particles) {
                         if (number >= 4) {
                             for (int p = 0; p < list.size(); p++) {
                                 Player target = list.get(p);
