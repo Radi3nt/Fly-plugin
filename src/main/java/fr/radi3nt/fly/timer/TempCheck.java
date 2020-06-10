@@ -11,6 +11,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -33,6 +34,7 @@ public class TempCheck extends BukkitRunnable {
     ArrayList<String> flyers = Fly.flyers;
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
+    private final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
 
     HashMap<Player, Boolean> NotifyChat = FlyAlert.NotifyChat;
@@ -53,9 +55,13 @@ public class TempCheck extends BukkitRunnable {
         String TimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-timeleft") + ChatColor.RESET);
         String NoTimeLeftMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-notimeleft") + ChatColor.RESET);
 
+        Sound SoundNo = Sound.BLOCK_ANVIL_BREAK;
 
-
-        Sound SoundNo = Sound.valueOf(plugin.getConfig().getString("temp-sound-no"));
+        try {
+            SoundNo = Sound.valueOf(plugin.getConfig().getString("temp-sound-no"));
+        } catch (Exception e) {
+            console.sendMessage(Prefix + ChatColor.RED + "Sound in config is not a valid sound:" + plugin.getConfig().getString("temp-sound-no"));
+        }
 
 
         File locations = new File("plugins/FlyPlugin", "flyers.yml");
@@ -185,21 +191,40 @@ public class TempCheck extends BukkitRunnable {
     }
 
     public void PlayHighSound(Player player) {
-        Sound SoundHigh = Sound.valueOf(plugin.getConfig().getString("temp-sound-high"));
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        Sound SoundHigh = Sound.BLOCK_ANVIL_BREAK;
+
+        try {
+            SoundHigh = Sound.valueOf(plugin.getConfig().getString("temp-sound-high"));
+        } catch (Exception e) {
+            console.sendMessage(Prefix + ChatColor.RED + "Sound in config is not a valid sound:" + plugin.getConfig().getString("temp-sound-high"));
+        }
 
         player.playSound(player.getLocation(), SoundHigh, SoundCategory.AMBIENT, 100, (float) 1);
     }
 
     public void PlayMediumSound(Player player) {
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        Sound SoundMedium = Sound.BLOCK_ANVIL_BREAK;
 
-        Sound SoundMedium = Sound.valueOf(plugin.getConfig().getString("temp-sound-medium"));
+        try {
+            SoundMedium = Sound.valueOf(plugin.getConfig().getString("temp-sound-medium"));
+        } catch (Exception e) {
+            console.sendMessage(Prefix + ChatColor.RED + "Sound in config is not a valid sound:" + plugin.getConfig().getString("temp-sound-medium"));
+        }
 
         player.playSound(player.getLocation(), SoundMedium, SoundCategory.AMBIENT, 100, (float) 1);
     }
 
     public void PlayLowSound(Player player) {
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
+        Sound SoundLow = Sound.BLOCK_ANVIL_BREAK;
 
-        Sound SoundLow = Sound.valueOf(plugin.getConfig().getString("temp-sound-low"));
+        try {
+            SoundLow = Sound.valueOf(plugin.getConfig().getString("temp-sound-low"));
+        } catch (Exception e) {
+            console.sendMessage(Prefix + ChatColor.RED + "Sound in config is not a valid sound:" + plugin.getConfig().getString("temp-sound-low"));
+        }
 
         player.playSound(player.getLocation(), SoundLow, SoundCategory.AMBIENT, 100, (float) 1);
     }

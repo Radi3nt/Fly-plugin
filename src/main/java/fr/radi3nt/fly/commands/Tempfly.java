@@ -269,11 +269,12 @@ public class Tempfly implements CommandExecutor {
             Boolean Particles = plugin.getConfig().getBoolean("particles");
             if (Particles) {
                 new BukkitRunnable() {
-                    final Location loc = player.getLocation();
+                    Location loc = player.getLocation();
                     final double r = 1;
                     double t = 0;
 
                     public void run() {
+                        loc = player.getLocation();
                         t = t + Math.PI / 16;
                         double x = r * cos(t);
                         double y = 0.225 * t;

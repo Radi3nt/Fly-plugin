@@ -33,6 +33,7 @@ public class FlyAlert implements CommandExecutor {
         String Title = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-title")) + ChatColor.RESET;
         String Sounds = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-sounds")) + ChatColor.RESET;
         String Bossbar = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-bossbar")) + ChatColor.RESET;
+        String Dust = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-dust")) + ChatColor.RESET;
         String All = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("flyalert-all")) + ChatColor.RESET;
 
 
@@ -139,11 +140,13 @@ public class FlyAlert implements CommandExecutor {
                             if (args[1].equals("on")) {
                                 NotifyDust.remove(player);
                                 NotifyDust.put(player, true);
-                                sender.sendMessage(Prefix + " You turned on dust");
+                                String DustR = Dust.replace("%state%", Estate);
+                                sender.sendMessage(Prefix + " " + DustR);
                             } else if (args[1].equals("off")) {
                                 NotifyDust.remove(player);
                                 NotifyDust.put(player, false);
-                                sender.sendMessage(Prefix + " You turned off dust");
+                                String DustR = Dust.replace("%state%", Dstate);
+                                sender.sendMessage(Prefix + " " + DustR);
                             } else {
                                 player.sendMessage(Prefix + " " + ChatColor.RED + WrongArgs);
                             }
