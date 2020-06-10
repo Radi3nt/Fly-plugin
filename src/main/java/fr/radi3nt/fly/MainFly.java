@@ -2,6 +2,7 @@ package fr.radi3nt.fly;
 
 import fr.radi3nt.fly.commands.*;
 import fr.radi3nt.fly.events.*;
+import fr.radi3nt.fly.events.wand.OnClickWithWand;
 import fr.radi3nt.fly.timer.Cosmetics;
 import fr.radi3nt.fly.timer.TempCheck;
 import fr.radi3nt.fly.utilis.UpdateCheck;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
+import static fr.radi3nt.fly.timer.Cosmetics.ZoneFlyers;
 import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public final class MainFly extends JavaPlugin {
@@ -80,8 +82,7 @@ public final class MainFly extends JavaPlugin {
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Config update finished");
 
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
-        for (int i = 0; i < list.size(); i++){
-            Player player = list.get(i);
+        for (Player player : list) {
             NotifyChat.remove(player);
             NotifyTitle.remove(player);
             NotifyBossBar.remove(player);
@@ -92,6 +93,8 @@ public final class MainFly extends JavaPlugin {
             NotifyBossBar.put(player, true);
             NotifySounds.put(player, true);
             NotifyDust.put(player, true);
+
+            ZoneFlyers.put(player, false);
 
 
             if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) {
@@ -107,7 +110,7 @@ public final class MainFly extends JavaPlugin {
                 timer.put(player.getName(), System.currentTimeMillis());
                 time.put(player.getName(), timeleft);
                 timem.put(player, 100000);
-                HashMap<Player,BossBar> bossbar = TempCheck.bossbar;
+                HashMap<Player, BossBar> bossbar = TempCheck.bossbar;
                 bossbar.put(player, Bukkit.createBossBar("Charging ...", BarColor.WHITE, BarStyle.SOLID));
                 bossbar.get(player).addPlayer(player);
             }
@@ -116,33 +119,33 @@ public final class MainFly extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        console.sendMessage( ChatColor.GOLD + "[Fly] " + ChatColor.DARK_RED + "Disabling ...");
+        console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.DARK_RED + "Disabling ...");
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         NotifyBossBar.clear();
         NotifyTitle.clear();
         NotifyChat.clear();
         NotifySounds.clear();
         NotifyDust.clear();
-        for (int i = 0; i < list.size(); i++){
-            if (list.get(i).hasPermission("fly.admin")) {
-                list.get(i).sendMessage(Prefix + ChatColor.RED + " Reloading is not very compatible with the plugin ... \n We highly recommend to restart your server, \n if you don't want to have some hackers flying around");
+        ZoneFlyers.clear();
+        for (Player player : list) {
+            if (player.hasPermission("fly.admin")) {
+                player.sendMessage(Prefix + ChatColor.RED + " Reloading is not very compatible with the plugin ... \n We highly recommend to restart your server, \n if you don't want to have some hackers flying around");
 
-                list.get(i).playSound(list.get(i).getLocation(), "minecraft:block.note_block.bit", SoundCategory.AMBIENT, 100, 1);
+                player.playSound(player.getLocation(), "minecraft:block.note_block.bit", SoundCategory.AMBIENT, 100, 1);
             }
-            if (list.get(i).getGameMode().equals(GameMode.CREATIVE)) {
-                list.get(i).setAllowFlight(true);
-                HashMap<Player,BossBar> bossbar = TempCheck.bossbar;
-                if (bossbar.containsKey(list.get(i))) {
-                    bossbar.get(list.get(i)).removePlayer(list.get(i));
-                    bossbar.remove(list.get(i));
+            if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                player.setAllowFlight(true);
+                HashMap<Player, BossBar> bossbar = TempCheck.bossbar;
+                if (bossbar.containsKey(player)) {
+                    bossbar.get(player).removePlayer(player);
+                    bossbar.remove(player);
                 }
             } else {
-                HashMap<Player,BossBar> bossbar = TempCheck.bossbar;
-                if (bossbar.containsKey(list.get(i))) {
-                    bossbar.get(list.get(i)).removePlayer(list.get(i));
-                    bossbar.remove(list.get(i));
+                HashMap<Player, BossBar> bossbar = TempCheck.bossbar;
+                if (bossbar.containsKey(player)) {
+                    bossbar.get(player).removePlayer(player);
+                    bossbar.remove(player);
                 }
-                Player player = list.get(i);
                 NotifyChat.remove(player);
                 NotifyTitle.remove(player);
                 NotifyBossBar.remove(player);
@@ -170,6 +173,9 @@ public final class MainFly extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnGroundHit(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerMove(), this);
 
+        getServer().getPluginManager().registerEvents(new OnClickWithWand(), this);
+
+
     }
 
     public void RegisterCommands() {
@@ -189,6 +195,9 @@ public final class MainFly extends JavaPlugin {
 
         getCommand("flyalert").setExecutor(new FlyAlert());
         getCommand("flyalert").setTabCompleter(new fr.radi3nt.fly.tab.FlyAlert());
+
+        getCommand("flyzone").setExecutor(new FlyZone());
+        getCommand("flyzone").setTabCompleter(new fr.radi3nt.fly.tab.FlyZone());
 
 
         getCommand("flygui").setExecutor(new FlyGui());

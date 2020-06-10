@@ -4,6 +4,7 @@ import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.Tempfly;
 import org.bukkit.*;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -31,6 +32,10 @@ public class Cosmetics extends BukkitRunnable {
 
     public static ArrayList<Player> pushed = new ArrayList<>();
     public static HashMap<Player, Integer> MaxHeight = new HashMap<>();
+    public static HashMap<Player, Boolean> ZoneFlyers = new HashMap<>();
+    private static int ZonesParticlesInterval = 0;
+    private final ConsoleCommandSender console = Bukkit.getConsoleSender();
+
 
     @Override
     public void run() {
@@ -40,10 +45,12 @@ public class Cosmetics extends BukkitRunnable {
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         ArrayList<String> flyers = Fly.flyers;
         Map<String, Long> timer = Tempfly.timer;
+        ArrayList<Boolean> InZones = new ArrayList<>();
 
         Boolean Particles = plugin.getConfig().getBoolean("particles");
         Boolean ShieldContact = plugin.getConfig().getBoolean("shield-contact-reaction");
         Integer Reelradius = plugin.getConfig().getInt("height-floor-radius");
+        String Prefix = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("prefix") + ChatColor.RESET);
 
 
         for (int i = 0; i < list.size(); i++) {
@@ -85,7 +92,7 @@ public class Cosmetics extends BukkitRunnable {
                                             Location location = player.getLocation();
                                             double r = 1.5;
                                             double x = r * cos(tehta) * sin(phi);
-                                            double y = r * cos(phi) + 1;
+                                            double y = r * cos(phi);
                                             double z = r * sin(tehta) * sin(phi);
                                             location.add(x, y, z);
 
@@ -208,8 +215,7 @@ public class Cosmetics extends BukkitRunnable {
             //DUST
             if (player.hasPermission("fly.admin")) {
                 if (NotifyDust.get(player)) {
-                    for (int p = 0; p < list.size(); p++) {
-                        Player target = list.get(p);
+                    for (Player target : list) {
                         if (flyers.contains(target.getName()) && !target.getGameMode().equals(GameMode.SPECTATOR)) {
                             if (target.isFlying()) {
                                 if (timer.containsKey(target.getName())) {
@@ -252,7 +258,7 @@ public class Cosmetics extends BukkitRunnable {
 
 
             //Flying Area
-            File FlyingZone = new File("plugins/FlyPlugin", "FlyingZones.yml");
+            File FlyingZone = new File("plugins/FlyPlugin", "zones.yml");
             if (!FlyingZone.exists()) {
                 try {
                     FlyingZone.createNewFile();
@@ -272,77 +278,228 @@ public class Cosmetics extends BukkitRunnable {
                     int Iy = FlyingZoneConfig.getInt("Zones." + zones + ".Iy");
                     int Iz = FlyingZoneConfig.getInt("Zones." + zones + ".Iz");
 
+                    String particlesType = plugin.getConfig().getString("flyzones-particles");
+                    Integer viewdist = plugin.getConfig().getInt("flyzones-viewdistance");
 
-                    if (Ox < Ix) {
-                        xO(Ox, Oy, Oz, Ix, Iy, Iz, world, player);
+                    String perm = FlyingZoneConfig.getString("Zones." + zones + ".Perm");
+
+                    if (perm != null) {
+                        if (!perm.isEmpty()) {
+                            if (player.hasPermission(perm)) {
+                                InZones.add(CheckInFlyingZones(Ox, Oy, Oz, Ix, Iy, Iz, world, player));
+                                if (Ix < Ox) {
+                                    int NOx = Ox;
+                                    Ox = Ix;
+                                    Ix = NOx;
+                                }
+                                if (Iy < Oy) {
+                                    int NOy = Oy;
+                                    Oy = Iy;
+                                    Iy = NOy;
+                                }
+                                if (Iz < Oz) {
+                                    int NOz = Oz;
+                                    Oz = Iz;
+                                    Iz = NOz;
+                                }
+                                ZonesParticlesInterval++;
+                                if (ZonesParticlesInterval >= 12) {
+                                    for (int x = Ox; x <= Ix + 1; x++) {
+                                        for (int y = Oy; y <= Iy + 1; y++) {
+                                            for (int z = Oz; z <= Iz + 1; z++) {
+                                                if (Particles) {
+                                                    if (x == Ox || y == Oy || z == Oz || x == Ix + 1 || y == Iy + 1 || z == Iz + 1) {
+                                                        try {
+                                                            Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
+                                                            int distance = (int) player.getLocation().distance(checkLoc);
+                                                            if (distance < viewdist) {
+                                                                try {
+                                                                    player.spawnParticle(Particle.valueOf(particlesType), checkLoc, 1, 0, 0, 0, 0);
+                                                                    //Default Particle.CRIT_MAGIC
+                                                                } catch (IllegalArgumentException e) {
+                                                                    console.sendMessage(Prefix + ChatColor.RED + " Error in config: " + particlesType + " is invalid");
+                                                                }
+                                                            }
+                                                        } catch (Exception e) {
+                                                            //EXCEPTION
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     } else {
-                        xI(Ox, Oy, Oz, Ix, Iy, Iz, world, player);
+                        InZones.add(CheckInFlyingZones(Ox, Oy, Oz, Ix, Iy, Iz, world, player));
+                        if (Ix < Ox) {
+                            int NOx = Ox;
+                            Ox = Ix;
+                            Ix = NOx;
+                        }
+                        if (Iy < Oy) {
+                            int NOy = Oy;
+                            Oy = Iy;
+                            Iy = NOy;
+                        }
+                        if (Iz < Oz) {
+                            int NOz = Oz;
+                            Oz = Iz;
+                            Iz = NOz;
+                        }
+                        ZonesParticlesInterval++;
+                        if (ZonesParticlesInterval >= 12) {
+                            for (int x = Ox; x <= Ix + 1; x++) {
+                                for (int y = Oy; y <= Iy + 1; y++) {
+                                    for (int z = Oz; z <= Iz + 1; z++) {
+                                        if (Particles) {
+                                            if (x == Ox || y == Oy || z == Oz || x == Ix + 1 || y == Iy + 1 || z == Iz + 1) {
+                                                try {
+                                                    Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
+                                                    int distance = (int) player.getLocation().distance(checkLoc);
+                                                    if (distance < viewdist) {
+                                                        try {
+                                                            player.spawnParticle(Particle.valueOf(particlesType), checkLoc, 1, 0, 0, 0, 0);
+                                                            //Default Particle.CRIT_MAGIC
+                                                        } catch (IllegalArgumentException e) {
+                                                            console.sendMessage(Prefix + ChatColor.RED + " Error in config: " + particlesType + " is invalid");
+                                                        }
+                                                    }
+                                                } catch (Exception e) {
+                                                    //EXCEPTION
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+                if (InZones.contains(true)) {
+                    if (!ZoneFlyers.containsKey(player)) {
+                        ZoneFlyers.put(player, player.getAllowFlight() && !Tempfly.time.containsKey(player.getName()));
+                        Fly.FlyMethod(player, true);
+                        player.setFlying(true);
+                    }
+                    if (!player.getAllowFlight()) {
+                        Fly.FlyMethod(player, true);
+                    }
+                } else {
+                    if (ZoneFlyers.containsKey(player)) {
+                        if (!Tempfly.time.containsKey(player.getName()) && !ZoneFlyers.get(player)) {
+                            Fly.FlyMethod(player, false);
+                            GroundHitters.add(player);
+                        }
+                        ZoneFlyers.remove(player);
                     }
                 }
+                InZones.clear();
+            } catch (NullPointerException e) {
+                //Exeption
+            }
 
+        }
+    }
+
+    private boolean CheckInFlyingZones(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Player player) {
+        if (Ox < Ix) {
+            return xO(Ox, Oy, Oz, Ix, Iy, Iz, world, player);
+        } else {
+            return xI(Ox, Oy, Oz, Ix, Iy, Iz, world, player);
+        }
+
+    }
+
+    public boolean xO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Player player) {
+        for (int x = Ox; x <= Ix; x++) {
+            if (Oy < Iy) {
+                if (yO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player)) {
+                    return true;
+                }
+            } else {
+                if (yI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean yO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Player player) {
+        for (int y = Oy; y <= Iy; y++) {
+            if (Oz < Iz) {
+                if (zO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player)) {
+                    return true;
+                }
+            } else {
+                if (zI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean zO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Integer y, Player player) {
+        for (int z = Oz; z <= Iz; z++) {
+            try {
+                Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
+                if (player.getLocation().getBlock().equals(checkLoc.getBlock())) {
+                    return true;
+                }
             } catch (Exception e) {
-                //Exception
+                //Something
             }
-
         }
+        return false;
     }
 
-    public void xO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Player player) {
-        for (int x = Ox; x < Ix; x++) {
+    public Boolean xI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Player player) {
+        for (int x = Ix; x <= Ox; x++) {
             if (Oy < Iy) {
-                yO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
+                if (yO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player)) {
+                    return true;
+                }
             } else {
-                yI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
+                if (yI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player)) {
+                    return true;
+                }
             }
         }
+        return false;
     }
 
-    public void yO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Player player) {
-        for (int y = Oy; y < Iy; y++) {
+    public boolean yI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Player player) {
+        for (int y = Iy; y <= Oy; y++) {
             if (Oz < Iz) {
-                zO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
+                if (zO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player)) {
+                    return true;
+                }
             } else {
-                zI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
+                if (zI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player)) {
+                    return true;
+                }
             }
         }
+        return false;
     }
 
-    public void zO(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Integer y, Player player) {
-        for (int z = Oz; z < Iz; z++) {
-            Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
-            if (player.getLocation().getBlock().equals(checkLoc.getBlock())) {
-                System.out.println("Il est dedans");
+    public boolean zI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Integer y, Player player) {
+        for (int z = Iz; z <= Oz; z++) {
+            try {
+                Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
+                if (player.getLocation().getBlock().equals(checkLoc.getBlock())) {
+                    return true;
+                }
+            } catch (Exception e) {
+                //Something
             }
         }
-    }
-
-    public void xI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Player player) {
-        for (int x = Ix; x < Ox; x++) {
-            if (Oy < Iy) {
-                yO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
-            } else {
-                yI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, player);
-            }
-        }
-    }
-
-    public void yI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Player player) {
-        for (int y = Iy; y < Oy; y++) {
-            if (Oz < Iz) {
-                zO(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
-            } else {
-                zI(Ox, Oy, Oz, Ix, Iy, Iz, world, x, y, player);
-            }
-        }
-    }
-
-    public void zI(Integer Ox, Integer Oy, Integer Oz, Integer Ix, Integer Iy, Integer Iz, String world, Integer x, Integer y, Player player) {
-        for (int z = Iz; z < Oz; z++) {
-            Location checkLoc = new Location(Bukkit.getWorld(world), x, y, z);
-            if (player.getLocation().equals(checkLoc)) {
-                System.out.println("Il est dedans");
-            }
-        }
+        return false;
     }
 
 

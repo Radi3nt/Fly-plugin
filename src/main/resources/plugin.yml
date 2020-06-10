@@ -42,3 +42,7 @@ commands:
   flyupdate:
     description: Check for updates
     usage: /flyupdate
+  flyzone:
+    description: Manage flying zones
+    usage: /flyzone <truc>
+    aliases: fz

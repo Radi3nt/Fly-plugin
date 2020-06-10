@@ -30,6 +30,7 @@ import java.util.Map;
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
 import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
+import static fr.radi3nt.fly.timer.Cosmetics.ZoneFlyers;
 import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public class OnPlayerJoin implements Listener {
@@ -67,6 +68,7 @@ public class OnPlayerJoin implements Listener {
         NotifyBossBar.put(player, true);
         NotifySounds.put(player, true);
         NotifyDust.put(player, true);
+        ZoneFlyers.put(player, false);
         if (player.getAllowFlight()) {
             if (!player.hasPermission("fly.join")) {
                 if (!player.getGameMode().equals(GameMode.CREATIVE) && !player.getGameMode().equals(GameMode.SPECTATOR)) {

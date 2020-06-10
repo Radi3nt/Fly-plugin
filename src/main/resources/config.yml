@@ -92,9 +92,27 @@ flyalert-chat: "&cChat %state%"
 flyalert-title: "&cTitle %state%"
 flyalert-sounds: "&cSounds %state%"
 flyalert-bossbar: "&cBossbar %state%"
+flyalert-dust: "&cDust %state%"
 flyalert-all: "&cAll %state%"
 
 
+
+#FlyZones
+flyzones-noselect: "You don't have a valid selection! (use '/flyzone wand' to have the selection wand)"
+flyzones-namenoexist: "This zone doesn't exist"
+flyzones-namealreadyexist: "This zone already exist"
+flyzones-permreplace: "You changed the permission to %perm%"
+flyzones-permreplacenull: "You deleted the permission requirement"
+flyzones-create: "Successfully created new zone!"
+flyzones-name: "Successfully renamed the zone!"
+flyzones-delete: "Successfully deleted the zone!"
+
+flyzones-selectL: "&2First position set to %pos%"
+flyzones-selectR: "&2Second position set to %pos%"
+
+
+flyzones-particles: "CRIT_MAGIC"
+flyzones-viewdistance: 5
 
 
 #All of this is in RED so //ce//
