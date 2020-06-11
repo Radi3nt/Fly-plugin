@@ -32,7 +32,7 @@ public class FlyZone implements TabCompleter {
             things.add("wand");
             things.add("edit");
             things.add("create");
-            things.add("gui");
+            //things.add("gui");
         }
         if (args.length == 2 && args[0].equals("edit")) {
             things.add("delete");

@@ -1,5 +1,6 @@
 package fr.radi3nt.fly.events.crafts;
 
+import fr.radi3nt.fly.MainFly;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -42,47 +43,49 @@ public class PrepareCraftItemEvent implements Listener {
 
     @EventHandler
     public void PrepareCraftItemEvent(PrepareItemCraftEvent e) {
-        ItemStack[] craftingitems = e.getInventory().getMatrix();
-        ItemStack finalitem = new ItemStack(Material.AIR);
-        int z = 0;
-        for (int i = 0; i <= 64; i++) {
-            int temps = i * 15 + 15;
-            int heures = (temps / 3600);
-            int minutes = ((temps - (temps / 3600) * 3600) / 60);
-            int seconds = temps - (heures * 3600 + minutes * 60);
+        if (MainFly.getPlugin(MainFly.class).getConfig().getBoolean("fly-potions")) {
+            ItemStack[] craftingitems = e.getInventory().getMatrix();
+            ItemStack finalitem = new ItemStack(Material.AIR);
+            int z = 0;
+            for (int i = 0; i <= 64; i++) {
+                int temps = i * 15 + 15;
+                int heures = (temps / 3600);
+                int minutes = ((temps - (temps / 3600) * 3600) / 60);
+                int seconds = temps - (heures * 3600 + minutes * 60);
 
-            ItemStack item = new ItemStack(Material.POTION, 1);
-            ItemMeta meta = item.getItemMeta();
-            if (heures < 1) {
-                if (minutes < 1) {
-                    meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + seconds + " sec");
+                ItemStack item = new ItemStack(Material.POTION, 1);
+                ItemMeta meta = item.getItemMeta();
+                if (heures < 1) {
+                    if (minutes < 1) {
+                        meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + seconds + " sec");
+                    } else {
+                        meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + minutes + " min " + seconds + " sec");
+                    }
                 } else {
-                    meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + minutes + " min " + seconds + " sec");
+                    meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + heures + " h " + minutes + " min " + seconds + " sec");
                 }
-            } else {
-                meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + heures + " h " + minutes + " min " + seconds + " sec");
-            }
-            meta.addEnchant(Enchantment.DURABILITY, 1, false);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            item.setItemMeta(meta);
-            PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
-            potionMeta.setColor(Color.FUCHSIA);
-            item.setItemMeta(potionMeta);
+                meta.addEnchant(Enchantment.DURABILITY, 1, false);
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                item.setItemMeta(meta);
+                PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
+                potionMeta.setColor(Color.FUCHSIA);
+                item.setItemMeta(potionMeta);
 
-            if (CheckForEmerauldMateral(craftingitems, i + 1)) {
-                finalitem.setType(item.getType());
-                finalitem.setItemMeta(item.getItemMeta());
-                e.getInventory().setResult(null);
-                PotionCraft.remove(e.getInventory());
-                z = i;
-            }
+                if (CheckForEmerauldMateral(craftingitems, i + 1)) {
+                    finalitem.setType(item.getType());
+                    finalitem.setItemMeta(item.getItemMeta());
+                    e.getInventory().setResult(null);
+                    PotionCraft.remove(e.getInventory());
+                    z = i;
+                }
 
-        }
-        if (!finalitem.getType().equals(Material.AIR)) {
-            e.getInventory().setResult(finalitem);
-            PotionCraft.put(e.getInventory(), z + 1);
+            }
+            if (!finalitem.getType().equals(Material.AIR)) {
+                e.getInventory().setResult(finalitem);
+                PotionCraft.put(e.getInventory(), z + 1);
+            }
         }
     }
 }
