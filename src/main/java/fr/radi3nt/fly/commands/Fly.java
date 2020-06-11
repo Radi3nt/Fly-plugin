@@ -3,20 +3,15 @@ package fr.radi3nt.fly.commands;
 import fr.radi3nt.fly.MainFly;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
 import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 public class Fly implements CommandExecutor {
 
@@ -146,27 +141,6 @@ public class Fly implements CommandExecutor {
         if (state) {
             flyers.remove(player.getName());
             flyers.add(player.getName());
-            Boolean Particles = MainFly.getPlugin(MainFly.class).getConfig().getBoolean("particles");
-            if (Particles) {
-                new BukkitRunnable() {
-                    final Location loc = player.getLocation();
-                    final double r = 1;
-                    double t = 0;
-
-                    public void run() {
-                        t = t + Math.PI / 16;
-                        double x = r * cos(t);
-                        double y = 0.225 * t;
-                        double z = r * sin(t);
-                        loc.add(x, y, z);
-                        player.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc.getX(), loc.getY(), loc.getZ(), 1, 0, 0, 0, 0, null, true);
-                        loc.subtract(x, y, z);
-                        if (t > Math.PI * 3) {
-                            this.cancel();
-                        }
-                    }
-                }.runTaskTimer(MainFly.getPlugin(MainFly.class), 0, 1);
-            }
         } else {
             flyers.remove(player.getName());
             player.setInvulnerable(false);

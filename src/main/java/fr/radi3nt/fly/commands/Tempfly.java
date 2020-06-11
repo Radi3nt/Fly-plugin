@@ -26,7 +26,7 @@ public class Tempfly implements CommandExecutor {
 
     Plugin plugin = MainFly.getPlugin(MainFly.class);
 
-    public static Map<Player, Long> cooldown = new HashMap<Player, Long>();
+    public static Map<Player, Long> cooldown = new HashMap<>();
 
     public static Map<String, Long> timer = new HashMap<>();
     public static Map<String, Integer> time = new HashMap<>();
