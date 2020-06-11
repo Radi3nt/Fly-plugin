@@ -3,6 +3,7 @@ package fr.radi3nt.fly.events;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
+import fr.radi3nt.fly.timer.Cosmetics;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,6 +46,7 @@ public class OnPlayerDisconnect implements Listener {
         NotifyBossBar.remove(player);
         NotifySounds.remove(player);
 
+        Cosmetics.ZoneFlyers.remove(player);
         MaxHeight.remove(player);
 
     }

@@ -149,6 +149,7 @@ cooldown-message: "&cCommand on cooldown for &b&l%timeleft%&c seconds"
 #I recommend to let this like that
 cooldown-time: 5
 
+fly-potions: true
 reload-melody: true
 credits-message: true
 update-check: true
