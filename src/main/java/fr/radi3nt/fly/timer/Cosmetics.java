@@ -33,7 +33,7 @@ public class Cosmetics extends BukkitRunnable {
     public static ArrayList<Player> pushed = new ArrayList<>();
     public static HashMap<Player, Integer> MaxHeight = new HashMap<>();
     public static HashMap<Player, Boolean> ZoneFlyers = new HashMap<>();
-    private static int ZonesParticlesInterval = 0;
+    private static int HeightInterval = 0;
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
 
@@ -46,6 +46,7 @@ public class Cosmetics extends BukkitRunnable {
         ArrayList<String> flyers = Fly.flyers;
         Map<String, Long> timer = Tempfly.timer;
         ArrayList<Boolean> InZones = new ArrayList<>();
+
 
         Boolean Particles = plugin.getConfig().getBoolean("particles");
         Boolean ShieldContact = plugin.getConfig().getBoolean("shield-contact-reaction");
@@ -83,7 +84,7 @@ public class Cosmetics extends BukkitRunnable {
                         }
                     }
                     if (Particles) {
-                        if (number >= 4) {
+                        if (number >= 2) {
                             for (int p = 0; p < list.size(); p++) {
                                 Player target = list.get(p);
                                 if (player != target) {
@@ -92,7 +93,7 @@ public class Cosmetics extends BukkitRunnable {
                                             Location location = player.getLocation();
                                             double r = 1.5;
                                             double x = r * cos(tehta) * sin(phi);
-                                            double y = r * cos(phi);
+                                            double y = r * cos(phi) + 1;
                                             double z = r * sin(tehta) * sin(phi);
                                             location.add(x, y, z);
 
@@ -170,34 +171,37 @@ public class Cosmetics extends BukkitRunnable {
 
                         }
                         if (Particles) {
-                            if (perm - reelradius < player.getLocation().getBlockY()) {
-                                //Display
-                                int radius = reelradius - (perm - player.getLocation().getBlockY());
+                            if (HeightInterval >= 12) {
 
-                                int ox = 0;
-                                int oy = 0; // origin
+                                if (perm - reelradius < player.getLocation().getBlockY()) {
+                                    //Display
+                                    int radius = reelradius - (perm - player.getLocation().getBlockY());
 
-                                for (int x = -radius; x < radius; x++) {
-                                    int height = (int) Math.sqrt(radius * radius - x * x);
+                                    int ox = 0;
+                                    int oy = 0; // origin
 
-                                    for (int y = -height; y < height; y++) {
-                                        if (radius > reelradius) {
-                                            radius = reelradius;
+                                    for (int x = -radius; x < radius; x++) {
+                                        int height = (int) Math.sqrt(radius * radius - x * x);
+
+                                        for (int y = -height; y < height; y++) {
+                                            if (radius > reelradius) {
+                                                radius = reelradius;
+                                            }
+                                            floorLocation.add(x + ox, 0, y + oy);
+                                            player.spawnParticle(Particle.END_ROD, floorLocation, 1, 0, 0, 0, 0);
+                                            floorLocation.subtract(x + ox, 0, y + oy);
                                         }
-                                        floorLocation.add(x + ox, 0, y + oy);
-                                        player.spawnParticle(Particle.END_ROD, floorLocation, 1, 0, 0, 0, 0);
-                                        floorLocation.subtract(x + ox, 0, y + oy);
                                     }
+
+
                                 }
-
-
                             }
                         }
                     }
                 }
             }
 
-            //CREATIVE REDO
+            //CREATIVE SPECTATOR FLY
             if (player.hasPermission("fly.gamemode")) {
                 if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) {
                     player.setAllowFlight(true);
@@ -302,8 +306,6 @@ public class Cosmetics extends BukkitRunnable {
                                     Oz = Iz;
                                     Iz = NOz;
                                 }
-                                ZonesParticlesInterval++;
-                                if (ZonesParticlesInterval >= 12) {
                                     for (int x = Ox; x <= Ix + 1; x++) {
                                         for (int y = Oy; y <= Iy + 1; y++) {
                                             for (int z = Oz; z <= Iz + 1; z++) {
@@ -327,7 +329,6 @@ public class Cosmetics extends BukkitRunnable {
                                                 }
                                             }
                                         }
-                                    }
                                 }
                             }
                         }
@@ -348,8 +349,6 @@ public class Cosmetics extends BukkitRunnable {
                             Oz = Iz;
                             Iz = NOz;
                         }
-                        ZonesParticlesInterval++;
-                        if (ZonesParticlesInterval >= 12) {
                             for (int x = Ox; x <= Ix + 1; x++) {
                                 for (int y = Oy; y <= Iy + 1; y++) {
                                     for (int z = Oz; z <= Iz + 1; z++) {
@@ -373,7 +372,6 @@ public class Cosmetics extends BukkitRunnable {
                                         }
                                     }
                                 }
-                            }
                         }
                     }
 
@@ -402,6 +400,11 @@ public class Cosmetics extends BukkitRunnable {
                 //Exeption
             }
 
+        }
+        if (HeightInterval >= 12) {
+            HeightInterval = 0;
+        } else {
+            HeightInterval++;
         }
     }
 
