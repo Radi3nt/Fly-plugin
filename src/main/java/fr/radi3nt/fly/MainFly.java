@@ -2,6 +2,8 @@ package fr.radi3nt.fly;
 
 import fr.radi3nt.fly.commands.*;
 import fr.radi3nt.fly.events.*;
+import fr.radi3nt.fly.events.crafts.OnCraftEvent;
+import fr.radi3nt.fly.events.crafts.PrepareCraftItemEvent;
 import fr.radi3nt.fly.events.wand.OnClickWithWand;
 import fr.radi3nt.fly.timer.Cosmetics;
 import fr.radi3nt.fly.timer.TempCheck;
@@ -40,6 +42,8 @@ public final class MainFly extends JavaPlugin {
 
     public ArrayList<String> flyers = Fly.flyers;
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
+    Boolean Recipe = this.getConfig().getBoolean("fly-potions");
+
     //--------------------------------------------------//
     public static final String VERSION = "1.2.3j";
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
@@ -60,7 +64,6 @@ public final class MainFly extends JavaPlugin {
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.RED + "Registered Commands");
         RegisterRunnables();
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.RED + "Registered Runnables");
-
 
 
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Updating version ...");
@@ -94,7 +97,6 @@ public final class MainFly extends JavaPlugin {
             NotifySounds.put(player, true);
             NotifyDust.put(player, true);
 
-            ZoneFlyers.put(player, false);
 
 
             if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) {
@@ -172,6 +174,11 @@ public final class MainFly extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnFlyGuiClick(), this);
         getServer().getPluginManager().registerEvents(new OnGroundHit(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerMove(), this);
+
+        getServer().getPluginManager().registerEvents(new PrepareCraftItemEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnCraftEvent(), this);
+
+        getServer().getPluginManager().registerEvents(new OnDrinkFlyPotion(), this);
 
         getServer().getPluginManager().registerEvents(new OnClickWithWand(), this);
 
