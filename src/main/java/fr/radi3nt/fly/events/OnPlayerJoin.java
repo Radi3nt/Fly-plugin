@@ -134,13 +134,16 @@ public class OnPlayerJoin implements Listener {
                 Location ploc = player.getLocation();
                 int y = ploc.getBlockY() - 2;
                 ploc.add(0, y, 0);
-                if (ploc.getBlock().getType().equals(Material.AIR)) {
-                    player.setFlying(true);
-                }
             }
         }
-        Location ploc = player.getLocation();
-        int y = ploc.getBlockY() - 2;
+        if (player.hasPermission("fly.air")) {
+            if (!player.isOnGround()) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+            }
+        }
+        Location ploc = player.getLocation().getBlock().getLocation();
+        ploc.add(0, -2, 0);
         if (ploc.getBlock().getType().equals(Material.AIR)) {
             GroundHitters.add(player);
         }
