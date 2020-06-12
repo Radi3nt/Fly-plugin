@@ -379,7 +379,7 @@ public class Cosmetics extends BukkitRunnable {
                 }
                 if (InZones.contains(true)) {
                     if (!ZoneFlyers.containsKey(player)) {
-                        ZoneFlyers.put(player, player.getAllowFlight() && !Tempfly.time.containsKey(player.getName()));
+                        ZoneFlyers.put(player, player.isFlying() && player.getAllowFlight() && !Tempfly.time.containsKey(player.getName()));
                         Fly.FlyMethod(player, true);
                         player.setFlying(true);
                     }
