@@ -2,19 +2,15 @@ package fr.radi3nt.fly.events.crafts;
 
 import fr.radi3nt.fly.MainFly;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 
+import static fr.radi3nt.fly.events.crafts.PrepareCraftItemEvent.CreateFlyPotion;
 import static fr.radi3nt.fly.events.crafts.PrepareCraftItemEvent.PotionCraft;
 
 public class OnCraftEvent implements Listener {
@@ -29,6 +25,7 @@ public class OnCraftEvent implements Listener {
                     if (e.getCurrentItem().getType() != Material.AIR) {
                         if (e.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.GOLD + "Fly Potion ")) {
                             ItemStack[] matrix = inventory.getMatrix();
+                            Material Base = matrix[0].getType();
                             for (ItemStack itemStack : matrix) {
                                 if (itemStack.getType().equals(matrix[4].getType())) {
                                     itemStack.setAmount(itemStack.getAmount() - 1);
@@ -40,31 +37,37 @@ public class OnCraftEvent implements Listener {
                                     }
                                 }
                             }
+                            int temps = 0;
+                            int i = (PotionCraft.get(inventory) - 1);
+                            int emerald = 15;
+                            int diamond = 5;
+                            int gold = 1;
+                            switch (Base) {
+                                case EMERALD:
+                                    temps = i * emerald + emerald;
+                                    break;
+                                case EMERALD_BLOCK:
+                                    temps = i * emerald * 9 + i * emerald * 9;
+                                    break;
+                                case DIAMOND:
+                                    temps = i * diamond + diamond;
+                                    break;
+                                case DIAMOND_BLOCK:
+                                    temps = i * diamond * 9 + diamond * 9;
+                                    break;
+                                case GOLD_INGOT:
+                                    temps = i * gold + gold;
+                                    break;
+                                case GOLD_BLOCK:
+                                    temps = i * gold * 9 + gold * 9;
+                                    break;
+                            }
                             inventory.setMatrix(matrix);
-                            int temps = (PotionCraft.get(inventory) - 1) * 15 + 15;
                             int heures = (temps / 3600);
                             int minutes = ((temps - (temps / 3600) * 3600) / 60);
                             int seconds = temps - (heures * 3600 + minutes * 60);
 
-                            ItemStack item = new ItemStack(Material.POTION, 1);
-                            ItemMeta meta = item.getItemMeta();
-                            if (heures < 1) {
-                                if (minutes < 1) {
-                                    meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + seconds + " sec");
-                                } else {
-                                    meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + minutes + " min " + seconds + " sec");
-                                }
-                            } else {
-                                meta.setDisplayName(ChatColor.GOLD + "Fly Potion " + heures + " h " + minutes + " min " + seconds + " sec");
-                            }
-                            meta.addEnchant(Enchantment.DURABILITY, 1, false);
-                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-                            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                            item.setItemMeta(meta);
-                            PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
-                            potionMeta.setColor(Color.FUCHSIA);
-                            item.setItemMeta(potionMeta);
+                            ItemStack item = CreateFlyPotion(heures, minutes, seconds);
                             e.getWhoClicked().setItemOnCursor(item);
                             PotionCraft.remove(inventory);
 
@@ -72,8 +75,6 @@ public class OnCraftEvent implements Listener {
                     }
                 }
             }
-        } else {
-            e.setCancelled(true);
         }
     }
 
