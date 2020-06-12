@@ -46,3 +46,7 @@ commands:
     description: Manage flying zones
     usage: /flyzone <truc>
     aliases: fz
+  flypotion:
+    description: Gives you a fly potion
+    usage: /flypotion <hours> h <minutes> min <seconds> sec
+    aliases: fp
