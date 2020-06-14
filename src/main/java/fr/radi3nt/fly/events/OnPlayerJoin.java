@@ -30,6 +30,7 @@ import java.util.Map;
 import static fr.radi3nt.fly.commands.Fly.FlyMethod;
 import static fr.radi3nt.fly.commands.FlyAlert.NotifyDust;
 import static fr.radi3nt.fly.events.OnGroundHit.GroundHitters;
+import static fr.radi3nt.fly.timer.Cosmetics.ZoneFlyers;
 import static fr.radi3nt.fly.timer.TempCheck.timem;
 
 public class OnPlayerJoin implements Listener {
@@ -57,6 +58,16 @@ public class OnPlayerJoin implements Listener {
 
 
         Player player = e.getPlayer();
+
+        if (player.hasPermission("fly.air")) {
+            if (!player.isOnGround()) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+            }
+        } else {
+            ZoneFlyers.put(player, false);
+        }
+
         NotifyChat.remove(player);
         NotifyTitle.remove(player);
         NotifyBossBar.remove(player);
@@ -136,12 +147,7 @@ public class OnPlayerJoin implements Listener {
                 ploc.add(0, y, 0);
             }
         }
-        if (player.hasPermission("fly.air")) {
-            if (!player.isOnGround()) {
-                player.setAllowFlight(true);
-                player.setFlying(true);
-            }
-        }
+
         Location ploc = player.getLocation().getBlock().getLocation();
         ploc.add(0, -2, 0);
         if (ploc.getBlock().getType().equals(Material.AIR)) {

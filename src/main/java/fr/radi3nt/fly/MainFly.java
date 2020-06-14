@@ -85,6 +85,16 @@ public final class MainFly extends JavaPlugin {
 
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
         for (Player player : list) {
+
+            if (player.hasPermission("fly.air")) {
+                if (!player.isOnGround()) {
+                    player.setAllowFlight(true);
+                    player.setFlying(true);
+                }
+            } else {
+                ZoneFlyers.put(player, false);
+            }
+
             NotifyChat.remove(player);
             NotifyTitle.remove(player);
             NotifyBossBar.remove(player);
@@ -115,6 +125,8 @@ public final class MainFly extends JavaPlugin {
                 bossbar.put(player, Bukkit.createBossBar("Charging ...", BarColor.WHITE, BarStyle.SOLID));
                 bossbar.get(player).addPlayer(player);
             }
+
+
         }
     }
 

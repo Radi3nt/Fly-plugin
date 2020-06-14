@@ -18,7 +18,6 @@ public class OnCraftEvent implements Listener {
     @EventHandler
     public void OnCraftEvent(InventoryClickEvent e) {
         if (MainFly.getPlugin(MainFly.class).getConfig().getBoolean("fly-potions")) {
-            //Just want to test this :) e.getWhoClicked().setWindowProperty(InventoryView.Property.BREW_TIME, 1);
             if (e.getWhoClicked().hasPermission("fly.potion")) {
                 if (e.getSlotType().equals(InventoryType.SlotType.RESULT)) {
                     CraftingInventory inventory = (CraftingInventory) e.getClickedInventory();
