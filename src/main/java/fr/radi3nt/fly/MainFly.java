@@ -2,6 +2,7 @@ package fr.radi3nt.fly;
 
 import fr.radi3nt.fly.commands.*;
 import fr.radi3nt.fly.events.*;
+import fr.radi3nt.fly.events.crafts.OnBrewFlyPotion;
 import fr.radi3nt.fly.events.crafts.OnCraftEvent;
 import fr.radi3nt.fly.events.crafts.PrepareCraftItemEvent;
 import fr.radi3nt.fly.events.wand.OnClickWithWand;
@@ -188,6 +189,10 @@ public final class MainFly extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PrepareCraftItemEvent(), this);
         getServer().getPluginManager().registerEvents(new OnCraftEvent(), this);
+
+        getServer().getPluginManager().registerEvents(new OnBrewFlyPotion(), this);
+        getServer().getPluginManager().registerEvents(new OnThrowFlyPotion(), this);
+
 
         getServer().getPluginManager().registerEvents(new OnDrinkFlyPotion(), this);
 
