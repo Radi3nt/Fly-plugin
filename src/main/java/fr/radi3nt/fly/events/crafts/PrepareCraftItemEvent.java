@@ -87,7 +87,7 @@ public class PrepareCraftItemEvent implements Listener {
     @EventHandler
     public void PrepareCraftItemEvent(PrepareItemCraftEvent e) {
         if (MainFly.getPlugin(MainFly.class).getConfig().getBoolean("fly-potions")) {
-            for (int l = 0; l < 6; l++) {
+            for (int l = 0; l < 64; l++) {
                 ItemStack[] craftingitems = e.getInventory().getMatrix();
                 ItemStack finalitem = new ItemStack(Material.AIR);
                 int z = 0;

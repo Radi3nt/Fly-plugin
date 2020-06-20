@@ -236,11 +236,11 @@ public final class MainFly extends JavaPlugin {
 
     public void RegisterRunnables() {
         TempCheck task = new TempCheck();
-        task.runTaskTimer(this, 2, 1);
+        task.runTaskTimer(this, 1, 1);
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "TempCheck runnable activated");
 
         Cosmetics cosmetics = new Cosmetics();
-        cosmetics.runTaskTimer(this, 2, 1);
+        cosmetics.runTaskTimer(this, 1, 1);
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Cosmetics runnable activated");
 
 
