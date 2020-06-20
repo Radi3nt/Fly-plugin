@@ -45,7 +45,7 @@ public final class MainFly extends JavaPlugin {
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
 
     //--------------------------------------------------//
-    public static final String VERSION = "1.2.4";
+    public static final String VERSION = "1.2.5";
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
     //--------------------------------------------------//
 
