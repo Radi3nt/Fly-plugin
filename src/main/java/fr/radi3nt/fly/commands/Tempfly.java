@@ -103,6 +103,7 @@ public class Tempfly implements CommandExecutor {
                             flyers.remove(target.getName());
                             loc.set("flyers." + target.getName(), time.get(target.getName()));
                             FlyMethod(target, true);
+                            MainFly.Logger.logTempFly(target.getAllowFlight(), time.get(target.getName()), sender, target);
                             timem.put(target, 100000);
                             timer.put(target.getName(), System.currentTimeMillis());
                             int timeleft = time.get(target.getName());
@@ -168,6 +169,7 @@ public class Tempfly implements CommandExecutor {
                                         player.playSound(player.getLocation(), "minecraft:block.note_block.pling", SoundCategory.AMBIENT, 100, 2);
                                         loc.set("flyers." + target.getName(), time.get(target.getName()));
                                         FlyMethod(target, true);
+                                        MainFly.Logger.logTempFly(target.getAllowFlight(), time.get(target.getName()), player, target);
                                         timer.put(target.getName(), System.currentTimeMillis());
                                         timem.put(target, 100000);
                                         int timeleft = time.get(target.getName());
@@ -216,6 +218,7 @@ public class Tempfly implements CommandExecutor {
                                     flyers.remove(player.getName());
                                     loc.set("flyers." + player.getName(), time.get(player.getName()));
                                     FlyMethod(player, true);
+                                    MainFly.Logger.logTempFly(player.getAllowFlight(), time.get(player.getName()), player);
                                     timem.put(player, 100000);
                                     timer.put(player.getName(), System.currentTimeMillis());
                                     int timeleft = time.get(player.getName());

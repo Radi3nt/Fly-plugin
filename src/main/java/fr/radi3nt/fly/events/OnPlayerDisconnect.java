@@ -1,9 +1,11 @@
 package fr.radi3nt.fly.events;
 
+import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
 import fr.radi3nt.fly.timer.Cosmetics;
+import fr.radi3nt.fly.utilis.Reason;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,6 +34,7 @@ public class OnPlayerDisconnect implements Listener {
 
         Player player = e.getPlayer();
         player.setInvulnerable(false);
+        MainFly.Logger.logFly(false, player, Reason.DISCONNECT);
         flyers.remove(player.getName());
         flyers.remove(player.getName());
         timer.remove(player.getName());

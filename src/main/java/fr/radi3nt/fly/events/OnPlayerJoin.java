@@ -4,6 +4,7 @@ import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.FlyAlert;
 import fr.radi3nt.fly.commands.Tempfly;
+import fr.radi3nt.fly.utilis.Reason;
 import fr.radi3nt.fly.utilis.UpdateCheck;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -63,6 +64,7 @@ public class OnPlayerJoin implements Listener {
             if (!player.isOnGround()) {
                 player.setAllowFlight(true);
                 player.setFlying(true);
+                MainFly.Logger.logFly(true, player, Reason.RECONNECT);
             }
         } else {
             ZoneFlyers.put(player, false);
@@ -84,6 +86,7 @@ public class OnPlayerJoin implements Listener {
                     player.setFlying(false);
                     player.setAllowFlight(false);
                     player.setInvulnerable(false);
+                    MainFly.Logger.logFly(false, player, Reason.RECONNECT);
                     flyers.remove(player.getName());
                     timer.remove(player.getName());
                     time.remove(player.getName());
@@ -139,9 +142,11 @@ public class OnPlayerJoin implements Listener {
             if (loc.get("flyers." + player.getName()) != null) {
                 Integer timeleft = (Integer) loc.get("flyers." + player.getName());
                 FlyMethod(player, true);
+
                 timer.put(player.getName(), System.currentTimeMillis());
                 time.put(player.getName(), timeleft);
                 timem.put(player, 100000);
+                MainFly.Logger.logTempFly(false, time.get(player.getName()), player, Reason.RECONNECT);
                 Location ploc = player.getLocation();
                 int y = ploc.getBlockY() - 2;
                 ploc.add(0, y, 0);

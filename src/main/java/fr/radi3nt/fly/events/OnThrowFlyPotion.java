@@ -4,6 +4,7 @@ import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.Tempfly;
 import fr.radi3nt.fly.timer.TempCheck;
+import fr.radi3nt.fly.utilis.Reason;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -108,6 +109,11 @@ public class OnThrowFlyPotion implements Listener {
                     FlyMethod(player, true);
                     TempCheck.timem.put(player, 100000);
                     Tempfly.timer.put(player.getName(), System.currentTimeMillis());
+                    if (e.getEntity().getShooter() instanceof Player) {
+                        MainFly.Logger.logTempFly(player.getAllowFlight(), Tempfly.time.get(player.getName()), (Player) e.getEntity().getShooter(), player, Reason.SPLASH_POTION);
+                    } else {
+                        MainFly.Logger.logTempFly(player.getAllowFlight(), Tempfly.time.get(player.getName()), player, Reason.SPLASH_POTION);
+                    }
                 } else {
                     ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, second * 4, 1, false, false));
                 }

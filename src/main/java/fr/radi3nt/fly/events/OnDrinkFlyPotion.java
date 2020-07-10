@@ -4,6 +4,7 @@ import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.Tempfly;
 import fr.radi3nt.fly.timer.TempCheck;
+import fr.radi3nt.fly.utilis.Reason;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -100,6 +101,7 @@ public class OnDrinkFlyPotion implements Listener {
                     flyers.remove(player.getName());
                     loc.set("flyers." + player.getName(), time.get(player.getName()));
                     FlyMethod(player, true);
+                    MainFly.Logger.logTempFly(player.getAllowFlight(), time.get(player.getName()), player, Reason.POTION);
                     timem.put(player, 100000);
                     timer.put(player.getName(), System.currentTimeMillis());
                 }

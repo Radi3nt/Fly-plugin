@@ -8,6 +8,7 @@ import fr.radi3nt.fly.events.crafts.PrepareCraftItemEvent;
 import fr.radi3nt.fly.events.wand.OnClickWithWand;
 import fr.radi3nt.fly.timer.Cosmetics;
 import fr.radi3nt.fly.timer.TempCheck;
+import fr.radi3nt.fly.utilis.Logger;
 import fr.radi3nt.fly.utilis.UpdateCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,8 @@ public final class MainFly extends JavaPlugin {
     HashMap<Player, Boolean> NotifyBossBar = FlyAlert.NotifyBossBar;
     HashMap<Player, Boolean> NotifySounds = FlyAlert.NotifySounds;
 
+    public static Logger Logger;
+
     public ArrayList<String> flyers = Fly.flyers;
     String Prefix = ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix") + ChatColor.RESET);
 
@@ -53,6 +57,37 @@ public final class MainFly extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        File locations = new File("plugins/FlyPlugin", "flyers.yml");
+        if (!locations.exists()) {
+            try {
+                locations.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
+
+
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int second = now.getSecond();
+        File log = new File("plugins/FlyPlugin/logs", "log-" + year + "-" + month + "-" + day + "-" + hour + "-" + minute + ".yml");
+        if (!log.exists()) {
+            try {
+                log.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        FileConfiguration logger = YamlConfiguration.loadConfiguration(log);
+        Logger = new Logger(logger, log);
+
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
 
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Starting up !");
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Fly Plugin by " + ChatColor.AQUA + ChatColor.BOLD + "Radi3nt");
@@ -69,19 +104,8 @@ public final class MainFly extends JavaPlugin {
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Updating version ...");
 
 
-        File locations = new File("plugins/FlyPlugin", "flyers.yml");
-        if (!locations.exists()) {
-            try {
-                locations.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        FileConfiguration loc = YamlConfiguration.loadConfiguration(locations);
-
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
         getConfig().set("version", VERSION);
+        this.saveConfig();
         console.sendMessage(ChatColor.GOLD + "[Fly] " + ChatColor.YELLOW + "Config update finished");
 
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());

@@ -34,12 +34,14 @@ public class Fly implements CommandExecutor {
                 if (args.length == 0) {
 
                     PlayerFly(player);
+                    MainFly.Logger.logFly(player.getAllowFlight(), player);
 
                 } else if (player.hasPermission("fly.others")) {
                     Player target = Bukkit.getPlayerExact(args[0]);
                     if (target instanceof Player) {
 
                         TargetFly(target, player);
+                        MainFly.Logger.logFly(target.getAllowFlight(), player, target);
 
                     } else {
                         player.sendMessage(Prefix + ChatColor.RED + " " + InvalidPlayer);
@@ -64,6 +66,7 @@ public class Fly implements CommandExecutor {
                     String FlySomeonePlayer = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("fly-someone-player")) + ChatColor.RESET;
                     if (!target.getAllowFlight()) {
                         FlyMethod(target, true);
+                        MainFly.Logger.logFly(target.getAllowFlight(), sender, target);
                         String FSPr = FlySomeonePlayer.replace("%state%", On).replace("%target%", target.getName()).replace("%player%", "console");
                         sender.sendMessage(Prefix + " " + FSPr);
                         if (TargetSendMessage) {
@@ -72,6 +75,7 @@ public class Fly implements CommandExecutor {
                         }
                     } else {
                         FlyMethod(target, false);
+                        MainFly.Logger.logFly(target.getAllowFlight(), sender, target);
                         String FSPr = FlySomeonePlayer.replace("%state%", Off).replace("%target%", target.getName()).replace("%player%", "console");
                         sender.sendMessage(Prefix + " " + FSPr);
                         if (TargetSendMessage) {

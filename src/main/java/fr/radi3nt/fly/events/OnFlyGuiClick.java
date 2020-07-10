@@ -63,6 +63,7 @@ public class OnFlyGuiClick implements Listener {
                                 target.setAllowFlight(false);
                                 target.setFlying(false);
                                 target.setInvulnerable(false);
+                                MainFly.Logger.logTempFly(target.getAllowFlight(), time.get(target.getName()), target);
                                 time.put(target.getName(), 1);
                                 Tempfly.timer.put(target.getName(), System.currentTimeMillis());
                                 Boolean Chat = NotifyChat.get(target);
@@ -84,9 +85,12 @@ public class OnFlyGuiClick implements Listener {
                                     NotifyTitle.put(target, Title);
                                     NotifySounds.put(target, Sounds);
                                 }, 50L);
+                            } else {
+                                TargetFly(target, player, false);
+                                MainFly.Logger.logFly(target.getAllowFlight(), target);
                             }
                             player.closeInventory();
-                            TargetFly(target, player, false);
+
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
@@ -98,6 +102,8 @@ public class OnFlyGuiClick implements Listener {
                                 target.setAllowFlight(false);
                                 target.setFlying(false);
                                 target.setInvulnerable(false);
+                                MainFly.Logger.logTempFly(target.getAllowFlight(), time.get(target.getName()), player, target);
+
                                 time.put(target.getName(), 1);
                                 Tempfly.timer.put(target.getName(), System.currentTimeMillis());
                                 Boolean Chat = NotifyChat.get(target);
@@ -119,9 +125,12 @@ public class OnFlyGuiClick implements Listener {
                                     NotifyTitle.put(target, Title);
                                     NotifySounds.put(target, Sounds);
                                 }, 50L);
+                            } else {
+                                TargetFly(target, player, false);
+                                MainFly.Logger.logFly(target.getAllowFlight(), target);
                             }
                             player.closeInventory();
-                            TargetFly(target, player, false);
+
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
@@ -136,6 +145,7 @@ public class OnFlyGuiClick implements Listener {
                         if (player.hasPermission("fly.fly")) {
                             player.closeInventory();
                             TargetFly(target, player, true);
+                            MainFly.Logger.logFly(target.getAllowFlight(), target);
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
@@ -145,6 +155,8 @@ public class OnFlyGuiClick implements Listener {
                         if (player.hasPermission("fly.others")) {
                             player.closeInventory();
                             TargetFly(target, player, true);
+                            MainFly.Logger.logFly(target.getAllowFlight(), player, target);
+
                             break;
                         } else {
                             player.sendMessage(Prefix + " " + ChatColor.RED + NoPermission);
@@ -338,9 +350,12 @@ public class OnFlyGuiClick implements Listener {
                 if (!(TimeLeft == 0)) {
                     flyers.remove(targettf.getName());
                     targettf.setAllowFlight(true);
+
                     flyers.add(targettf.getName());
                     Tempfly.time.put(targettf.getName(), TimeLeft);
                     Tempfly.timer.put(targettf.getName(), System.currentTimeMillis());
+                    MainFly.Logger.logTempFly(targettf.getAllowFlight(), time.get(targettf.getName()), player, targettf);
+
                     timem.put(targettf, 100000);
                     String MessageP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-message"));
                     String MessageTP = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tempfly-target"));

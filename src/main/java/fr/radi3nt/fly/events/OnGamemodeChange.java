@@ -3,6 +3,7 @@ package fr.radi3nt.fly.events;
 import fr.radi3nt.fly.MainFly;
 import fr.radi3nt.fly.commands.Fly;
 import fr.radi3nt.fly.commands.Tempfly;
+import fr.radi3nt.fly.utilis.Reason;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -38,6 +39,7 @@ public class OnGamemodeChange implements Listener {
                 player.setAllowFlight(false);
                 player.setFlying(false);
                 if (timer.containsKey(player.getName())) {
+                    MainFly.Logger.logTempFly(player.getAllowFlight(), time.get(player.getName()), player, Reason.GAMEMODE);
                     time.put(player.getName(), 1);
                     timer.put(player.getName(), System.currentTimeMillis());
                     Boolean Chat = NotifyChat.get(player);
@@ -59,6 +61,8 @@ public class OnGamemodeChange implements Listener {
                         NotifyTitle.put(player, Title);
                         NotifySounds.put(player, Sounds);
                     }, 50L);
+                } else {
+                    MainFly.Logger.logFly(player.getAllowFlight(), player, Reason.GAMEMODE);
                 }
                 flyers.remove(player.getName());
             }

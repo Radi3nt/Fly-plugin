@@ -78,11 +78,12 @@ public class UnTempFly implements CommandExecutor {
                             target.setAllowFlight(false);
                             target.setFlying(false);
                             target.setInvulnerable(false);
+                            MainFly.Logger.logTempFly(target.getAllowFlight(), time.get(target.getName()), player, target);
+
                             time.put(target.getName(), 1);
                             timer.put(target.getName(), System.currentTimeMillis());
 
                             GroundHitters.add(target);
-
 
                             Boolean Chat = NotifyChat.get(target);
                             Boolean BossBar = NotifyBossBar.get(target);
@@ -132,8 +133,11 @@ public class UnTempFly implements CommandExecutor {
                         target.setAllowFlight(false);
                         target.setFlying(false);
                         target.setInvulnerable(false);
+                        MainFly.Logger.logTempFly(target.getAllowFlight(), time.get(target.getName()), sender, target);
                         time.put(target.getName(), 1);
                         timer.put(target.getName(), System.currentTimeMillis());
+
+
                         Boolean Chat = NotifyChat.get(target);
                         Boolean BossBar = NotifyBossBar.get(target);
                         Boolean Title = NotifyTitle.get(target);

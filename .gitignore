@@ -1,2 +1,4 @@
 # Project exclude paths
 /target/
+_config.yml
+Fly.iml
